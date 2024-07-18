@@ -1,0 +1,397 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		70C14E242945BFF400D13D3B /* XmlFile.c in Sources */ = {isa = PBXBuildFile; fileRef = 70C14E042945BFF400D13D3B /* XmlFile.c */; };
+		70C14E252945BFF400D13D3B /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 70C14E052945BFF400D13D3B /* main.c */; };
+		70C14E262945BFF400D13D3B /* JsonFile.c in Sources */ = {isa = PBXBuildFile; fileRef = 70C14E062945BFF400D13D3B /* JsonFile.c */; };
+		70C14E272945BFF400D13D3B /* DanmakuFactoryString.c in Sources */ = {isa = PBXBuildFile; fileRef = 70C14E092945BFF400D13D3B /* DanmakuFactoryString.c */; };
+		70C14E282945BFF400D13D3B /* Config.c in Sources */ = {isa = PBXBuildFile; fileRef = 70C14E0D2945BFF400D13D3B /* Config.c */; };
+		70C14E292945BFF400D13D3B /* DanmakuFactoryList.c in Sources */ = {isa = PBXBuildFile; fileRef = 70C14E142945BFF400D13D3B /* DanmakuFactoryList.c */; };
+		70C14E2A2945BFF400D13D3B /* AssFile.c in Sources */ = {isa = PBXBuildFile; fileRef = 70C14E182945BFF400D13D3B /* AssFile.c */; };
+		70C14E2B2945BFF400D13D3B /* AssStringProcessing.c in Sources */ = {isa = PBXBuildFile; fileRef = 70C14E192945BFF400D13D3B /* AssStringProcessing.c */; };
+		70C14E2C2945BFF400D13D3B /* TemplateFile.c in Sources */ = {isa = PBXBuildFile; fileRef = 70C14E232945BFF400D13D3B /* TemplateFile.c */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		70E0F1262945BF95000A4B31 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		70C14E042945BFF400D13D3B /* XmlFile.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = XmlFile.c; path = ../XmlFile.c; sourceTree = "<group>"; };
+		70C14E052945BFF400D13D3B /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = main.c; path = ../main.c; sourceTree = "<group>"; };
+		70C14E062945BFF400D13D3B /* JsonFile.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = JsonFile.c; path = ../JsonFile.c; sourceTree = "<group>"; };
+		70C14E082945BFF400D13D3B /* DanmakuFactoryString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DanmakuFactoryString.h; sourceTree = "<group>"; };
+		70C14E092945BFF400D13D3B /* DanmakuFactoryString.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = DanmakuFactoryString.c; sourceTree = "<group>"; };
+		70C14E0A2945BFF400D13D3B /* CDanmakuFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDanmakuFactory.h; path = ../CDanmakuFactory.h; sourceTree = "<group>"; };
+		70C14E0C2945BFF400D13D3B /* Config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Config.h; sourceTree = "<group>"; };
+		70C14E0D2945BFF400D13D3B /* Config.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Config.c; sourceTree = "<group>"; };
+		70C14E0F2945BFF400D13D3B /* Status.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Status.h; sourceTree = "<group>"; };
+		70C14E102945BFF400D13D3B /* CLIDef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLIDef.h; sourceTree = "<group>"; };
+		70C14E112945BFF400D13D3B /* DanmakuDef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DanmakuDef.h; sourceTree = "<group>"; };
+		70C14E132945BFF400D13D3B /* DanmakuFactoryList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DanmakuFactoryList.h; sourceTree = "<group>"; };
+		70C14E142945BFF400D13D3B /* DanmakuFactoryList.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = DanmakuFactoryList.c; sourceTree = "<group>"; };
+		70C14E162945BFF400D13D3B /* AssFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssFile.h; sourceTree = "<group>"; };
+		70C14E172945BFF400D13D3B /* AssStringProcessing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssStringProcessing.h; sourceTree = "<group>"; };
+		70C14E182945BFF400D13D3B /* AssFile.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = AssFile.c; sourceTree = "<group>"; };
+		70C14E192945BFF400D13D3B /* AssStringProcessing.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = AssStringProcessing.c; sourceTree = "<group>"; };
+		70C14E1B2945BFF400D13D3B /* 01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 01.png; sourceTree = "<group>"; };
+		70C14E1C2945BFF400D13D3B /* 03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 03.png; sourceTree = "<group>"; };
+		70C14E1D2945BFF400D13D3B /* 02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 02.png; sourceTree = "<group>"; };
+		70C14E1E2945BFF400D13D3B /* 06.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 06.png; sourceTree = "<group>"; };
+		70C14E1F2945BFF400D13D3B /* 05.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 05.png; sourceTree = "<group>"; };
+		70C14E202945BFF400D13D3B /* 04.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 04.png; sourceTree = "<group>"; };
+		70C14E222945BFF400D13D3B /* TemplateFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TemplateFile.h; sourceTree = "<group>"; };
+		70C14E232945BFF400D13D3B /* TemplateFile.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = TemplateFile.c; sourceTree = "<group>"; };
+		70E0F1282945BF95000A4B31 /* DanmakuFactory */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = DanmakuFactory; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		70E0F1252945BF95000A4B31 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		70C14E072945BFF400D13D3B /* String */ = {
+			isa = PBXGroup;
+			children = (
+				70C14E082945BFF400D13D3B /* DanmakuFactoryString.h */,
+				70C14E092945BFF400D13D3B /* DanmakuFactoryString.c */,
+			);
+			name = String;
+			path = ../String;
+			sourceTree = "<group>";
+		};
+		70C14E0B2945BFF400D13D3B /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				70C14E0C2945BFF400D13D3B /* Config.h */,
+				70C14E0D2945BFF400D13D3B /* Config.c */,
+			);
+			name = Config;
+			path = ../Config;
+			sourceTree = "<group>";
+		};
+		70C14E0E2945BFF400D13D3B /* Define */ = {
+			isa = PBXGroup;
+			children = (
+				70C14E0F2945BFF400D13D3B /* Status.h */,
+				70C14E102945BFF400D13D3B /* CLIDef.h */,
+				70C14E112945BFF400D13D3B /* DanmakuDef.h */,
+			);
+			name = Define;
+			path = ../Define;
+			sourceTree = "<group>";
+		};
+		70C14E122945BFF400D13D3B /* List */ = {
+			isa = PBXGroup;
+			children = (
+				70C14E132945BFF400D13D3B /* DanmakuFactoryList.h */,
+				70C14E142945BFF400D13D3B /* DanmakuFactoryList.c */,
+			);
+			name = List;
+			path = ../List;
+			sourceTree = "<group>";
+		};
+		70C14E152945BFF400D13D3B /* AssFile */ = {
+			isa = PBXGroup;
+			children = (
+				70C14E162945BFF400D13D3B /* AssFile.h */,
+				70C14E172945BFF400D13D3B /* AssStringProcessing.h */,
+				70C14E182945BFF400D13D3B /* AssFile.c */,
+				70C14E192945BFF400D13D3B /* AssStringProcessing.c */,
+			);
+			name = AssFile;
+			path = ../AssFile;
+			sourceTree = "<group>";
+		};
+		70C14E1A2945BFF400D13D3B /* images */ = {
+			isa = PBXGroup;
+			children = (
+				70C14E1B2945BFF400D13D3B /* 01.png */,
+				70C14E1C2945BFF400D13D3B /* 03.png */,
+				70C14E1D2945BFF400D13D3B /* 02.png */,
+				70C14E1E2945BFF400D13D3B /* 06.png */,
+				70C14E1F2945BFF400D13D3B /* 05.png */,
+				70C14E202945BFF400D13D3B /* 04.png */,
+			);
+			name = images;
+			path = ../images;
+			sourceTree = "<group>";
+		};
+		70C14E212945BFF400D13D3B /* TemplateFile */ = {
+			isa = PBXGroup;
+			children = (
+				70C14E222945BFF400D13D3B /* TemplateFile.h */,
+				70C14E232945BFF400D13D3B /* TemplateFile.c */,
+			);
+			name = TemplateFile;
+			path = ../TemplateFile;
+			sourceTree = "<group>";
+		};
+		70E0F11F2945BF95000A4B31 = {
+			isa = PBXGroup;
+			children = (
+				70C14E152945BFF400D13D3B /* AssFile */,
+				70C14E0A2945BFF400D13D3B /* CDanmakuFactory.h */,
+				70C14E0B2945BFF400D13D3B /* Config */,
+				70C14E0E2945BFF400D13D3B /* Define */,
+				70C14E1A2945BFF400D13D3B /* images */,
+				70C14E062945BFF400D13D3B /* JsonFile.c */,
+				70C14E122945BFF400D13D3B /* List */,
+				70C14E052945BFF400D13D3B /* main.c */,
+				70C14E072945BFF400D13D3B /* String */,
+				70C14E212945BFF400D13D3B /* TemplateFile */,
+				70C14E042945BFF400D13D3B /* XmlFile.c */,
+				70E0F1292945BF95000A4B31 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		70E0F1292945BF95000A4B31 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				70E0F1282945BF95000A4B31 /* DanmakuFactory */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		70E0F1272945BF95000A4B31 /* DanmakuFactory */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 70E0F12F2945BF95000A4B31 /* Build configuration list for PBXNativeTarget "DanmakuFactory" */;
+			buildPhases = (
+				70E0F1242945BF95000A4B31 /* Sources */,
+				70E0F1252945BF95000A4B31 /* Frameworks */,
+				70E0F1262945BF95000A4B31 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DanmakuFactory;
+			productName = DanmakuFactory;
+			productReference = 70E0F1282945BF95000A4B31 /* DanmakuFactory */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		70E0F1202945BF95000A4B31 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastUpgradeCheck = 1410;
+				TargetAttributes = {
+					70E0F1272945BF95000A4B31 = {
+						CreatedOnToolsVersion = 14.1;
+					};
+				};
+			};
+			buildConfigurationList = 70E0F1232945BF95000A4B31 /* Build configuration list for PBXProject "DanmakuFactory" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 70E0F11F2945BF95000A4B31;
+			productRefGroup = 70E0F1292945BF95000A4B31 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				70E0F1272945BF95000A4B31 /* DanmakuFactory */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		70E0F1242945BF95000A4B31 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				70C14E282945BFF400D13D3B /* Config.c in Sources */,
+				70C14E2B2945BFF400D13D3B /* AssStringProcessing.c in Sources */,
+				70C14E262945BFF400D13D3B /* JsonFile.c in Sources */,
+				70C14E2C2945BFF400D13D3B /* TemplateFile.c in Sources */,
+				70C14E252945BFF400D13D3B /* main.c in Sources */,
+				70C14E242945BFF400D13D3B /* XmlFile.c in Sources */,
+				70C14E292945BFF400D13D3B /* DanmakuFactoryList.c in Sources */,
+				70C14E2A2945BFF400D13D3B /* AssFile.c in Sources */,
+				70C14E272945BFF400D13D3B /* DanmakuFactoryString.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		70E0F12D2945BF95000A4B31 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 12.6;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		70E0F12E2945BF95000A4B31 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 12.6;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		70E0F1302945BF95000A4B31 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		70E0F1312945BF95000A4B31 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		70E0F1232945BF95000A4B31 /* Build configuration list for PBXProject "DanmakuFactory" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				70E0F12D2945BF95000A4B31 /* Debug */,
+				70E0F12E2945BF95000A4B31 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		70E0F12F2945BF95000A4B31 /* Build configuration list for PBXNativeTarget "DanmakuFactory" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				70E0F1302945BF95000A4B31 /* Debug */,
+				70E0F1312945BF95000A4B31 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 70E0F1202945BF95000A4B31 /* Project object */;
+}

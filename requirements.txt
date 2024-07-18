@@ -1,0 +1,12 @@
+certifi==2022.5.18.1
+charset-normalizer==2.0.12
+filelock==3.7.0
+greenlet==1.1.2
+idna==3.3
+pyasn1==0.4.8
+requests==2.27.1
+rsa==4.8
+toml==0.10.2
+
+blrec
+

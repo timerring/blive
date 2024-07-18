@@ -1,0 +1,204 @@
+version = "1.0"
+
+[[tasks]]
+room_id = 27165570
+enable_monitor = true
+enable_recorder = true
+
+[[webhooks]]
+live_began = true
+live_ended = true
+room_change = true
+recording_started = true
+recording_finished = true
+recording_cancelled = true
+video_file_created = true
+video_file_completed = true
+danmaku_file_created = false
+danmaku_file_completed = false
+raw_danmaku_file_created = false
+raw_danmaku_file_completed = false
+cover_image_downloaded = true
+video_postprocessing_completed = true
+postprocessing_completed = true
+space_no_enough = true
+error_occurred = true
+url = "http://localhost:22333"
+
+[output]
+path_template = "{roomid}/{roomid}_{year}{month}{day}-{hour}-{minute}-{second}"
+filesize_limit = 0
+duration_limit = 28800
+out_dir = "./Videos"
+
+[logging]
+log_dir = "./logs"
+console_log_level = "INFO"
+backup_count = 30
+
+[bili_api]
+base_api_urls = [ "https://api.bilibili.com",]
+base_live_api_urls = [ "https://api.live.bilibili.com",]
+base_play_info_api_urls = [ "https://api.live.bilibili.com",]
+
+[header]
+user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36"
+cookie = ""
+
+[danmaku]
+danmu_uname = false
+record_gift_send = true
+record_free_gifts = false
+record_guard_buy = true
+record_super_chat = true
+save_raw_danmaku = true
+
+[recorder]
+stream_format = "flv"
+recording_mode = "standard"
+quality_number = 150
+fmp4_stream_timeout = 10
+read_timeout = 3
+disconnection_timeout = 300
+buffer_size = 8192
+save_cover = true
+cover_save_strategy = "dedup"
+
+[postprocessing]
+remux_to_mp4 = true
+inject_extra_metadata = true
+delete_source = "auto"
+
+[space]
+check_interval = 600
+space_threshold = 10737418240
+recycle_records = true
+
+[email_notification]
+began_message_type = "html"
+began_message_title = ""
+began_message_content = ""
+ended_message_type = "html"
+ended_message_title = ""
+ended_message_content = ""
+space_message_type = "html"
+space_message_title = ""
+space_message_content = ""
+error_message_type = "html"
+error_message_title = ""
+error_message_content = ""
+notify_began = true
+notify_ended = true
+notify_error = true
+notify_space = true
+enabled = false
+src_addr = ""
+dst_addr = ""
+auth_code = ""
+smtp_host = "smtp.163.com"
+smtp_port = 465
+
+[serverchan_notification]
+began_message_type = "markdown"
+began_message_title = ""
+began_message_content = ""
+ended_message_type = "markdown"
+ended_message_title = ""
+ended_message_content = ""
+space_message_type = "markdown"
+space_message_title = ""
+space_message_content = ""
+error_message_type = "markdown"
+error_message_title = ""
+error_message_content = ""
+notify_began = true
+notify_ended = true
+notify_error = true
+notify_space = true
+enabled = false
+sendkey = ""
+
+[pushdeer_notification]
+began_message_type = "markdown"
+began_message_title = ""
+began_message_content = ""
+ended_message_type = "markdown"
+ended_message_title = ""
+ended_message_content = ""
+space_message_type = "markdown"
+space_message_title = ""
+space_message_content = ""
+error_message_type = "markdown"
+error_message_title = ""
+error_message_content = ""
+notify_began = true
+notify_ended = true
+notify_error = true
+notify_space = true
+enabled = false
+server = ""
+pushkey = ""
+
+[pushplus_notification]
+began_message_type = "markdown"
+began_message_title = ""
+began_message_content = ""
+ended_message_type = "markdown"
+ended_message_title = ""
+ended_message_content = ""
+space_message_type = "markdown"
+space_message_title = ""
+space_message_content = ""
+error_message_type = "markdown"
+error_message_title = ""
+error_message_content = ""
+notify_began = true
+notify_ended = true
+notify_error = true
+notify_space = true
+enabled = false
+token = ""
+topic = ""
+
+[telegram_notification]
+began_message_type = "html"
+began_message_title = ""
+began_message_content = ""
+ended_message_type = "html"
+ended_message_title = ""
+ended_message_content = ""
+space_message_type = "html"
+space_message_title = ""
+space_message_content = ""
+error_message_type = "html"
+error_message_title = ""
+error_message_content = ""
+notify_began = true
+notify_ended = true
+notify_error = true
+notify_space = true
+enabled = false
+token = ""
+chatid = ""
+server = ""
+
+[bark_notification]
+began_message_type = "markdown"
+began_message_title = ""
+began_message_content = ""
+ended_message_type = "markdown"
+ended_message_title = ""
+ended_message_content = ""
+space_message_type = "markdown"
+space_message_title = ""
+space_message_content = ""
+error_message_type = "markdown"
+error_message_title = ""
+error_message_content = ""
+notify_began = true
+notify_ended = true
+notify_error = true
+notify_space = true
+enabled = false
+server = ""
+pushkey = ""
