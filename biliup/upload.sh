@@ -10,6 +10,10 @@ fi
 # 文件的完整路径
 full_path=$1
 
+# 去除.mp4扩展名，只保留路径和文件名（不包括扩展名）
+trimmed_path="${full_path%.mp4}"
+
+
 # 提取房间号和日期时间
 # 使用参数扩展来去除路径，只留下文件名
 file_name=$(basename "$full_path")
@@ -56,4 +60,12 @@ sed -i "s/%H/$hour/g" "$copy_yaml_file"
 
 echo "文件名 $file_name 中日期和时间参数已更新到 $copy_yaml_file"
 
-./biliup upload "full_path" --config "$copy_yaml_file"
+# 执行上传命令，并检查是否成功
+if ./biliup upload "$full_path" --config "$copy_yaml_file"; then
+    echo "上传成功，正在删除相关文件 $trimmed_path*"
+    rm $trimmed_path*
+    echo "相关文件已被删除。"
+else
+    echo "上传失败，相关文件保留。"
+    exit 1
+fi
