@@ -17,7 +17,6 @@ trimmed_path="${full_path%.mp4}"
 # 提取房间号和日期时间
 # 使用参数扩展来去除路径，只留下文件名
 file_name=$(basename "$full_path")
-
 # 正则表达式匹配房间号和日期时间
 if [[ $file_name =~ ([0-9]+)_([0-9]{4})-([0-9]{2})-([0-9]{2})-([0-9]{2})\.mp4 ]]; then
     room_id="${BASH_REMATCH[1]}"
@@ -57,6 +56,7 @@ sed -i "s/%Y/$year/g" "$copy_yaml_file"
 sed -i "s/%M/$month/g" "$copy_yaml_file"
 sed -i "s/%d/$day/g" "$copy_yaml_file"
 sed -i "s/%H/$hour/g" "$copy_yaml_file"
+sed -i "s/%P/${file_name}/g" "$copy_yaml_file"
 
 echo "文件名 $file_name 中日期和时间参数已更新到 $copy_yaml_file"
 
