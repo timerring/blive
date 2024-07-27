@@ -1,7 +1,7 @@
 line: kodo
 limit: 3
 streamers:
-  /root/blive/Videos/22222222/22222222*.mp4:
+  /root/blive/Videos/22222222/%P:
     copyright: 1
     source: https://live.bilibili.com/22222222
     tid: 138
