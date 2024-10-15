@@ -1,0 +1,11 @@
+# Ignore the .log file
+*.log
+
+# Ignore logs folder
+logs/
+
+# Ignore login_file folder
+login_file/
+
+# Specific for the MacOS
+.DS_Store
