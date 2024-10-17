@@ -1,43 +1,42 @@
 #!/bin/bash
 
-# 检查是否提供了文件名作为参数
+# check whether the filename is provided.
 if [ $# -ne 1 ]; then
     echo "Usage: $0 filename"
     exit 1
 fi
 
-# 获取完整的文件路径
+# require the full path
 full_path=$1
 export full_path
 
 filename_without_ext="${full_path%.*}"
 xmlName="${filename_without_ext}.xml"
 
-# 使用 dirname 获取路径部分，basename 获取文件名
+# Use dirname to get the path part，and use basename to get the filename
 path=$(dirname "$full_path")
 filename=$(basename "$full_path")
 
-# 提取文件扩展名
+# get the extended name
 extension="${filename##*.}"
 
-# 提取roomid和时间戳
+# extract roomid and timestamp
 roomid=$(echo "$filename" | cut -d'_' -f1)
 timestamp=$(echo "$filename" | cut -d'_' -f2)
 
-# 提取并格式化日期部分
+# extract and format the time variables.
 year=${timestamp:0:4}
 month=${timestamp:4:2}
 day=${timestamp:6:2}
 hour=${timestamp:9:2}
 
-# 格式化日期和时间
+# rebuilt the name of video
 formatVideoName="${path}/${roomid}_${year}-${month}-${day}-${hour}.${extension}"
 export formatVideoName
 
 formatXmlName="${path}/${roomid}_${year}-${month}-${day}-${hour}.xml"
 mv $xmlName $formatXmlName
 
-# 输出结果
 #echo "$formatName"
 export formatXmlName
 
