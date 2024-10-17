@@ -1,0 +1,14 @@
+line: kodo
+limit: 3
+streamers:
+  /root/blive/Videos/22230707/%P:
+    copyright: 1
+    source: https://live.bilibili.com/22230707
+    tid: 138
+    cover: 
+    title: 【弹幕版】峰哥亡命天涯直播回放-%Y年%M月%d日%H点场
+    desc_format_id: 0
+    desc: 峰哥亡命天涯直播，直播间地址：https://live.bilibili.com/22230707 内容仅供娱乐，直播中主播的言论、观点和行为均由主播本人负责，不代表录播员的观点或立场。
+    dynamic: ""
+    tag: 峰哥,录播,峰哥亡命天涯,峰哥直播,峰峰,老登,雅典大学堂
+    dtime: ~

@@ -1,0 +1,15 @@
+# Visual Studio
+.vs/
+obj/
+
+#pdf文档草稿
+*.docx
+
+#编译运行产生的文件
+*.exe
+*.ini
+*.o
+
+# CMake
+build/
+bin/

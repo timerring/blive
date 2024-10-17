@@ -1,23 +1,23 @@
 #!/bin/bash
 
-# 检查是否提供了参数
+# check the parameter
 if [ $# -ne 1 ]; then
     echo "使用方法：$0 <文件的完整路径>"
     echo "文件路径格式：/root/blive/Videos/<roomid>/<roomid>_YYYY-MM-DD-HH.mp4"
     exit 1
 fi
 
-# 文件的完整路径
+# get full path
 full_path=$1
 
-# 去除.mp4扩展名，只保留路径和文件名（不包括扩展名）
+# remove .mp4 extended name，only reserve the path and filename（without extended name）
 trimmed_path="${full_path%.mp4}"
 
 
-# 提取房间号和日期时间
-# 使用参数扩展来去除路径，只留下文件名
+# extract the roomid and time
+# Use parameter expansion to remove the path, leaving only the file name
 file_name=$(basename "$full_path")
-# 正则表达式匹配房间号和日期时间
+# Regular expression to match room number and date time
 if [[ $file_name =~ ([0-9]+)_([0-9]{4})-([0-9]{2})-([0-9]{2})-([0-9]{2})\.mp4 ]]; then
     room_id="${BASH_REMATCH[1]}"
     year="${BASH_REMATCH[2]}"
@@ -29,29 +29,29 @@ else
     exit 1
 fi
 
-# 显示提取的房间号和日期时间
+# print the roomid and time variables.
 echo "房间号: $room_id"
 echo "年份: $year"
 echo "月份: $month"
 echo "日期: $day"
 echo "小时: $hour"
 
-# 定义原始YAML文件路径
+# define the path of yaml file
 yaml_file="./config/$room_id.yaml"
 
-# 检查文件是否存在
+# check if the file is exist.
 if [ ! -f "$yaml_file" ]; then
     echo "文件 $yaml_file 不存在。"
     exit 1
 fi
 
-# 定义副本文件路径
+# define the path of copy of the yaml
 copy_yaml_file="./config/copy_$room_id.yaml"
 
-# 复制原始YAML文件到副本文件
+# make a copy of yaml
 cp "$yaml_file" "$copy_yaml_file"
 
-# 使用sed命令在副本文件中替换日期和时间参数
+# Replace date and time parameters in a copy file with the sed command
 sed -i "s/%Y/$year/g" "$copy_yaml_file"
 sed -i "s/%M/$month/g" "$copy_yaml_file"
 sed -i "s/%d/$day/g" "$copy_yaml_file"
@@ -60,7 +60,7 @@ sed -i "s/%P/${file_name}/g" "$copy_yaml_file"
 
 echo "文件名 $file_name 中日期和时间参数已更新到 $copy_yaml_file"
 
-# 执行上传命令，并检查是否成功
+# Execute the upload command and check if it was successful
 if ./biliup upload "$full_path" --config "$copy_yaml_file"; then
     echo "上传成功，正在删除相关文件 $trimmed_path*"
     rm $trimmed_path*

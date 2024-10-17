@@ -1,11 +1,11 @@
 #!/bin/bash
 
-# 构建新的文件名
+# rebuild the new file name
 assName=${formatXmlName%.xml}.ass
 
 export assName
 
-#use DanmakuFactory to convert the xml File
+# use DanmakuFactory to convert the xml File
 /root/blive/DanmakuFactory/DanmakuFactory -o "$assName" -i "$formatXmlName"
 
 #echo "$full_path"

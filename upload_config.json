@@ -10,32 +10,5 @@
             "tag": ["Some", "Tags"],
             "desc":["An example video description"]
         }  
-    },
-    "27165570":{
-        "username":"username",
-        "password":"password",
-        "login_token_file": "/root/blive/biliup/bililogin.json",
-        
-        "upload_args":{"copyright": 1,
-            "title": "秋雨在日本直播回放-{year}年{month}月{day}日{hour}点场-{live_title}",
-            "tid": 138,
-            "tag": ["秋雨", "录播", "秋雨在日本", "秋雨直播"],
-            "desc": [
-                "秋雨在日本{year}{month}{day} 直播，直播间地址：https://live.bilibili.com/27165570",
-                "内容仅供娱乐，直播中主播的言论、观点和行为均由主播本人负责，不代表录播员的观点或立场。"
-            ],
-            "source": "",
-            "cover": "",
-            "no_reprint": 0,
-            "open_elec": 1,
-            "max_retry": 50,
-            "thread_pool_workers": 10,
-            "video_list_json": "",
-            "submit_mode": 2,
-            "replace_tag": 0,
-            "avid": null,
-            "bvid": null,
-            "title_format":"{hour}-{minute}-{second}_{live_title}"
-        }
     }
 }

@@ -1,3 +1,9 @@
+# Data&test
+Videos/
+test/
+.cache
+.vscode/
+
 # Ignore the .log file
 *.log
 
