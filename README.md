@@ -49,14 +49,14 @@ bash ./run.sh
 
 参照 `upload/config` 文件夹内的 `22230707.yaml` 模板，添加你需要录制的房间信息，如有多个房间，请添加多个`roomid.yaml`文件，具体见[biliup-rs上传文档](https://biliup.github.io/biliup-rs/Guide.html#useage)。
 
-弹幕版视频现需手动操作，仅需找到需要投稿的视频的绝对路径（在 `Videos` 目录下），后在`upload`目录下输入一条指令即可自动匹配模版，自动进行弹幕转换与压制，自动上传的全过程：
+弹幕版视频现需手动操作，在`upload`目录下输入一条指令即可自动让已录制的视频匹配模版，自动进行弹幕转换与压制，自动上传的全过程：
 
 ```bash
-# 在 upload 文件夹下启动 format.sh 脚本
-# ./format.sh 需要上传视频的绝对路径 eg.
-./format.sh /root/blive/Videos/11111111/11111111_20240716-19-35-33.mp4
+./operateStart.sh
 ```
 > 注意：由于不同机器的配置不同，因此压制弹幕的速率也不同，如果机器无GPU且CPU性能极差，推荐输入上述命令前使用 `tmux` 挂在后台运行此过程。具体时间可通过 `压制速率x视频时长` 估算。
+>
+> 此外，路径是硬编码完成的，因此在启动时请确保视频保存路径与固定的路径一致，即`/root/blive/Videos`，如果不一致也可以自行替换 `operateStart.sh`脚本里的 `target_folder` 变量为你视频保存的地址。
 
 ## 特别感谢
 
