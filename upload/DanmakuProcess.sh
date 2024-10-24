@@ -1,11 +1,11 @@
 #!/bin/bash
 
-# rebuild the new file name
+# generate the converted subtitle file name
 assName=${formatXmlName%.xml}.ass
 
 export assName
 
-# use DanmakuFactory to convert the xml File
+# use DanmakuFactory to convert the xml file
 /root/blive/DanmakuFactory/DanmakuFactory -o "$assName" -i "$formatXmlName"
 
 #echo "$full_path"
@@ -14,6 +14,6 @@ export assName
 
 ffmpeg -i $full_path -vf ass=$assName $formatVideoName
 
-echo "ffmpeg Successfully complete!"
+echo "ffmpeg successfully complete!"
 
-./upload.sh $formatVideoName
+./uploadVideo.sh $formatVideoName
