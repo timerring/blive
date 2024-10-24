@@ -15,3 +15,9 @@ login_file/
 
 # Specific for the MacOS
 .DS_Store
+
+# Specific for the git commitizen
+node_modules/
+package.json
+pnpm-lock.yaml
+package-lock.json
