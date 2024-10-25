@@ -1,6 +1,10 @@
 #!/bin/bash
 
-target_folder="/root/blive/Videos"
+if [ $# -gt 0 ]; then
+    target_folder="$1"
+else
+    target_folder="/root/blive/Videos"
+fi
 
 queue=("$target_folder")
 
@@ -22,4 +26,3 @@ while [ ${#queue[@]} -gt 0 ]; do
         fi
     done
 done
-
