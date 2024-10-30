@@ -3,6 +3,7 @@ Videos/
 test/
 .cache
 .vscode/
+__pycache__/
 
 # Ignore the .log file
 *.log
