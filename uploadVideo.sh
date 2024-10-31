@@ -1,10 +1,16 @@
 #!/bin/bash
 
+while read key value; do
+    export $key="$value"
+done < ./path.txt
+
+echo $root_path
+
 # check if the provided parameters
 # specific for manually upload single video
 if [ $# -ne 1 ]; then
     echo "Please provide the full path of mp4"
-    echo "for example：/root/blive/Videos/<roomid>/<roomid>_YYYY-MM-DD-HH.mp4"
+    echo "for example：$root_path/Videos/<roomid>/<roomid>_YYYY-MM-DD-HH.mp4"
     exit 1
 fi
 
@@ -39,7 +45,7 @@ echo "hour: $hour"
 # original to create the copy. Then upload videos via the copy.
 
 # define the path of yaml.
-yaml_file="./config/$room_id.yaml"
+yaml_file="$root_path/biliup/config/$room_id.yaml"
 
 # check if the yaml is exist.
 if [ ! -f "$yaml_file" ]; then
@@ -48,7 +54,7 @@ if [ ! -f "$yaml_file" ]; then
 fi
 
 # define the path of copy.
-copy_yaml_file="./config/copy_$room_id.yaml"
+copy_yaml_file="$root_path/biliup/config/copy_$room_id.yaml"
 
 # make the copy.
 cp "$yaml_file" "$copy_yaml_file"
@@ -63,7 +69,7 @@ sed -i "s/%P/${file_name}/g" "$copy_yaml_file"
 echo "The parameters have been updated in the $copy_yaml_file"
 
 # Use biliup tool to upload video, and then delete the subtitle ass file and video file.
-if ./biliup upload "$full_path" --config "$copy_yaml_file"; then
+if $root_path/biliup/biliup upload "$full_path" --config "$copy_yaml_file"; then
     echo "Upload successfully，then delete related files: $trimmed_path*"
     rm $trimmed_path*
     echo "Delete successfully."

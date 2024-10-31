@@ -1,5 +1,10 @@
 #!/bin/bash
+# import the $root_path
+while read key value; do
+    export $key="$value"
+done < ./path.txt
 
+echo $root_path
 # check if the filename is provided.
 if [ $# -ne 1 ]; then
     echo "Usage: $0 filename"
@@ -36,7 +41,7 @@ export formatVideoName
 formatXmlName="${path}/${roomid}_${year}-${month}-${day}-${hour}.xml"
 mv $xmlName $formatXmlName
 
-#echo "$formatName"
+# echo "$formatName"
 export formatXmlName
 
-./danmakuProcess.sh
+$root_path/danmakuProcess.sh
