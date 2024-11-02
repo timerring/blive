@@ -1,5 +1,13 @@
 #!/bin/bash
 
+# DESCRIPTION:
+#   The script mainly centers on the video uploading process along with deleting video if goes well.
+#
+# PARAMETERS:
+#   INPUT: 
+#       $uploadPath - eg:/path/to/video/roomid_YYYY-MM-DD-HH.mp4
+#   OUTPUT: none
+
 while read key value; do
     export $key="$value"
 done < ./path.txt
@@ -14,14 +22,10 @@ if [ $# -ne 1 ]; then
     exit 1
 fi
 
-full_path=$1
-
-# remove the extended name，only reserve the file path along with file name (without extension name)
-trimmed_path="${full_path%.mp4}"
-
+uploadPath=$1
 
 # extract the roomid and date information
-file_name=$(basename "$full_path")
+file_name=$(basename "$uploadPath")
 # use regular expression to match the parameter
 if [[ $file_name =~ ([0-9]+)_([0-9]{4})-([0-9]{2})-([0-9]{2})-([0-9]{2})\.mp4 ]]; then
     room_id="${BASH_REMATCH[1]}"
@@ -69,10 +73,9 @@ sed -i "s/%P/${file_name}/g" "$copy_yaml_file"
 echo "The parameters have been updated in the $copy_yaml_file"
 
 # Use biliup tool to upload video, and then delete the subtitle ass file and video file.
-if $root_path/biliup/biliup upload "$full_path" --config "$copy_yaml_file"; then
-    echo "Upload successfully，then delete related files: $trimmed_path*"
-    rm $trimmed_path*
-    echo "Delete successfully."
+if $root_path/biliup/biliup upload "$uploadPath" --config "$copy_yaml_file"; then
+    echo "Upload successfully，then delete the video"
+    rm $uploadPath
 else
     echo "Fail to upload, the files will be reserve."
     exit 1
