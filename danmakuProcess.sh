@@ -22,7 +22,7 @@ rm $formatXmlName
 # echo "$assName"
 # echo "$formatVideoName"
 
-ffmpeg -y -i $full_path -vf ass=$assName $formatVideoName 
+ffmpeg -y -i $full_path -vf ass=$assName -preset superfast $formatVideoName  > $root_path/burnLog/burn-$(date +%Y%m%d%H%M%S).log 2>&1
 
 echo "ffmpeg successfully complete! And will delete danmaku files..."
 
