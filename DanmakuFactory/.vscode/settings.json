@@ -1,9 +1,0 @@
-{
-    "files.associations": {
-        "cdanmakufactory.h": "c",
-        "danmakufactorylist.h": "c",
-        "assfile.h": "c",
-        "templatefile.h": "c",
-        "assstringprocessing.h": "c"
-    }
-}

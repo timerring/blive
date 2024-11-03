@@ -52,7 +52,7 @@ assPath="${path}/${roomid}_${year}-${month}-${day}-${hour}.ass"
 
 # use DanmakuFactory to convert the xml file
 xmlPath="${filename_without_ext}.xml"
-$root_path/DanmakuFactory/DanmakuFactory -o "$assPath" -i "$xmlPath"
+$root_path/DanmakuFactory -o "$assPath" -i "$xmlPath"
 rm $xmlPath
 echo “danmaku convert success!”
 
