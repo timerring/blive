@@ -8,7 +8,7 @@
 #   OUTPUT:
 #       $formatVideoName - eg:/path/to/video/roomid_YYYY-MM-DD-HH.mp4
 
-# import the $root_path
+# Import the $root_path
 while read key value; do
     export $key="$value"
 done < ./path.txt
@@ -66,4 +66,4 @@ rm $full_path
 rm $assPath
 
 # Upload video.
-nohup $root_path/uploadVideo.sh $formatVideoName > $root_path/logs/uploadDanmakuLog/upload-$(date +%Y%m%d%H%M%S).log 2>&1 &
+echo "$formatVideoName" >> $root_path/uploadVideoQueue.txt
