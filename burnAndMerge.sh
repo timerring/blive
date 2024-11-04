@@ -21,16 +21,19 @@ while read -r line; do
         continue
     fi
 
+    # Compress the danmaku into video
+    output_file=$(echo "$line" | sed 's/_\([0-9]\{4\}\)\([0-9]\{2\}\)\([0-9]\{2\}\)/_\1-\2-\3/')
+
     # Convert the danmaku files
     xml_file=${line%.mp4}.xml
     ass_file=${line%.mp4}.ass
-    $root_path/DanmakuFactory -o "$ass_file" -i "$xml_file" --ignore-warnings
-    echo "==================== generated $ass_file ===================="
+    if [ -f "$xml_file" ]; then
+        $root_path/DanmakuFactory -o "$ass_file" -i "$xml_file" --ignore-warnings
+        echo "==================== generated $ass_file ===================="
+    fi
 
-    # Compress the danmaku into video
-    output_file=$(echo "$line" | sed 's/_\([0-9]\{4\}\)\([0-9]\{2\}\)\([0-9]\{2\}\)/_\1-\2-\3/')
     
-    # Initial some basic parameters
+    # Initial some basic parameters and create tmp folder
     if [ -z "$first_output_file" ]; then
     dir=$(dirname $output_file)
     first_output_file="${output_file%-[0-9][0-9]-[0-9][0-9].mp4}.mp4"
@@ -41,10 +44,15 @@ while read -r line; do
 
     file_name=$(basename "$output_file")
     new_path="$tmp_dir/$file_name"
-    echo "==================== compress $new_path ===================="
+    echo "==================== burning $new_path ===================="
     echo "file '$new_path'" >> mergevideo.txt
-    # echo "ffmpeg -i $line -vf ass=$ass_file $output_file"
-    ffmpeg -i "$line" -vf "ass=$ass_file" -preset ultrafast "$new_path" -y -nostdin  > $root_path/logs/burningLog/burn-$(date +%Y%m%d%H%M%S).log 2>&1
+    if [ -f "$ass_file" ]; then
+        # echo "ffmpeg -i $line -vf ass=$ass_file $output_file"
+        ffmpeg -i "$line" -vf "ass=$ass_file" -preset ultrafast "$new_path" -y -nostdin  > $root_path/logs/burningLog/burn-$(date +%Y%m%d%H%M%S).log 2>&1
+    else
+        ffmpeg -i "$line" -vf -preset ultrafast "$new_path" -y -nostdin  > $root_path/logs/burningLog/burn-$(date +%Y%m%d%H%M%S).log 2>&1
+    fi
+    
     # Delete the related items of videos
     rm ${line%.mp4}.*
 done < sameVideos.txt
