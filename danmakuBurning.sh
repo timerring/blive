@@ -52,18 +52,24 @@ assPath="${path}/${roomid}_${year}-${month}-${day}-${hour}.ass"
 
 # use DanmakuFactory to convert the xml file
 xmlPath="${filename_without_ext}.xml"
-$root_path/DanmakuFactory -o "$assPath" -i "$xmlPath"
-rm $xmlPath
-echo “danmaku convert success!”
-
+if [ -f "$xmlPath" ]; then
+    $root_path/DanmakuFactory -o "$assPath" -i "$xmlPath" --ignore-warnings
+    rm $xmlPath
+    echo “danmaku convert success!”
+fi
 
 # Burn danmaku into video.
-ffmpeg -y -i $full_path -vf ass=$assPath -preset ultrafast $formatVideoName > $root_path/logs/burningLog/burn-$(date +%Y%m%d%H%M%S).log 2>&1
+if [ -f "$assPath" ]; then
+    ffmpeg -y -i $full_path -vf ass=$assPath -preset ultrafast $formatVideoName > $root_path/logs/burningLog/burn-$(date +%Y%m%d%H%M%S).log 2>&1
+    rm $assPath
+else
+    ffmpeg -y -i $full_path -vf -preset ultrafast $formatVideoName > $root_path/logs/burningLog/burn-$(date +%Y%m%d%H%M%S).log 2>&1
+fi
+
 echo "ffmpeg successfully complete!"
 
 # Delete the original video.
 rm $full_path
-rm $assPath
 
 # Upload video.
 echo "$formatVideoName" >> $root_path/uploadVideoQueue.txt
