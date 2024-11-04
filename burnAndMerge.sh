@@ -52,7 +52,7 @@ done < sameVideos.txt
 # merge the videos
 echo "==================== merge starts ===================="
 # echo "ffmpeg -f concat -i mergevideo.txt -c copy $first_output_file"
-ffmpeg -f concat -safe 0 -i mergevideo.txt -c copy $first_output_file > $root_path/logs/mergeLog/merge-$(date +%Y%m%d%H%M%S).log 2>&1
+ffmpeg -f concat -safe 0 -i mergevideo.txt -use_wallclock_as_timestamps 1 -c copy $first_output_file > $root_path/logs/mergeLog/merge-$(date +%Y%m%d%H%M%S).log 2>&1
 
 # delete useless videos and lists
 rm -r $tmp_dir
