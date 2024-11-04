@@ -29,17 +29,27 @@ check_and_process_folder() {
 
     # Check if there is the video clips in the same date
     for mp4_file in "$folder_path"/*.mp4; do
-        detect_name=$(basename "$mp4_file")
-        # This length to prevent processing the burned videos again!
-        if [ ${#detect_name} -gt 27 ]; then
-            date_part=$(basename "$mp4_file" | cut -d '-' -f 1)
-            for other_mp4_file in "$folder_path"/*.mp4; do
-                if [[ $(basename "$other_mp4_file" | cut -d '-' -f 1) == $date_part ]]; then
-                    count=$((count + 1))
+        # Check if file size is less than 10MB and delete if so
+        file_size=$(stat -c%s "$mp4_file")
+        if [ $file_size -lt 10485760 ]; then
+            TBDjson=${mp4_file%.mp4}.jsonl
+            TBDxml=${mp4_file%.mp4}.xml
+            rm "$TBDjson"
+            rm "$TBDxml"
+            rm "$mp4_file"
+        else
+            detect_name=$(basename "$mp4_file")
+            # This length to prevent processing the burned videos again!
+            if [ ${#detect_name} -gt 27 ]; then
+                date_part=$(basename "$mp4_file" | cut -d '-' -f 1)
+                for other_mp4_file in "$folder_path"/*.mp4; do
+                    if [[ $(basename "$other_mp4_file" | cut -d '-' -f 1) == $date_part ]]; then
+                        count=$((count + 1))
+                    fi
+                done
+                if [ $count -gt 1 ]; then
+                    same_date_videos="$same_date_videos\n$mp4_file"
                 fi
-            done
-            if [ $count -gt 1 ]; then
-                same_date_videos="$same_date_videos\n$mp4_file"
             fi
         fi
     done
