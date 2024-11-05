@@ -1,10 +1,10 @@
 #!/bin/bash
 # DESCRIPTION:
-#   Read the sameVideos.txt and burn them in tmp, then merge them into a integral video.
+#   Read the sameSegments.txt and burn them in tmp, then merge them into a integral video.
 #   Eventually, add the integral video to uploadVideoQueue.
 #
 # PARAMETERS:
-#   INPUT:  sameVideos.txt
+#   INPUT:  sameSegments.txt
 #   OUTPUT: uploadVideoQueue.txt
 
 # Import the $root_path
@@ -55,7 +55,7 @@ while read -r line; do
     
     # Delete the related items of videos
     rm ${line%.mp4}.*
-done < sameVideos.txt
+done < sameSegments.txt
 
 # merge the videos
 echo "==================== merge starts ===================="
