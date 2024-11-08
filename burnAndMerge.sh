@@ -48,9 +48,16 @@ while read -r line; do
     echo "file '$new_path'" >> mergevideo.txt
     if [ -f "$ass_file" ]; then
         # echo "ffmpeg -i $line -vf ass=$ass_file $output_file"
-        ffmpeg -i "$line" -vf "ass=$ass_file" -preset ultrafast "$new_path" -y -nostdin  > $root_path/logs/burningLog/burn-$(date +%Y%m%d%H%M%S).log 2>&1
+        # The only cpu version.
+        # ffmpeg -i "$line" -vf "ass=$ass_file" -preset ultrafast "$new_path" -y -nostdin  > $root_path/logs/burningLog/burn-$(date +%Y%m%d%H%M%S).log 2>&1
+        # The Nvidia GPU accelerating version.
+        ffmpeg -hwaccel cuda -c:v h264_cuvid -i "$line" -c:v h264_nvenc -vf "ass=$ass_file" "$new_path" -y -nostdin > $root_path/logs/burningLog/burn-$(date +%Y%m%d%H%M%S).log 2>&1
     else
-        ffmpeg -i "$line" -vf -preset ultrafast "$new_path" -y -nostdin  > $root_path/logs/burningLog/burn-$(date +%Y%m%d%H%M%S).log 2>&1
+        # The only cpu version.
+        # ffmpeg -i "$line" -vf -preset ultrafast "$new_path" -y -nostdin  > $root_path/logs/burningLog/burn-$(date +%Y%m%d%H%M%S).log 2>&1
+        # The Nvidia GPU accelerating version.
+        ffmpeg -hwaccel cuda -c:v h264_cuvid -i "$line" -c:v h264_nvenc "$new_path" -y -nostdin > $root_path/logs/burningLog/burn-$(date +%Y%m%d%H%M%S).log 2>&1
+
     fi
     
     # Delete the related items of videos
