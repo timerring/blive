@@ -60,10 +60,16 @@ fi
 
 # Burn danmaku into video.
 if [ -f "$assPath" ]; then
-    ffmpeg -y -i $full_path -vf ass=$assPath -preset ultrafast $formatVideoName > $root_path/logs/burningLog/burn-$(date +%Y%m%d%H%M%S).log 2>&1
+    # The only cpu version
+    # ffmpeg -y -i $full_path -vf ass=$assPath -preset ultrafast $formatVideoName > $root_path/logs/burningLog/burn-$(date +%Y%m%d%H%M%S).log 2>&1
+    # The Nvidia GPU accelerating version
+    ffmpeg -y -hwaccel cuda -c:v h264_cuvid -i $full_path -c:v h264_nvenc -vf ass=$assPath $formatVideoName > $root_path/logs/burningLog/burn-$(date +%Y%m%d%H%M%S).log 2>&1
     rm $assPath
 else
-    ffmpeg -y -i $full_path -vf -preset ultrafast $formatVideoName > $root_path/logs/burningLog/burn-$(date +%Y%m%d%H%M%S).log 2>&1
+    # The only cpu version
+    # ffmpeg -y -i $full_path -vf -preset ultrafast $formatVideoName > $root_path/logs/burningLog/burn-$(date +%Y%m%d%H%M%S).log 2>&1
+    # The Nvidia GPU acceleting version
+    ffmpeg -y -hwaccel cuda -c:v h264_cuvid -i $full_path -c:v h264_nvenc $formatVideoName > $root_path/logs/burningLog/burn-$(date +%Y%m%d%H%M%S).log 2>&1
 fi
 
 echo "ffmpeg successfully complete!"
