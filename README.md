@@ -102,7 +102,7 @@ nohup ./uploadQueue.sh > uploadQueue.log 2>&1 &
 通过 `uploadQueue.log` 查看上传日志。
 
 
-> [!WARNING]
+> [!TIP]
 > 由于不同机器的配置不同，因此压制弹幕的速率也不同，如果机器无GPU且CPU性能极差，**不建议两种上传方式**都开启，二选一即可。
 
 
