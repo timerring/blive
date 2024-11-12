@@ -37,6 +37,16 @@ pip install -r requirements.txt
 ### biliup-rs 登录
 首先使用[biliup-rs](https://github.com/biliup/biliup-rs)登录b站，将登录产生的`cookies.json`文件复制一份到项目根目录中。
 
+> [!NOTE]需要在项目根目录创建的日志文件夹
+> ```
+> logs # 日志文件夹
+> ├── blrecLog # blrec 录制日志
+> ├── burningLog # 弹幕压制日志
+> ├── mergeLog # 碎片合并日志
+> ├── uploadDanmakuLog # 有弹幕版上传日志
+> └── _upload_log # 无弹幕版上传日志
+> ```
+
 ### 自动录制运行
 
 - 在 `startRecord.sh` 或 `startRecord.bat` 启动脚本中设置端口 `port`
@@ -72,6 +82,9 @@ nohup ./scanSegments.sh > scanSegments.log 2>&1 &
 ```
 通过 `scanSegments.log` 查看运行日志。
 
+> [!NOTE]压制时间
+> 弹幕压制具体时间可通过 `压制速率x视频时长` 估算。
+
 #### 上传配置
 
 > 请先执行一次 `./setRoutineTask.sh`，将项目根目录文件存储。
@@ -87,19 +100,9 @@ nohup ./uploadQueue.sh > uploadQueue.log 2>&1 &
 ```
 通过 `uploadQueue.log` 查看上传日志。
 
-### 注意事项
 
-1. 日志介绍
-```
-logs # 日志文件夹
-├── blrecLog # blrec 录制日志
-├── burningLog # 弹幕压制日志
-├── mergeLog # 碎片合并日志
-├── uploadDanmakuLog # 有弹幕版上传日志
-└── _upload_log # 无弹幕版上传日志
-```
-
-2. 由于不同机器的配置不同，因此压制弹幕的速率也不同，如果机器无GPU且CPU性能极差，**不建议两种上传方式**都开启，二选一即可。弹幕压制具体时间可通过 `压制速率x视频时长` 估算。
+> [!WARNING]注意事项
+> 由于不同机器的配置不同，因此压制弹幕的速率也不同，如果机器无GPU且CPU性能极差，**不建议两种上传方式**都开启，二选一即可。
 
 
 ## 特别感谢
