@@ -56,6 +56,7 @@ if [ -f "$xmlPath" ]; then
     $root_path/DanmakuFactory -o "$assPath" -i "$xmlPath" --ignore-warnings
     rm $xmlPath
     echo “danmaku convert success!”
+    python3 $root_path/removeEmojis.py $ass_file > $root_path/logs/burningLog/remove-$(date +%Y%m%d%H%M%S).log 2>&1
 fi
 
 # Burn danmaku into video.
