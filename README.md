@@ -37,7 +37,8 @@ pip install -r requirements.txt
 ### biliup-rs 登录
 首先使用[biliup-rs](https://github.com/biliup/biliup-rs)登录b站，将登录产生的`cookies.json`文件复制一份到项目根目录中。
 
-> [!NOTE]需要在项目根目录创建的日志文件夹
+> [!NOTE]
+> 需要在项目根目录创建的日志文件夹
 > ```
 > logs # 日志文件夹
 > ├── blrecLog # blrec 录制日志
@@ -82,7 +83,7 @@ nohup ./scanSegments.sh > scanSegments.log 2>&1 &
 ```
 通过 `scanSegments.log` 查看运行日志。
 
-> [!NOTE]压制时间
+> [!NOTE]
 > 弹幕压制具体时间可通过 `压制速率x视频时长` 估算。
 
 #### 上传配置
@@ -101,7 +102,7 @@ nohup ./uploadQueue.sh > uploadQueue.log 2>&1 &
 通过 `uploadQueue.log` 查看上传日志。
 
 
-> [!WARNING]注意事项
+> [!WARNING]
 > 由于不同机器的配置不同，因此压制弹幕的速率也不同，如果机器无GPU且CPU性能极差，**不建议两种上传方式**都开启，二选一即可。
 
 
