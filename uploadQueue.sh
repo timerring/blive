@@ -21,6 +21,7 @@ processVideo() {
 }
 
 while true; do
+    uniq $uploadQueue > $tempQueue && mv $tempQueue $uploadQueue
     if [ -s "$uploadQueue" ]; then
         firstLine=$(head -n 1 "$uploadQueue")
         (processVideo "$firstLine") &
