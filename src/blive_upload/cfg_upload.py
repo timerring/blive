@@ -10,7 +10,6 @@ from ..Live import Live
 
     
 #Edit Information here, details in https://github.com/FortuneDayssss/BilibiliUploader
-#此处修改上传内容，标题，简介，tag等，详见https://github.com/FortuneDayssss/BilibiliUploader
 def config_gen(config_json: str, record_info: dict, up_name = None):
     """
     Generate the upload configuration for this python script, 
@@ -58,7 +57,7 @@ def uploader_login(login_token_file, username: str = "username", password: str =
     return uploader
 
 # def parts_prepare(record_info):
-#     # 处理视频文件
+#     # process the video files
 #     parts = []
 #     file_list=record_info.get('video_list')
 #     for item in file_list:

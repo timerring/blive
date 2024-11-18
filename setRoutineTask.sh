@@ -1,6 +1,5 @@
 #!/bin/bash
 
-root_path=$(pwd)
-
+rootPath=$(pwd)
 rm ./path.txt
-echo "root_path $root_path" >> ./path.txt
+echo "rootPath $rootPath" >> ./path.txt
