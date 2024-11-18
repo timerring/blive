@@ -56,22 +56,22 @@ if [ ! -f "$yamlFile" ]; then
 fi
 
 # define the path of copy.
-copy_yamlFile="$rootPath/biliup/config/copy_$roomID.yaml"
+copyYamlFile="$rootPath/biliup/config/copy_$roomID.yaml"
 
 # make the copy.
-cp "$yamlFile" "$copy_yamlFile"
+cp "$yamlFile" "$copyYamlFile"
 
 # substitue the parameters in the copy file.
-sed -i "s/%Y/$year/g" "$copy_yamlFile"
-sed -i "s/%M/$month/g" "$copy_yamlFile"
-sed -i "s/%d/$day/g" "$copy_yamlFile"
-sed -i "s/%H/$hour/g" "$copy_yamlFile"
-sed -i "s/%P/${fileName}/g" "$copy_yamlFile"
+sed -i "s/%Y/$year/g" "$copyYamlFile"
+sed -i "s/%M/$month/g" "$copyYamlFile"
+sed -i "s/%d/$day/g" "$copyYamlFile"
+sed -i "s/%H/$hour/g" "$copyYamlFile"
+sed -i "s/%P/${fileName}/g" "$copyYamlFile"
 
-echo "The parameters have been updated in the $copy_yamlFile"
+echo "The parameters have been updated in the $copyYamlFile"
 
 # Use biliup tool to upload video, and then delete the subtitle ass file and video file.
-if $rootPath/biliup/biliup upload "$uploadPath" --config "$copy_yamlFile"; then
+if $rootPath/biliup/biliup upload "$uploadPath" --config "$copyYamlFile"; then
     echo "Upload successfully，then delete the video"
     rm $uploadPath
 else
