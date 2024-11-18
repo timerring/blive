@@ -25,9 +25,7 @@ while read -r line; do
 
     # Convert the danmaku files
     xmlFile=${line%.mp4}.xml
-    echo "Read the $xmlFile"
     assFile=${line%.mp4}.ass
-    echo "Read the $assFile"
     if [ -f "$xmlFile" ]; then
         $rootPath/DanmakuFactory -o "$assFile" -i "$xmlFile" --ignore-warnings
         echo "==================== generated $assFile ===================="
@@ -49,11 +47,14 @@ while read -r line; do
     echo "==================== burning $newPath ===================="
     echo "file '$newPath'" >> mergevideo.txt
     if [ -f "$assFile" ]; then
-        # echo "ffmpeg -i $line -vf ass=$assFile $outputFile"
+        # The Nvidia GPU accelerating version.
         ffmpeg -hwaccel cuda -c:v h264_cuvid -i "$line" -c:v h264_nvenc -vf "ass=$assFile" "$newPath" -y -nostdin > $rootPath/logs/burningLog/burn-$(date +%Y%m%d%H%M%S).log 2>&1
+        # The only cpu version.
         # ffmpeg -i "$line" -vf "ass=$assFile" -preset ultrafast "$newPath" -y -nostdin  > $rootPath/logs/burningLog/burn-$(date +%Y%m%d%H%M%S).log 2>&1
     else
+        # The Nvidia GPU accelerating version.
         ffmpeg -hwaccel cuda -c:v h264_cuvid -i "$line" -c:v h264_nvenc "$newPath" -y -nostdin > $rootPath/logs/burningLog/burn-$(date +%Y%m%d%H%M%S).log 2>&1
+        # The only cpu version.
         # ffmpeg -i "$line" -vf -preset ultrafast "$newPath" -y -nostdin  > $rootPath/logs/burningLog/burn-$(date +%Y%m%d%H%M%S).log 2>&1
     fi
     
