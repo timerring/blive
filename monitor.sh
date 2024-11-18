@@ -4,7 +4,7 @@
 #
 # PARAMETERS:
 #   INPUT: 
-#       $1 - the video folder (default: $root_path/Videos)
+#       $1 - the video folder (default: $rootPath/Videos)
 #   OUTPUT: none.
 
 while read key value; do
@@ -12,23 +12,23 @@ while read key value; do
 done < ./path.txt
 
 if [ $# -gt 0 ]; then
-    target_folder="$1"
+    targetFolder="$1"
 else
-    target_folder="$root_path/Videos"
+    targetFolder="$rootPath/Videos"
 fi
 
 
-function monitor_directory() {
+function MonitorDirectory() {
     for file in "$1"/*; do
         if [ -d "$file" ]; then
-            monitor_directory "$file"
+            MonitorDirectory "$file"
         elif [[ "$file" == *.mp4 ]]; then
-            $root_path/danmakuBurning.sh $file
+            $rootPath/danmakuBurning.sh $file
         fi
     done
 }
 
 while true; do
-    monitor_directory "$target_folder"
+    MonitorDirectory "$targetFolder"
     sleep 180
 done

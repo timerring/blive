@@ -12,23 +12,21 @@ while read key value; do
     export $key="$value"
 done < ./path.txt
 
-echo $root_path
-
 # check if the provided parameters
 # specific for manually upload single video
 if [ $# -ne 1 ]; then
     echo "Please provide the full path of mp4"
-    echo "for example：$root_path/Videos/<roomid>/<roomid>_YYYY-MM-DD-HH.mp4"
+    echo "for example：$rootPath/Videos/<roomid>/<roomid>_YYYY-MM-DD-HH.mp4"
     exit 1
 fi
 
 uploadPath=$1
 
 # extract the roomid and date information
-file_name=$(basename "$uploadPath")
+fileName=$(basename "$uploadPath")
 # use regular expression to match the parameter
-if [[ $file_name =~ ([0-9]+)_([0-9]{4})-([0-9]{2})-([0-9]{2})-([0-9]{2})\.mp4 ]]; then
-    room_id="${BASH_REMATCH[1]}"
+if [[ $fileName =~ ([0-9]+)_([0-9]{4})-([0-9]{2})-([0-9]{2})-([0-9]{2})\.mp4 ]]; then
+    roomID="${BASH_REMATCH[1]}"
     year="${BASH_REMATCH[2]}"
     month="${BASH_REMATCH[3]}"
     day="${BASH_REMATCH[4]}"
@@ -39,7 +37,7 @@ else
 fi
 
 # print the extracted info
-echo "roomid: $room_id"
+echo "roomid: $roomID"
 echo "year: $year"
 echo "month: $month"
 echo "day: $day"
@@ -49,31 +47,31 @@ echo "hour: $hour"
 # original to create the copy. Then upload videos via the copy.
 
 # define the path of yaml.
-yaml_file="$root_path/biliup/config/$room_id.yaml"
+yamlFile="$rootPath/biliup/config/$roomID.yaml"
 
 # check if the yaml is exist.
-if [ ! -f "$yaml_file" ]; then
-    echo "$yaml_file is not exist."
+if [ ! -f "$yamlFile" ]; then
+    echo "$yamlFile is not exist."
     exit 1
 fi
 
 # define the path of copy.
-copy_yaml_file="$root_path/biliup/config/copy_$room_id.yaml"
+copy_yamlFile="$rootPath/biliup/config/copy_$roomID.yaml"
 
 # make the copy.
-cp "$yaml_file" "$copy_yaml_file"
+cp "$yamlFile" "$copy_yamlFile"
 
 # substitue the parameters in the copy file.
-sed -i "s/%Y/$year/g" "$copy_yaml_file"
-sed -i "s/%M/$month/g" "$copy_yaml_file"
-sed -i "s/%d/$day/g" "$copy_yaml_file"
-sed -i "s/%H/$hour/g" "$copy_yaml_file"
-sed -i "s/%P/${file_name}/g" "$copy_yaml_file"
+sed -i "s/%Y/$year/g" "$copy_yamlFile"
+sed -i "s/%M/$month/g" "$copy_yamlFile"
+sed -i "s/%d/$day/g" "$copy_yamlFile"
+sed -i "s/%H/$hour/g" "$copy_yamlFile"
+sed -i "s/%P/${fileName}/g" "$copy_yamlFile"
 
-echo "The parameters have been updated in the $copy_yaml_file"
+echo "The parameters have been updated in the $copy_yamlFile"
 
 # Use biliup tool to upload video, and then delete the subtitle ass file and video file.
-if $root_path/biliup/biliup upload "$uploadPath" --config "$copy_yaml_file"; then
+if $rootPath/biliup/biliup upload "$uploadPath" --config "$copy_yamlFile"; then
     echo "Upload successfully，then delete the video"
     rm $uploadPath
 else

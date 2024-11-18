@@ -3,25 +3,25 @@ import os
 from datetime import datetime
 import collections
 
-# 导入FileLock，用于处理文件写入时的锁，避免数据冲突
+# import the FileLock, for handling the file write lock, to avoid data conflict
 from filelock import FileLock
 class Live():
     '''
     Provide the mapping between python dictionary and json object save in files. 
     '''
     def __init__(self, filename = None):
-        # 构造函数，初始化Live类的实例
-        # 如果提供了文件名，则从文件中加载数据
+        # constructor, initialize the instance of Live class
+        # if the filename is provided, load the data from the file
         if filename is not None:
             with open(filename, 'r', encoding='utf-8') as f:
                 self._data = json.load(f)
         else:
-            # 如果没有提供文件名，初始化一个空字典
+            # if the filename is not provided, initialize an empty dictionary
             self._data = {}
-        # 保存文件名
+        # save the filename
         self.filename = filename
 
-    # create_v1方法用于创建一个新的直播记录，包括直播的基本信息和时间戳。
+    # create_v1 method is used to create a new live record, including the basic information of the live and the timestamp.
     def create_v1(
             self,
             room_id:str,
@@ -52,15 +52,16 @@ class Live():
             "video_list_now": {}
         }
 
-    # 向当前直播的临时视频列表（video_list_now）中添加一个新的视频记录。
+    # add a new video record to the temporary video list (video_list_now) of the current live.
     def add_video_now_v1(
             self,
             start_time:str,
             filename:str
             ):
-        # root是文件名的名称部分，ext是文件名的扩展部分
+        # root is the name part of the filename, ext is the extension part of the filename
         (root, ext) = os.path.splitext(filename)
-        # video是一个字典，包含视频的基本信息 这里root键关联的值是另一个字典，有三个键值对
+        # video is a dictionary, containing the basic information of the video
+        # here the root key is associated with another dictionary, with three key-value pairs
         video = {root:
                 {
                 "start_time": start_time, # ISO time format
@@ -68,38 +69,37 @@ class Live():
                 "live_title": self._data["live_title_now"]
             }
         }
-        # 更新到临时视频列表中
+        # update to the temporary video list
         self._data['video_list_now'].update(video)
         return video
     
-    # 将临时视频列表中的一个视频移动到最终视频列表（video_list），并更新文件名。
+    # move a video from the temporary video list (video_list_now) to the final video list (video_list), and update the filename.
     def finalize_video_v1(self, filename:str):
         """
         Move the video from video_list_now to video_list. 
         The video may have different extension, so only the root is used to find the video.
         """
-        # root是文件名的名称部分，ext是文件名的扩展部分
+        # root is the name part of the filename, ext is the extension part of the filename
         (root, ext) = os.path.splitext(filename)
-        # 从临时视频列表中移除视频
+        # remove the video from the temporary video list
         video = self._data["video_list_now"].pop(root)
-        # Update the filename in case the extension is changed.
-        # 更新文件名以防扩展名被更改
+        # update the filename in case the extension is changed
         video["filename"] = filename
-        # 添加进最终视频列表中
+        # add to the final video list
         self._data["video_list"].append(video)
 
-    # 更新当前直播的标题
+    # update the title of the current live
     def update_live_title_now(self, live_title_now:str):
         """
         Update the live_title_now in the data.
         """
         self._data["live_title_now"] = live_title_now
 
-    # 更新直播的状态
+    # update the status of the live
     def update_live_status(self, status:str):
         self._data["status"] = status
 
-    # 将直播数据保存到文件
+    # dump the live data to the file
     def dump(self, filename = None, path = ""):
         """
         Dump the data to the file. 将数据导出到文件。
@@ -115,30 +115,33 @@ class Live():
                 timestamp = datetime.fromisoformat(self._data['time']).strftime("_%Y%m%d_%H-%M-%S")
                 self.filename = os.path.join(path, f"{self._data['room_id']}{timestamp}.json")
                 filename = self.filename
-        # 使用FileLock上下文管理器来锁定文件，以防止在写入时发生冲突。这是通过创建一个与目标文件同名的.lock文件来实现的。
+        # use the FileLock context manager to lock the file, to prevent conflict during writing
+        # this is achieved by creating a .lock file with the same name as the target file
         with FileLock(f"{filename}.lock"):
             with open(filename, 'w', encoding='utf-8') as f:
-                # 使用json.dump将self._data字典序列化为JSON格式，并写入到文件中。indent=4参数指定了输出的缩进级别，使得JSON文件格式化，便于阅读。
+                # use json.dump to serialize the self._data dictionary to JSON format, and write to the file
+                # the indent=4 parameter specifies the output indentation level, making the JSON file formatted, for easy reading
                 json.dump(self._data, f, indent=4)
         return filename
 
-    # 从文件加载数据到Live类的实例
+    # load the data from the file to the instance of Live class
     def load(self, filename):
         """
         Load the data from the file.
         """
-        # 使用FileLock确保在读取文件时不会有写入操作发生，从而避免数据损坏。
+        # use the FileLock to ensure that no writing operation occurs while reading the file, to avoid data corruption
         with FileLock(f"{filename}.lock"):
             with open(filename, 'r', encoding='utf-8') as f:
-                # 使用json.load函数从文件对象f中读取JSON数据，并将其解析为Python字典。然后将这个字典赋值给类的实例变量self._data。
+                # use json.load to read the JSON data from the file object f, and parse it to a Python dictionary
+                # then assign this dictionary to the instance variable self._data
                 self._data = json.load(f)
 
-    # 检查直播状态
+    # check if the live is ongoing
     def islive(self):
         if self._data["version"] == "v1":
             return self._data["status"] == "Living"
     
-    # 更新视频的服务器名称
+    # update the server name of the video
     def update_server_name(self, filename:str, server_name:str):
         """
         Find the dictionary in video_list with filename, and update the server_name.
@@ -149,7 +152,7 @@ class Live():
                 break
 
 
-# 示例数据，可能用于初始化Live类的实例
+# example data, may be used to initialize the instance of Live class
 data = {
     "version": "v1",
     "time_format": "_%Y%m%d_%H-%M-%S",

@@ -9,13 +9,13 @@
 while read key value; do
     export $key="$value"
 done < ./path.txt
-echo $root_path
 
-uploadQueue="$root_path/uploadVideoQueue.txt"
+uploadQueue="$rootPath/uploadVideoQueue.txt"
+tempQueue="$rootPath/tempVideoQueue.txt"
 
 processVideo() {
     local line="$1"
-    $root_path/uploadVideo.sh "$line" > $root_path/logs/uploadDanmakuLog/upload-$(date +%Y%m%d%H%M%S).log 2>&1
+    $rootPath/uploadVideo.sh "$line" > $rootPath/logs/uploadDanmakuLog/upload-$(date +%Y%m%d%H%M%S).log 2>&1
     sleep 10
     sed -i '1d' "$uploadQueue"
 }
@@ -30,7 +30,7 @@ while true; do
         wait $pid
         echo "$firstLine uploaded successfully!"
     else
-        echo "There is no file awaiting uploading. Check again in 120 seconds."
+        echo "$(date +"%Y-%m-%d %H:%M:%S")  There is no file awaiting uploading. Check again in 120 seconds."
         sleep 120
     fi
 done

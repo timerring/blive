@@ -5,64 +5,60 @@
 #
 # PARAMETERS:
 #   INPUT:  none.
-#   OUTPUT: $same_date_videos > sameSegments.txt
+#   OUTPUT: $otherMp4File >> sameSegments.txt
 
 while read key value; do
     export $key="$value"
 done < ./path.txt
-echo $root_path
 
-check_and_process_folder() {
-    local folder_path=$1
-    local count=0
-    local same_date_hour_videos=""
-    local formatted_date_hour=""
+CheckAndProcessFolder() {
+    local folderPath=$1
 
     # Check if there are any flv files in the folder.
     # If exists, which means the room is under recording.
-    flv_file=("$folder_path"/*.flv)
-    flv_name=$(basename "$flv_file")
-    if [ ${#flv_name} -gt 10 ]; then
-        echo "Found flv files in $folder_path. Skipping."
+    flvFile=("$folderPath"/*.flv)
+    flvName=$(basename "$flvFile")
+    if [ ${#flvName} -gt 10 ]; then
+        echo "Found flv files in $folderPath. Skipping."
         return
     fi
 
     # Check if there are video clips in the same date and hour
-    for mp4_file in "$folder_path"/*.mp4; do
-        if [ ${#mp4_file} -gt 35 ]; then
-            detect_name=$(basename "$mp4_file")
+    for mp4File in "$folderPath"/*.mp4; do
+        if [ ${#mp4File} -gt 35 ]; then
+            detectName=$(basename "$mp4File")
 
             # This length to prevent processing the burned videos again!
-            if [ ${#detect_name} -gt 27 ]; then
-                echo $mp4_file > sameSegments.txt
+            if [ ${#detectName} -gt 27 ]; then
+                echo $mp4File > sameSegments.txt
 
                 # Find the same date and hour video
-                date_part=$(basename "$mp4_file" | cut -d '_' -f 2| cut -d '-' -f 1)
-                hour_part=$(basename "$mp4_file" | cut -d '-' -f 2)
-                for other_mp4_file in "$folder_path"/*.mp4; do
-                    if [[ $(basename "$other_mp4_file" | cut -d '_' -f 2| cut -d '-' -f 1) == $date_part && $(basename "$other_mp4_file" | cut -d '-' -f 2) == $hour_part ]]; then
-                        if [[ "$mp4_file" != "$other_mp4_file" ]]; then
-                            echo "$other_mp4_file" >> sameSegments.txt
+                datePart=$(basename "$mp4File" | cut -d '_' -f 2| cut -d '-' -f 1)
+                hourPart=$(basename "$mp4File" | cut -d '-' -f 2)
+                for otherMp4File in "$folderPath"/*.mp4; do
+                    if [[ $(basename "$otherMp4File" | cut -d '_' -f 2| cut -d '-' -f 1) == $datePart && $(basename "$otherMp4File" | cut -d '-' -f 2) == $hourPart ]]; then
+                        if [[ "$mp4File" != "$otherMp4File" ]]; then
+                            echo "$otherMp4File" >> sameSegments.txt
                         fi
                     fi
                 done
-                line_count=$(wc -l < "sameSegments.txt")
-                echo "$line_count"
-                if [ $line_count -gt 1 ]; then
-                    $root_path/burningAndMerge.sh sameSegments.txt
+                lineCount=$(wc -l < "sameSegments.txt")
+                echo "$lineCount"
+                if [ $lineCount -gt 1 ]; then
+                    $rootPath/burningAndMerge.sh sameSegments.txt
                 else
-                    $root_path/danmakuBurning.sh $mp4_file
+                    $rootPath/danmakuBurning.sh $mp4File
                 fi
             fi
         fi
     done
 }
 
-roomFolderPath="$root_path/Videos"
+roomFolderPath="$rootPath/Videos"
 while true; do
     for roomFolder in "$roomFolderPath"/*; do
         if [ -d "$roomFolder" ]; then
-            check_and_process_folder "$roomFolder"
+            CheckAndProcessFolder "$roomFolder"
         fi
     done
     echo "$(date +"%Y-%m-%d %H:%M:%S") There is no file recorded. Check again in 120 seconds."
