@@ -30,7 +30,7 @@ while read -r line; do
     if [ -f "$xml_file" ]; then
         $root_path/DanmakuFactory -o "$ass_file" -i "$xml_file" --ignore-warnings
         echo "==================== generated $ass_file ===================="
-        export ASS_PATH="$assPath"
+        export ASS_PATH="$ass_file"
         python3 $root_path/removeEmojis.py > $root_path/logs/burningLog/remove-$(date +%Y%m%d%H%M%S).log 2>&1
     fi
 
