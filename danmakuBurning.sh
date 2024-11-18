@@ -60,9 +60,15 @@ fi
 
 # Burn danmaku into video.
 if [ -f "$assPath" ]; then
+    # The only cpu version
+    # ffmpeg -y -i $fullPath -vf ass=$assPath -preset ultrafast $formatVideoName > $rootPath/logs/burningLog/burn-$(date +%Y%m%d%H%M%S).log 2>&1
+    # The Nvidia GPU accelerating version
     ffmpeg -y -hwaccel cuda -c:v h264_cuvid -i $fullPath -c:v h264_nvenc -vf ass=$assPath $formatVideoName > $rootPath/logs/burningLog/burn-$(date +%Y%m%d%H%M%S).log 2>&1
     rm $assPath
 else
+    # The only cpu version
+    # ffmpeg -y -i $fullPath -vf -preset ultrafast $formatVideoName > $rootPath/logs/burningLog/burn-$(date +%Y%m%d%H%M%S).log 2>&1
+    # The Nvidia GPU acceleting version
     ffmpeg -y -hwaccel cuda -c:v h264_cuvid -i $fullPath -c:v h264_nvenc $formatVideoName > $rootPath/logs/burningLog/burn-$(date +%Y%m%d%H%M%S).log 2>&1
 fi
 
