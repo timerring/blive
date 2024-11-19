@@ -1,13 +1,28 @@
-# bilive
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bungee+Shade&display=swap" rel="stylesheet">
+<!-- Place this tag in your head or just before your close body tag. -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
 
-> 7 x 24 小时无人监守弹幕版录播上传，启动项目，人人都是录播员。
-> 
-> 如果您觉得项目不错，欢迎 :star: 也欢迎 PR 合作，如果有任何疑问，欢迎提 issue 交流。
+<div align="center">
+<div style="color:white; font-family: 'Bungee Shade', sans-serif; font-style: normal; font-size: 4em;">BILIVE</div>
+
+*7 x 24 小时无人监守弹幕版录播上传，启动项目，人人都是录播员。*
+
+[:page_facing_up: Documentation](#major-features) |
+[:gear: Installation](#quick-start) |
+[:thinking: Reporting Issues](https://github.com/timerring/bilive/issues/new/choose)
+
+</div>
+
+## Introduction
+
+> 如果您觉得项目不错，欢迎 <a class="github-button" href="https://github.com/timerring/bilive" data-color-scheme="no-preference: light; light: light; dark: light;" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star timerring/bilive on GitHub">Star</a> 也欢迎 PR 合作，如果有任何疑问，欢迎提 issue 交流。
 
 自动监听并录制B站直播和弹幕、自动转换xml弹幕（含付费留言、礼物等）为ass并压制进视频，自动投稿**弹幕版视频**和**无弹幕视频**至B站，无需GPU，兼容超低配置服务器与主机，**兼容Windows 和 linux操作系统**。
 
 
-Feature：
+### Major features
 
 - **速度快**：录制的同时可以选择启动无弹幕版视频的上传进程，下播延迟检测后即可直接上线平台。
 - **范围广**：多线程同时监听数个直播间，同时录制内容并投稿。
@@ -15,13 +30,15 @@ Feature：
 - **灵活高**：模版化自定义投稿，支持自定义投稿分区，动态内容，视频描述，视频标题，视频标签等，同时支持多P上传。
 - **自动检测合并**：对于网络问题或者连线导致的视频流分段，支持自动检测并按小时合并视频片段。
 - **弹幕版视频**：录制视频同时录制弹幕文件（包含普通弹幕，付费弹幕以及礼物上舰等信息），支持自动转换xml为ass弹幕文件并且压制到视频中形成**有弹幕版视频**，转换完成后即在上传队列中自动上传。
-- **硬件要求低**：无需GPU，只需最基础的单核CPU搭配最低的运存即可完成录制，压制，上传等等全部过程，15年前的电脑或服务器依然可以使用！
+- **硬件要求低**：无需GPU，只需最基础的单核CPU搭配最低的运存即可完成录制，压制，上传等等全部过程，10年前的电脑或服务器依然可以使用！
+
+> [!TIP]
 > 关于压制速率：与弹幕数量有关，测试硬件的基本区间 2核Intel(R) Xeon(R) Platinum 85 的 CPU 的压制速率在 3 ~ 6 倍之间，也可使用 Nvidia 1650 GPU 加速则压制速率在 16 ～ 20 倍之间。 差距在可接受范围内。如需使用 Nvidia GPU 加速，
 > 请参考：
 > + [Using FFmpeg with NVIDIA GPU Hardware Acceleration](https://docs.nvidia.com/video-technologies/video-codec-sdk/12.0/ffmpeg-with-nvidia-gpu/index.html)
 > + [使用GPU为FFmpeg 加速](https://yukihane.work/li-gong/ffmpeg-with-gpu)
 
-## 快速使用
+## Quick start
 ### 测试硬件
 + OS: Ubuntu 22.04.4 LTS
 
@@ -31,7 +48,9 @@ Feature：
 + 内存：2G
 + 硬盘：40G
 + 带宽: 3Mbps
+  > [!TIP]
   > 个人经验：若想尽可能快地更新视频，主要取决于上传速度而非弹幕压制速度，因此建议带宽越大越好。
+
 ### 环境
 ```
 pip install -r requirements.txt
