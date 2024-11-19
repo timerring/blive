@@ -1,11 +1,7 @@
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bungee+Shade&display=swap" rel="stylesheet">
-<!-- Place this tag in your head or just before your close body tag. -->
-<script async defer src="https://buttons.github.io/buttons.js"></script>
-
 <div align="center">
-<div style="color:white; font-family: 'Bungee Shade', sans-serif; font-style: normal; font-size: 4em;">BILIVE</div>
+  <picture>
+    <img src="assets/header.svg" alt="BILIVE" />
+  </picture>
 
 *7 x 24 小时无人监守弹幕版录播上传，启动项目，人人都是录播员。*
 
@@ -17,7 +13,7 @@
 
 ## Introduction
 
-> 如果您觉得项目不错，欢迎 <a class="github-button" href="https://github.com/timerring/bilive" data-color-scheme="no-preference: light; light: light; dark: light;" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star timerring/bilive on GitHub">Star</a> 也欢迎 PR 合作，如果有任何疑问，欢迎提 issue 交流。
+> 如果您觉得项目不错，欢迎 :star: 也欢迎 PR 合作，如果有任何疑问，欢迎提 issue 交流。
 
 自动监听并录制B站直播和弹幕、自动转换xml弹幕（含付费留言、礼物等）为ass并压制进视频，自动投稿**弹幕版视频**和**无弹幕视频**至B站，无需GPU，兼容超低配置服务器与主机，**兼容Windows 和 linux操作系统**。
 
