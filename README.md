@@ -3,7 +3,7 @@
     <img src="assets/header.svg" alt="BILIVE" />
   </picture>
 
-*7 x 24 小时无人监守弹幕版录播上传，启动项目，人人都是录播员。*
+*7 x 24 小时无人监守录制、渲染弹幕、自动上传，启动项目，人人都是录播员。*
 
 [:page_facing_up: Documentation](#major-features) |
 [:gear: Installation](#quick-start) |
