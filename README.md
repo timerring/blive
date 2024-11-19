@@ -1,6 +1,7 @@
 <div align="center">
   <picture>
-    <img src="assets/header.svg" alt="BILIVE" />
+    <source media="(prefers-color-scheme: dark)" srcset="assets/headerDark.svg" />
+    <img src="assets/headerLight.svg" alt="BILIVE" />
   </picture>
 
 *7 x 24 小时无人监守录制、渲染弹幕、自动上传，启动项目，人人都是录播员。*
