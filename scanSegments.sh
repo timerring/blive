@@ -34,9 +34,11 @@ CheckAndProcessFolder() {
 
                 # Find the same date and hour video
                 datePart=$(basename "$mp4File" | cut -d '_' -f 2| cut -d '-' -f 1)
-                hourPart=$(basename "$mp4File" | cut -d '-' -f 2)
+                # If you want to merge the videos with the same date and hour, uncomment the following lines.
+                # hourPart=$(basename "$mp4File" | cut -d '-' -f 2)
                 for otherMp4File in "$folderPath"/*.mp4; do
-                    if [[ $(basename "$otherMp4File" | cut -d '_' -f 2| cut -d '-' -f 1) == $datePart && $(basename "$otherMp4File" | cut -d '-' -f 2) == $hourPart ]]; then
+                    # if [[ $(basename "$otherMp4File" | cut -d '_' -f 2| cut -d '-' -f 1) == $datePart && $(basename "$otherMp4File" | cut -d '-' -f 2) == $hourPart ]]; then
+                    if [[ $(basename "$otherMp4File" | cut -d '_' -f 2| cut -d '-' -f 1) == $datePart ]]; then
                         if [[ "$mp4File" != "$otherMp4File" ]]; then
                             echo "$otherMp4File" >> sameSegments.txt
                         fi

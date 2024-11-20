@@ -30,7 +30,7 @@ while read -r line; do
         $rootPath/DanmakuFactory -o "$assFile" -i "$xmlFile" --ignore-warnings
         echo "==================== generated $assFile ===================="
         export ASS_PATH="$assFile"
-        python3 $rootPath/removeEmojis.py > $rootPath/logs/burningLog/remove-$(date +%Y%m%d%H%M%S).log 2>&1
+        python3 $rootPath/removeEmojis.py >> $rootPath/logs/burningLog/removeEmojis.log 2>&1
     fi
     
     # Initial some basic parameters and create tmp folder
