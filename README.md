@@ -96,9 +96,9 @@ pip install -r requirements.txt
 
 
 ```bash
-nohup ./scanSegments.sh > scanSegments.log 2>&1 & 
+./startScan.sh
 ```
-通过 `scanSegments.log` 查看运行日志。
+通过 `logs/scanSegments.log` 查看运行日志。
 
 > [!NOTE]
 > 弹幕压制具体时间可通过 `压制速率x视频时长` 估算。
@@ -114,9 +114,9 @@ nohup ./scanSegments.sh > scanSegments.log 2>&1 &
 输入以下指令即可自动使上传队列中的视频匹配对应模版并自动上传：
 
 ```bash
-nohup ./uploadQueue.sh > uploadQueue.log 2>&1 &
+./startUpload.sh
 ```
-通过 `uploadQueue.log` 查看上传日志。
+通过 `logs/uploadQueue.log` 查看上传日志。
 
 
 > [!TIP]
