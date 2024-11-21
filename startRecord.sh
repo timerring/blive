@@ -14,5 +14,3 @@ port=2233
 
 nohup blrec -c $config --open --host $host --port $port > $rootPath/logs/blrec.log 2>&1 &
 echo "blrec run success!"
-
-
