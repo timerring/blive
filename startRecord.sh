@@ -1,4 +1,7 @@
 # pause#!/bin/bash
+while read key value; do
+    export $key="$value"
+done < ./path.txt
 
 export config=./settings.toml
 
@@ -9,7 +12,7 @@ export no_proxy=*
 host=0.0.0.0
 port=2233
 
-nohup blrec -c $config --open --host $host --port $port > blrec.log 2>&1 &
+nohup blrec -c $config --open --host $host --port $port > $rootPath/logs/blrec.log 2>&1 &
 echo "blrec run success!"
 
 

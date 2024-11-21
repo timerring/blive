@@ -20,7 +20,7 @@ if __name__ == "__main__":
     # create the video list file directory, if it already exists, ignore
     os.makedirs(video_list_path, exist_ok=True)
     # get the upload log file path
-    upload_log_dir = os.path.join(settings['logging']['log_dir'],"_upload_log")
+    upload_log_dir = os.path.join(settings['logging']['log_dir'],"uploadNoDanmakuLog")
     # create the upload log directory, if it already exists, ignore
     os.makedirs(upload_log_dir, exist_ok = True)
 

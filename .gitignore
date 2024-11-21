@@ -9,7 +9,8 @@ __pycache__/
 *.log
 
 # Ignore logs folder
-logs/
+logs/*/*
+!logs/*/.gitkeep
 
 # Ignore login_file folder
 login_file/
