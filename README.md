@@ -16,7 +16,7 @@
 
 > 如果您觉得项目不错，欢迎 :star: 也欢迎 PR 合作，如果有任何疑问，欢迎提 issue 交流。
 
-自动监听并录制B站直播和弹幕、自动转换xml弹幕（含付费留言、礼物等）为ass并压制进视频，自动投稿**弹幕版视频**和**无弹幕视频**至B站，无需GPU，兼容超低配置服务器与主机，**兼容Windows 和 linux操作系统**。
+自动监听并录制B站直播和弹幕、自动转换xml弹幕（含付费留言、礼物等）为ass并渲染进视频，自动投稿**弹幕版视频**和**无弹幕视频**至B站，无需GPU，兼容超低配置服务器与主机，**兼容Windows 和 linux操作系统**。
 
 
 ### Major features
@@ -26,16 +26,9 @@
 - **空间小**：自动删除已上传的往期直播回放，节省空间，硬盘空间可以重复利用。
 - **灵活高**：模版化自定义投稿，支持自定义投稿分区，动态内容，视频描述，视频标题，视频标签等，同时支持多P上传。
 - **自动检测合并**：对于网络问题或者连线导致的视频流分段，支持自动检测并按小时合并视频片段。
-- **弹幕版视频**：录制视频同时录制弹幕文件（包含普通弹幕，付费弹幕以及礼物上舰等信息），支持自动转换xml为ass弹幕文件并且压制到视频中形成**有弹幕版视频**，转换完成后即在上传队列中自动上传。
-- **硬件要求低**：无需GPU，只需最基础的单核CPU搭配最低的运存即可完成录制，压制，上传等等全部过程，10年前的电脑或服务器依然可以使用！
+- **弹幕版视频**：录制视频同时录制弹幕文件（包含普通弹幕，付费弹幕以及礼物上舰等信息），支持自动转换xml为ass弹幕文件并且渲染到视频中形成**有弹幕版视频**，转换完成后即在上传队列中自动上传。
+- **硬件要求低**：无需GPU，只需最基础的单核CPU搭配最低的运存即可完成录制，渲染，上传等等全部过程，10年前的电脑或服务器依然可以使用！
 
-> [!TIP]
-> 关于压制速率：与弹幕数量有关，测试硬件的基本区间 2核Intel(R) Xeon(R) Platinum 85 的 CPU 的压制速率在 3 ~ 6 倍之间，也可使用 Nvidia 1650 GPU 加速则压制速率在 16 ～ 20 倍之间。 差距在可接受范围内。如需使用 Nvidia GPU 加速，
-> 请参考：
-> + [Using FFmpeg with NVIDIA GPU Hardware Acceleration](https://docs.nvidia.com/video-technologies/video-codec-sdk/12.0/ffmpeg-with-nvidia-gpu/index.html)
-> + [使用GPU为FFmpeg 加速](https://yukihane.work/li-gong/ffmpeg-with-gpu)
-
-## Quick start
 ### 测试硬件
 + OS: Ubuntu 22.04.4 LTS
 
@@ -45,25 +38,25 @@
 + 内存：2G
 + 硬盘：40G
 + 带宽: 3Mbps
-  > 个人经验：若想尽可能快地更新视频，主要取决于上传速度而非弹幕压制速度，因此建议带宽越大越好。
+  > 个人经验：若想尽可能快地更新视频，主要取决于上传速度而非弹幕渲染速度，因此建议带宽越大越好。
 
+> [!TIP]
+> 关于渲染速率：与弹幕数量有关，测试硬件的基本区间 2核 Xeon(R) Platinum 85 的 CPU 的渲染速率在 3 ~ 6 倍之间，也可使用 Nvidia GPU 加速，项目的测试显卡为 GTX1650，其渲染速率在 16 ～ 20 倍之间。 
+> 
+> 弹幕渲染具体时间可通过 `渲染速率x视频时长` 估算，如无需 GPU 加速渲染过程，请忽略本条提示。
+> 
+> 如需使用 Nvidia GPU 加速，
+> 请参考：
+> + [Using FFmpeg with NVIDIA GPU Hardware Acceleration](https://docs.nvidia.com/video-technologies/video-codec-sdk/12.0/ffmpeg-with-nvidia-gpu/index.html)
+> + [使用GPU为FFmpeg 加速](https://yukihane.work/li-gong/ffmpeg-with-gpu)
+
+## Quick start
 ### 环境
 ```
 pip install -r requirements.txt
 ```
 ### biliup-rs 登录
 首先使用[biliup-rs](https://github.com/biliup/biliup-rs)登录b站，将登录产生的`cookies.json`文件复制一份到项目根目录中。
-
-> [!NOTE]
-> 需要在项目根目录创建的日志文件夹
-> ```
-> logs # 日志文件夹
-> ├── blrecLog # blrec 录制日志
-> ├── burningLog # 弹幕压制日志
-> ├── mergeLog # 碎片合并日志
-> ├── uploadDanmakuLog # 有弹幕版上传日志
-> └── _upload_log # 无弹幕版上传日志
-> ```
 
 ### 自动录制运行
 
@@ -72,11 +65,7 @@ pip install -r requirements.txt
   - 打开 `http://localhost:port` 进入blrec前端界面进行设置。
 
 然后执行：
-- Windows
-```bash
-./startRecord.bat
-```
-- Linux
+
 ```bash
 ./startRecord.sh
 ```
@@ -88,20 +77,16 @@ pip install -r requirements.txt
 - 自动投稿将在录制的同时启动上传进程，结束后几分钟内即可上传完成（本过程依据配置全自动进行，无需人为操作）。
 
 
-### 弹幕版视频压制与自动上传
+### 弹幕版视频渲染与自动上传
 
-#### 启动弹幕压制进程
+#### 启动弹幕渲染进程
 
-输入以下指令即可开始检测已录制的视频并且自动合并分段，自动进行弹幕转换与压制的过程：
+输入以下指令即可开始检测已录制的视频并且自动合并分段，自动进行弹幕转换与渲染的过程：
 
 
 ```bash
 ./startScan.sh
 ```
-通过 `logs/scanSegments.log` 查看运行日志。
-
-> [!NOTE]
-> 弹幕压制具体时间可通过 `压制速率x视频时长` 估算。
 
 #### 上传配置
 
@@ -116,12 +101,25 @@ pip install -r requirements.txt
 ```bash
 ./startUpload.sh
 ```
-通过 `logs/uploadQueue.log` 查看上传日志。
 
-
-> [!TIP]
-> 由于不同机器的配置不同，因此压制弹幕的速率也不同，如果机器无GPU且CPU性能极差，**不建议两种上传方式**都开启，二选一即可。
-
+> [!NOTE]
+> 相应的执行结果请在 `logs` 文件夹中查看。
+> ```
+> logs # 日志文件夹
+> ├── blrecLog # blrec 录制日志
+> │   └── ...
+> ├── burningLog # 弹幕渲染日志
+> │   └── ...
+> ├── mergeLog # 片段合并日志
+> │   └── ...
+> ├── uploadDanmakuLog # 有弹幕版上传日志
+> │   └── ...
+> ├── uploadNoDanmakuLog # 无弹幕版上传日志
+> │   └── ...
+> ├── removeEmojis.log # 移除弹幕表情日志
+> ├── scanSegments.log # startScan.sh 运行日志
+> └── uploadQueue.log # startUpload.sh 运行日志
+> ```
 
 ## 特别感谢
 
