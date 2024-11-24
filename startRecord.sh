@@ -12,5 +12,6 @@ export no_proxy=*
 host=0.0.0.0
 port=2233
 
+kill -9 $(pgrep -f blrec)
 nohup blrec -c $config --open --host $host --port $port > $rootPath/logs/blrec.log 2>&1 &
 echo "blrec run success!"
