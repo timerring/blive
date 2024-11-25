@@ -27,7 +27,7 @@ while read -r line; do
     xmlFile=${line%.mp4}.xml
     assFile=${line%.mp4}.ass
     if [ -f "$xmlFile" ]; then
-        $rootPath/DanmakuFactory -o "$assFile" -i "$xmlFile" --ignore-warnings
+        $rootPath/DanmakuFactory -o "$assFile" -i "$xmlFile" --msgboxfontsize 23 --ignore-warnings
         echo "==================== generated $assFile ===================="
         export ASS_PATH="$assFile"
         python3 $rootPath/removeEmojis.py >> $rootPath/logs/removeEmojis.log 2>&1
