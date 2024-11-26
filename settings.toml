@@ -1,39 +1,19 @@
 version = "1.0"
-[[tasks]]
+webhooks = []
 
 [[tasks]]
 room_id = 22230707
 enable_monitor = true
 enable_recorder = true
 
-[[webhooks]]
-live_began = true
-live_ended = true
-room_change = true
-recording_started = true
-recording_finished = true
-recording_cancelled = true
-video_file_created = true
-video_file_completed = true
-danmaku_file_created = false
-danmaku_file_completed = false
-raw_danmaku_file_created = false
-raw_danmaku_file_completed = false
-cover_image_downloaded = true
-video_postprocessing_completed = true
-postprocessing_completed = true
-space_no_enough = true
-error_occurred = true
-url = "http://localhost:22333"
-
 [output]
 path_template = "{roomid}/{roomid}_{year}{month}{day}-{hour}-{minute}-{second}"
 filesize_limit = 0
-duration_limit = 28800
+duration_limit = 0
 out_dir = "./Videos"
 
 [logging]
-log_dir = "./logs"
+log_dir = "./logs/blrecLog"
 console_log_level = "INFO"
 backup_count = 30
 
@@ -60,9 +40,9 @@ recording_mode = "standard"
 quality_number = 150
 fmp4_stream_timeout = 10
 read_timeout = 3
-disconnection_timeout = 300
-buffer_size = 8192
-save_cover = true
+disconnection_timeout = 600
+buffer_size = 32768
+save_cover = false
 cover_save_strategy = "dedup"
 
 [postprocessing]
@@ -71,9 +51,9 @@ inject_extra_metadata = true
 delete_source = "auto"
 
 [space]
-check_interval = 600
+check_interval = 0
 space_threshold = 10737418240
-recycle_records = true
+recycle_records = false
 
 [email_notification]
 began_message_type = "html"

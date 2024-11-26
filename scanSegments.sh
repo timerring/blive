@@ -47,7 +47,7 @@ CheckAndProcessFolder() {
                 lineCount=$(wc -l < "sameSegments.txt")
                 echo "$lineCount"
                 if [ $lineCount -gt 1 ]; then
-                    $rootPath/burningAndMerge.sh sameSegments.txt
+                    $rootPath/burnAndMerge.sh sameSegments.txt
                 else
                     $rootPath/danmakuBurning.sh $mp4File
                 fi
