@@ -37,7 +37,7 @@ save_raw_danmaku = true
 [recorder]
 stream_format = "flv"
 recording_mode = "standard"
-quality_number = 150
+quality_number = 250
 fmp4_stream_timeout = 10
 read_timeout = 3
 disconnection_timeout = 600

@@ -7,10 +7,6 @@
 #   INPUT:  none.
 #   OUTPUT: $otherMp4File >> sameSegments.txt
 
-while read key value; do
-    export $key="$value"
-done < ./path.txt
-
 CheckAndProcessFolder() {
     local folderPath=$1
 
@@ -47,16 +43,16 @@ CheckAndProcessFolder() {
                 lineCount=$(wc -l < "sameSegments.txt")
                 echo "$lineCount"
                 if [ $lineCount -gt 1 ]; then
-                    $rootPath/burnAndMerge.sh sameSegments.txt
+                    $BILIVE_PATH/burnAndMerge.sh sameSegments.txt
                 else
-                    $rootPath/danmakuBurning.sh $mp4File
+                    $BILIVE_PATH/danmakuBurning.sh $mp4File
                 fi
             fi
         fi
     done
 }
 
-roomFolderPath="$rootPath/Videos"
+roomFolderPath="$BILIVE_PATH/Videos"
 while true; do
     for roomFolder in "$roomFolderPath"/*; do
         if [ -d "$roomFolder" ]; then

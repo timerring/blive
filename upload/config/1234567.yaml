@@ -1,14 +1,14 @@
 line: kodo
 limit: 3
 streamers:
-  /home/jh/Downloads/blive/Videos/1234567/%P:
+  VIDEO_PATH:
     copyright: 1
-    source: https://live.bilibili.com/1234567
+    source: BILI_SOURCE
     tid: 138
     cover: 
-    title: 【弹幕版】XXX直播回放-%Y年%M月%d日%H点场
+    title: 【弹幕版】某某某直播回放-%Y年%M月%d日%H点场(按需修改)
     desc_format_id: 0
-    desc: your video description
+    desc: edit your video description(视频简介，按需修改)
     dynamic: ""
-    tag: tag1,tag2,tag3
+    tag: tag1,tag2,tag3(视频标签按需修改标签之间用英文逗号间隔)
     dtime: ~

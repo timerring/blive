@@ -8,15 +8,11 @@
 #       $uploadPath - eg:/path/to/video/roomid_YYYY-MM-DD-HH.mp4
 #   OUTPUT: none
 
-while read key value; do
-    export $key="$value"
-done < ./path.txt
-
 # check if the provided parameters
 # specific for manually upload single video
 if [ $# -ne 1 ]; then
     echo "Please provide the full path of mp4"
-    echo "for example：$rootPath/Videos/<roomid>/<roomid>_YYYY-MM-DD-HH.mp4"
+    echo "for example：$BILIVE_PATH/Videos/<roomid>/<roomid>_YYYY-MM-DD-HH.mp4"
     exit 1
 fi
 
@@ -47,7 +43,7 @@ echo "hour: $hour"
 # original to create the copy. Then upload videos via the copy.
 
 # define the path of yaml.
-yamlFile="$rootPath/upload/config/$roomID.yaml"
+yamlFile="$BILIVE_PATH/upload/config/$roomID.yaml"
 
 # check if the yaml is exist.
 if [ ! -f "$yamlFile" ]; then
@@ -56,7 +52,7 @@ if [ ! -f "$yamlFile" ]; then
 fi
 
 # define the path of copy.
-copyYamlFile="$rootPath/upload/config/copy_$roomID.yaml"
+copyYamlFile="$BILIVE_PATH/upload/config/copy_$roomID.yaml"
 
 # make the copy.
 cp "$yamlFile" "$copyYamlFile"
@@ -66,12 +62,13 @@ sed -i "s/%Y/$year/g" "$copyYamlFile"
 sed -i "s/%M/$month/g" "$copyYamlFile"
 sed -i "s/%d/$day/g" "$copyYamlFile"
 sed -i "s/%H/$hour/g" "$copyYamlFile"
-sed -i "s/%P/${fileName}/g" "$copyYamlFile"
+sed -i "s|VIDEO_PATH|$uploadPath|g" "$copyYamlFile"
+sed -i "s|BILI_SOURCE|https://live.bilibili.com/$roomID|g" "$copyYamlFile"
 
 echo "The parameters have been updated in the $copyYamlFile"
 
 # Use biliup tool to upload video, and then delete the subtitle ass file and video file.
-if $rootPath/upload/biliup upload "$uploadPath" --config "$copyYamlFile"; then
+if $BILIVE_PATH/upload/biliup upload "$uploadPath" --config "$copyYamlFile"; then
     echo "Upload successfully，then delete the video"
     rm $uploadPath
 else

@@ -63,7 +63,7 @@
 pip install -r requirements.txt
 
 # 记录项目根目录
-./setRoutineTask.sh
+./setRoutineTask.sh && source ~/.bashrc
 ```
 ### 4.2 biliup-rs 登录
 
