@@ -13,7 +13,7 @@ PORT = 22333
 
 if __name__ == "__main__":
     # open and read the TOML configuration file
-    with open('settings.toml', 'r', encoding='utf-8') as f:
+    with open('../settings.toml', 'r', encoding='utf-8') as f:
         settings = toml.load(f)
     # get the video list file path
     video_list_path = os.path.join(settings['output']['out_dir'], "_list")
@@ -25,7 +25,7 @@ if __name__ == "__main__":
     os.makedirs(upload_log_dir, exist_ok = True)
 
     # configure the paths and configuration file for MyHandler
-    MyHandler.config(video_list_path, upload_log_dir, "upload_config.json")
+    MyHandler.config(video_list_path, upload_log_dir, "../upload/config/upload_config.json")
     # set the server listening address and port
     server_address = ('', PORT)
     # create the HTTP server instance, using MyHandler as the request processor

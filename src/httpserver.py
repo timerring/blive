@@ -46,7 +46,7 @@ class MyHandler(SimpleHTTPRequestHandler):
      # class method, for loading the upload list from the config file
     @classmethod
     def set_upload_list(cls):
-        with open("upload_config.json", 'r', encoding='utf-8') as f:
+        with open("../upload/config/upload_config.json", 'r', encoding='utf-8') as f:
             # load the JSON config
             config = json.load(f)
         # assign the list of room_ids from the config file to the upload list

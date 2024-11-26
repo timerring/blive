@@ -7,10 +7,8 @@
 # PARAMETERS:
 #   INPUT:  none.
 #   OUTPUT: none.
-while read key value; do
-    export $key="$value"
-done < ./path.txt
-targetDir="$rootPath/logs"
+
+targetDir="$BILIVE_PATH/logs"
 
 # Retrieve seconds
 currentTime=$(date +%s)

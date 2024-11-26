@@ -23,3 +23,18 @@ node_modules/
 package.json
 pnpm-lock.yaml
 package-lock.json
+
+# Ignore the biliup folder
+upload/config/*
+!upload/config/1234567.yaml
+!upload/config/upload_config.json
+!upload/uploadVideoQueue.txt
+
+# Ignore the production
+startRecord-production.sh
+settings-production.toml
+path.txt
+sameSegments.txt
+
+# Ignore the cookies.json
+cookies.json

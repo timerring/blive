@@ -6,16 +6,12 @@
 #   INPUT:  none.
 #   OUTPUT: none.
 
-while read key value; do
-    export $key="$value"
-done < ./path.txt
-
-uploadQueue="$rootPath/uploadVideoQueue.txt"
-tempQueue="$rootPath/tempVideoQueue.txt"
+uploadQueue="$BILIVE_PATH/upload/uploadVideoQueue.txt"
+tempQueue="$BILIVE_PATH/upload/tempVideoQueue.txt"
 
 processVideo() {
     local line="$1"
-    $rootPath/uploadVideo.sh "$line" > $rootPath/logs/uploadDanmakuLog/upload-$(date +%Y%m%d%H%M%S).log 2>&1
+    $BILIVE_PATH/upload/uploadVideo.sh "$line" > $BILIVE_PATH/logs/uploadDanmakuLog/upload-$(date +%Y%m%d%H%M%S).log 2>&1
     sleep 10
     sed -i '1d' "$uploadQueue"
 }

@@ -7,11 +7,6 @@
 #   INPUT:  sameSegments.txt
 #   OUTPUT: uploadVideoQueue.txt
 
-# Import the $rootPath
-while read key value; do
-    export $key="$value"
-done < ./path.txt
-
 firstOutputFile=""
 while read -r line; do
     # Skip when read blanket line
@@ -27,10 +22,10 @@ while read -r line; do
     xmlFile=${line%.mp4}.xml
     assFile=${line%.mp4}.ass
     if [ -f "$xmlFile" ]; then
-        $rootPath/DanmakuFactory -o "$assFile" -i "$xmlFile" --msgboxfontsize 23 --ignore-warnings
+        $BILIVE_PATH/utils/DanmakuFactory -o "$assFile" -i "$xmlFile" --msgboxfontsize 23 --ignore-warnings
         echo "==================== generated $assFile ===================="
         export ASS_PATH="$assFile"
-        python3 $rootPath/removeEmojis.py >> $rootPath/logs/removeEmojis.log 2>&1
+        python3 $BILIVE_PATH/utils/removeEmojis.py >> $BILIVE_PATH/logs/removeEmojis.log 2>&1
     fi
     
     # Initial some basic parameters and create tmp folder
@@ -48,30 +43,29 @@ while read -r line; do
     echo "file '$newPath'" >> mergevideo.txt
     if [ -f "$assFile" ]; then
         # The Nvidia GPU accelerating version.
-        ffmpeg -hwaccel cuda -c:v h264_cuvid -i "$line" -c:v h264_nvenc -vf "ass=$assFile" "$newPath" -y -nostdin > $rootPath/logs/burningLog/burn-$(date +%Y%m%d%H%M%S).log 2>&1
+        ffmpeg -hwaccel cuda -c:v h264_cuvid -i "$line" -c:v h264_nvenc -vf "ass=$assFile" "$newPath" -y -nostdin > $BILIVE_PATH/logs/burningLog/burn-$(date +%Y%m%d%H%M%S).log 2>&1
         # The only cpu version.
-        # ffmpeg -i "$line" -vf "ass=$assFile" -preset ultrafast "$newPath" -y -nostdin  > $rootPath/logs/burningLog/burn-$(date +%Y%m%d%H%M%S).log 2>&1
+        # ffmpeg -i "$line" -vf "ass=$assFile" -preset ultrafast "$newPath" -y -nostdin  > $BILIVE_PATH/logs/burningLog/burn-$(date +%Y%m%d%H%M%S).log 2>&1
     else
         # The Nvidia GPU accelerating version.
-        ffmpeg -hwaccel cuda -c:v h264_cuvid -i "$line" -c:v h264_nvenc "$newPath" -y -nostdin > $rootPath/logs/burningLog/burn-$(date +%Y%m%d%H%M%S).log 2>&1
+        ffmpeg -hwaccel cuda -c:v h264_cuvid -i "$line" -c:v h264_nvenc "$newPath" -y -nostdin > $BILIVE_PATH/logs/burningLog/burn-$(date +%Y%m%d%H%M%S).log 2>&1
         # The only cpu version.
-        # ffmpeg -i "$line" -vf -preset ultrafast "$newPath" -y -nostdin  > $rootPath/logs/burningLog/burn-$(date +%Y%m%d%H%M%S).log 2>&1
+        # ffmpeg -i "$line" -vf -preset ultrafast "$newPath" -y -nostdin  > $BILIVE_PATH/logs/burningLog/burn-$(date +%Y%m%d%H%M%S).log 2>&1
     fi
     
     # Delete the related items of videos
     rm ${line%.mp4}.*
-done < sameSegments.txt
+done < ./src/sameSegments.txt
 
 # merge the videos
 echo "==================== merge starts ===================="
 # echo "ffmpeg -f concat -i mergevideo.txt -c copy $firstOutputFile"
-ffmpeg -f concat -safe 0 -i mergevideo.txt -use_wallclock_as_timestamps 1 -c copy $firstOutputFile > $rootPath/logs/mergeLog/merge-$(date +%Y%m%d%H%M%S).log 2>&1
+ffmpeg -f concat -safe 0 -i mergevideo.txt -use_wallclock_as_timestamps 1 -c copy $firstOutputFile > $BILIVE_PATH/logs/mergeLog/merge-$(date +%Y%m%d%H%M%S).log 2>&1
 
 # delete useless videos and lists
 rm -r $tmpDir
 rm mergevideo.txt
 
 echo "==================== start upload $firstOutputFile ===================="
-# echo "nohup /root/blive/uploadVideo.sh $firstOutputFile > /root/blive/logs/uploadDanmakuLog/$(date +%Y%m%d%H%M%S).log 2>&1 &"
-echo "$firstOutputFile" >> $rootPath/uploadVideoQueue.txt
+echo "$firstOutputFile" >> $BILIVE_PATH/upload/uploadVideoQueue.txt
 echo "==================== OVER ===================="
