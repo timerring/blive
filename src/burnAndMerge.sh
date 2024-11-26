@@ -22,10 +22,10 @@ while read -r line; do
     xmlFile=${line%.mp4}.xml
     assFile=${line%.mp4}.ass
     if [ -f "$xmlFile" ]; then
-        $BILIVE_PATH/DanmakuFactory -o "$assFile" -i "$xmlFile" --msgboxfontsize 23 --ignore-warnings
+        $BILIVE_PATH/utils/DanmakuFactory -o "$assFile" -i "$xmlFile" --msgboxfontsize 23 --ignore-warnings
         echo "==================== generated $assFile ===================="
         export ASS_PATH="$assFile"
-        python3 $BILIVE_PATH/removeEmojis.py >> $BILIVE_PATH/logs/removeEmojis.log 2>&1
+        python3 $BILIVE_PATH/utils/removeEmojis.py >> $BILIVE_PATH/logs/removeEmojis.log 2>&1
     fi
     
     # Initial some basic parameters and create tmp folder
@@ -55,7 +55,7 @@ while read -r line; do
     
     # Delete the related items of videos
     rm ${line%.mp4}.*
-done < sameSegments.txt
+done < ./src/sameSegments.txt
 
 # merge the videos
 echo "==================== merge starts ===================="
@@ -67,6 +67,5 @@ rm -r $tmpDir
 rm mergevideo.txt
 
 echo "==================== start upload $firstOutputFile ===================="
-# echo "nohup /root/blive/uploadVideo.sh $firstOutputFile > /root/blive/logs/uploadDanmakuLog/$(date +%Y%m%d%H%M%S).log 2>&1 &"
-echo "$firstOutputFile" >> $BILIVE_PATH/uploadVideoQueue.txt
+echo "$firstOutputFile" >> $BILIVE_PATH/upload/uploadVideoQueue.txt
 echo "==================== OVER ===================="

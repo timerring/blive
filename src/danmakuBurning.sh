@@ -47,11 +47,11 @@ assPath="${path}/${roomid}_${year}-${month}-${day}-${hour}.ass"
 # use DanmakuFactory to convert the xml file
 xmlPath="${filenameWithoutExt}.xml"
 if [ -f "$xmlPath" ]; then
-    $BILIVE_PATH/DanmakuFactory -o "$assPath" -i "$xmlPath" --msgboxfontsize 23 --ignore-warnings
+    $BILIVE_PATH/utils/DanmakuFactory -o "$assPath" -i "$xmlPath" --msgboxfontsize 23 --ignore-warnings
     rm $xmlPath
     echo “danmaku convert success!”
     export ASS_PATH="$assPath"
-    python3 $BILIVE_PATH/removeEmojis.py >> $BILIVE_PATH/logs/removeEmojis.log 2>&1
+    python3 $BILIVE_PATH/utils/removeEmojis.py >> $BILIVE_PATH/logs/removeEmojis.log 2>&1
 fi
 
 # Burn danmaku into video.
@@ -74,4 +74,4 @@ echo "ffmpeg successfully complete!"
 rm $fullPath
 
 # Upload video.
-echo "$formatVideoName" >> $BILIVE_PATH/uploadVideoQueue.txt
+echo "$formatVideoName" >> $BILIVE_PATH/upload/uploadVideoQueue.txt

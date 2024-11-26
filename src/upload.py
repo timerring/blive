@@ -4,7 +4,7 @@ import os
 import time
 from src.blive_upload import configured_upload
 
-UPLOAD_CONFIGURATION = "upload_config.json"
+UPLOAD_CONFIGURATION = "../upload/config/upload_config.json"
 
 if __name__ == '__main__':
     os.environ['TZ'] = 'Asia/Shanghai'

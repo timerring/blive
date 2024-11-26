@@ -26,7 +26,7 @@ CheckAndProcessFolder() {
 
             # This length to prevent processing the burned videos again!
             if [ ${#detectName} -gt 27 ]; then
-                echo $mp4File > sameSegments.txt
+                echo $mp4File > ./src/sameSegments.txt
 
                 # Find the same date and hour video
                 datePart=$(basename "$mp4File" | cut -d '_' -f 2| cut -d '-' -f 1)
@@ -36,16 +36,16 @@ CheckAndProcessFolder() {
                     # if [[ $(basename "$otherMp4File" | cut -d '_' -f 2| cut -d '-' -f 1) == $datePart && $(basename "$otherMp4File" | cut -d '-' -f 2) == $hourPart ]]; then
                     if [[ $(basename "$otherMp4File" | cut -d '_' -f 2| cut -d '-' -f 1) == $datePart ]]; then
                         if [[ "$mp4File" != "$otherMp4File" ]]; then
-                            echo "$otherMp4File" >> sameSegments.txt
+                            echo "$otherMp4File" >> ./src/sameSegments.txt
                         fi
                     fi
                 done
-                lineCount=$(wc -l < "sameSegments.txt")
+                lineCount=$(wc -l < "./src/sameSegments.txt")
                 echo "$lineCount"
                 if [ $lineCount -gt 1 ]; then
-                    $BILIVE_PATH/burnAndMerge.sh sameSegments.txt
+                    $BILIVE_PATH/src/burnAndMerge.sh ./src/sameSegments.txt
                 else
-                    $BILIVE_PATH/danmakuBurning.sh $mp4File
+                    $BILIVE_PATH/src/danmakuBurning.sh $mp4File
                 fi
             fi
         fi
