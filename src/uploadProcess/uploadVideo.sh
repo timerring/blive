@@ -43,7 +43,7 @@ echo "hour: $hour"
 # original to create the copy. Then upload videos via the copy.
 
 # define the path of yaml.
-yamlFile="$BILIVE_PATH/upload/config/$roomID.yaml"
+yamlFile="$BILIVE_PATH/src/uploadProcess/config/$roomID.yaml"
 
 # check if the yaml is exist.
 if [ ! -f "$yamlFile" ]; then
@@ -52,7 +52,7 @@ if [ ! -f "$yamlFile" ]; then
 fi
 
 # define the path of copy.
-copyYamlFile="$BILIVE_PATH/upload/config/copy_$roomID.yaml"
+copyYamlFile="$BILIVE_PATH/src/uploadProcess/config/copy_$roomID.yaml"
 
 # make the copy.
 cp "$yamlFile" "$copyYamlFile"
@@ -68,7 +68,7 @@ sed -i "s|BILI_SOURCE|https://live.bilibili.com/$roomID|g" "$copyYamlFile"
 echo "The parameters have been updated in the $copyYamlFile"
 
 # Use biliup tool to upload video, and then delete the subtitle ass file and video file.
-if $BILIVE_PATH/upload/biliup upload "$uploadPath" --config "$copyYamlFile"; then
+if $BILIVE_PATH/src/uploadProcess/biliup upload "$uploadPath" --config "$copyYamlFile"; then
     echo "Upload successfully，then delete the video"
     rm $uploadPath
 else

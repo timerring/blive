@@ -25,10 +25,10 @@ pnpm-lock.yaml
 package-lock.json
 
 # Ignore the biliup folder
-upload/config/*
-!upload/config/1234567.yaml
-!upload/config/upload_config.json
-!upload/uploadVideoQueue.txt
+src/uploadProcess/config/*
+!src/uploadProcess/config/1234567.yaml
+!src/uploadProcess/config/upload_config.json
+!src/uploadProcess/uploadVideoQueue.txt
 
 # Ignore the production
 startRecord-production.sh

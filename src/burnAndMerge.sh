@@ -22,10 +22,10 @@ while read -r line; do
     xmlFile=${line%.mp4}.xml
     assFile=${line%.mp4}.ass
     if [ -f "$xmlFile" ]; then
-        $BILIVE_PATH/utils/DanmakuFactory -o "$assFile" -i "$xmlFile" --msgboxfontsize 23 --ignore-warnings
+        $BILIVE_PATH/src/utils/DanmakuFactory -o "$assFile" -i "$xmlFile" --msgboxfontsize 30 --msgboxsize 400x1000 --ignore-warnings
         echo "==================== generated $assFile ===================="
         export ASS_PATH="$assFile"
-        python3 $BILIVE_PATH/utils/removeEmojis.py >> $BILIVE_PATH/logs/removeEmojis.log 2>&1
+        python3 $BILIVE_PATH/src/utils/removeEmojis.py >> $BILIVE_PATH/logs/removeEmojis.log 2>&1
     fi
     
     # Initial some basic parameters and create tmp folder
@@ -67,5 +67,5 @@ rm -r $tmpDir
 rm mergevideo.txt
 
 echo "==================== start upload $firstOutputFile ===================="
-echo "$firstOutputFile" >> $BILIVE_PATH/upload/uploadVideoQueue.txt
+echo "$firstOutputFile" >> $BILIVE_PATH/src/uploadProcess/uploadVideoQueue.txt
 echo "==================== OVER ===================="
