@@ -1,0 +1,14 @@
+{
+    "example":{         
+        "username" : "username",
+        "password" : "password",
+
+        "upload_args" : {
+            "copyright":1,
+            "title": "Example Title",
+            "tid":138,
+            "tag": ["Some", "Tags"],
+            "desc":["An example video description"]
+        }  
+    }
+}

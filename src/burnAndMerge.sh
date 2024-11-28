@@ -22,10 +22,10 @@ while read -r line; do
     xmlFile=${line%.mp4}.xml
     assFile=${line%.mp4}.ass
     if [ -f "$xmlFile" ]; then
-        $BILIVE_PATH/utils/DanmakuFactory -o "$assFile" -i "$xmlFile" --msgboxfontsize 23 --ignore-warnings
+        $BILIVE_PATH/src/utils/DanmakuFactory -o "$assFile" -i "$xmlFile" --msgboxfontsize 30 --msgboxsize 400x1000 --ignore-warnings
         echo "==================== generated $assFile ===================="
         export ASS_PATH="$assFile"
-        python3 $BILIVE_PATH/utils/removeEmojis.py >> $BILIVE_PATH/logs/removeEmojis.log 2>&1
+        python3 $BILIVE_PATH/src/utils/removeEmojis.py >> $BILIVE_PATH/logs/removeEmojis.log 2>&1
     fi
     
     # Initial some basic parameters and create tmp folder
@@ -66,6 +66,12 @@ ffmpeg -f concat -safe 0 -i mergevideo.txt -use_wallclock_as_timestamps 1 -c cop
 rm -r $tmpDir
 rm mergevideo.txt
 
-echo "==================== start upload $firstOutputFile ===================="
-echo "$firstOutputFile" >> $BILIVE_PATH/upload/uploadVideoQueue.txt
-echo "==================== OVER ===================="
+python $BILIVE_PATH/src/subtitle/generate.py $firstOutputFile > $BILIVE_PATH/logs/burningLog/subtitlesGenerate-$(date +%Y%m%d%H%M%S).log 2>&1
+srtPath=${firstOutputFile%.*}".srt"
+videoUploadPath=${firstOutputFile%.*}"-s.mp4"
+ffmpeg -hwaccel cuda -c:v h264_cuvid -i "$firstOutputFile" -c:v h264_nvenc -vf "subtitles=$srtPath" "$videoUploadPath" -y -nostdin > $BILIVE_PATH/logs/burningLog/subtitlesRender-$(date +%Y%m%d%H%M%S).log 2>&1
+rm $srtPath
+rm $firstOutputFile
+
+echo "==================== add $videoUploadPath to upload queue ===================="
+echo "$videoUploadPath" >> $BILIVE_PATH/src/uploadProcess/uploadVideoQueue.txt

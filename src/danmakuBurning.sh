@@ -47,11 +47,11 @@ assPath="${path}/${roomid}_${year}-${month}-${day}-${hour}.ass"
 # use DanmakuFactory to convert the xml file
 xmlPath="${filenameWithoutExt}.xml"
 if [ -f "$xmlPath" ]; then
-    $BILIVE_PATH/utils/DanmakuFactory -o "$assPath" -i "$xmlPath" --msgboxfontsize 23 --ignore-warnings
+    $BILIVE_PATH/src/utils/DanmakuFactory -o "$assPath" -i "$xmlPath" --msgboxfontsize 30 --ignore-warnings
     rm $xmlPath
     echo “danmaku convert success!”
     export ASS_PATH="$assPath"
-    python3 $BILIVE_PATH/utils/removeEmojis.py >> $BILIVE_PATH/logs/removeEmojis.log 2>&1
+    python3 $BILIVE_PATH/src/utils/removeEmojis.py >> $BILIVE_PATH/logs/removeEmojis.log 2>&1
 fi
 
 # Burn danmaku into video.
@@ -73,5 +73,12 @@ echo "ffmpeg successfully complete!"
 # Delete the original video.
 rm $fullPath
 
-# Upload video.
-echo "$formatVideoName" >> $BILIVE_PATH/upload/uploadVideoQueue.txt
+python $BILIVE_PATH/src/subtitle/generate.py $formatVideoName > $BILIVE_PATH/logs/burningLog/subtitlesGenerate-$(date +%Y%m%d%H%M%S).log 2>&1
+srtPath=${formatVideoName%.*}".srt"
+videoUploadPath=${formatVideoName%.*}"-s.mp4"
+ffmpeg -hwaccel cuda -c:v h264_cuvid -i "$formatVideoName" -c:v h264_nvenc -vf "subtitles=$srtPath" "$videoUploadPath" -y -nostdin > $BILIVE_PATH/logs/burningLog/subtitlesRender-$(date +%Y%m%d%H%M%S).log 2>&1
+rm $srtPath
+rm $formatVideoName
+
+echo "==================== add $videoUploadPath to upload queue ===================="
+echo "$videoUploadPath" >> $BILIVE_PATH/src/uploadProcess/uploadVideoQueue.txt

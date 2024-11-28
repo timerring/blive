@@ -25,9 +25,36 @@
 - **范围广**：多线程同时监听数个直播间，同时录制内容并投稿。
 - **空间小**：自动删除已上传的往期直播回放，节省空间，硬盘空间可以重复利用。
 - **灵活高**：模版化自定义投稿，支持自定义投稿分区，动态内容，视频描述，视频标题，视频标签等，同时支持多P上传。
-- **自动检测合并**：对于网络问题或者连线导致的视频流分段，支持自动检测并按小时合并视频片段。
+- **自动检测合并**：对于网络问题或者连线导致的视频流分段，支持自动检测并合并成为完整视频片段。
 - **弹幕版视频**：录制视频同时录制弹幕文件（包含普通弹幕，付费弹幕以及礼物上舰等信息），支持自动转换xml为ass弹幕文件并且渲染到视频中形成**有弹幕版视频**，转换完成后即在上传队列中自动上传。
 - **硬件要求低**：无需GPU，只需最基础的单核CPU搭配最低的运存即可完成录制，渲染，上传等等全部过程，10年前的电脑或服务器依然可以使用！
+- **(:tada:NEW)自动渲染字幕**(如需使用本功能，则需保证有 Nvidia 显卡)：采用 OpenAI 的开源模型 `whisper`，自动识别视频语音并转换为字幕渲染至视频中。
+
+项目架构流程如下：
+
+```mermaid
+graph TD
+
+        User((用户))---->startRecord(启动录制)
+        startRecord(启动录制)--保存视频和字幕文件-->videoFolder[(Video 文件夹)]
+
+        User((用户))---->startUploadNoDanmaku(启动无弹幕版视频上传)
+        videoFolder[(Video 文件夹)]<--实时上传-->startUploadNoDanmaku(启动无弹幕版视频上传)
+
+        User((用户))---->startScan(启动扫描 Video 文件夹)
+        videoFolder[(Video 文件夹)]<--间隔两分钟扫描一次-->startScan(启动扫描 Video 文件夹)
+        startScan  --判断是否有弹幕-->ifDanmaku{判断}
+        ifDanmaku -->|有弹幕| DanmakuFactory[DanmakuFactory]
+        ifDanmaku -->|无弹幕| ffmpeg[ffmpeg]
+        DanmakuFactory[DanmakuFactory] --自动转换弹幕--> ffmpeg[ffmpeg]
+        ffmpeg[ffmpeg] --压制视频--> whisper[whisperASR模型]
+        whisper[whisperASR模型] --生成字幕--> ffmpeg1[ffmpeg]
+        ffmpeg1[ffmpeg] --渲染字幕 --> uploadQueue[(上传队列)]
+
+        User((用户))---->startUpload(启动有弹幕版视频上传进程)
+        startUpload(启动有弹幕版视频上传进程) <--扫描队列并上传视频--> uploadQueue[(上传队列)]
+```
+
 
 ## 3. 测试硬件
 + OS: Ubuntu 22.04.4 LTS
@@ -59,12 +86,25 @@
  
 ### 4.1 安装环境
 ```
-# 安装所需依赖
+# 安装所需依赖 推荐先 conda 创建虚拟环境
 pip install -r requirements.txt
 
 # 记录项目根目录
 ./setRoutineTask.sh && source ~/.bashrc
 ```
+如果需要使用自动渲染字幕功能，模型基本参数及链接如下，注意 GPU 显存必须大于所需 VRAM：
+
+|  Size  | Parameters | Multilingual model | Required VRAM |
+|:------:|:----------:|:------------------:|:-------------:|
+|  tiny  |    39 M    |       [`tiny`](https://openaipublic.azureedge.net/main/whisper/models/65147644a518d12f04e32d6f3b26facc3f8dd46e5390956a9424a650c0ce22b9/tiny.pt)       |     ~1 GB     |
+|  base  |    74 M    |       [`base`](https://openaipublic.azureedge.net/main/whisper/models/ed3a0b6b1c0edf879ad9b11b1af5a0e6ab5db9205f891f668f8b0e6c6326e34e/base.pt)       |     ~1 GB     |
+| small  |   244 M    |      [`small`](https://openaipublic.azureedge.net/main/whisper/models/9ecf779972d90ba49c06d968637d720dd632c55bbf19d441fb42bf17a411e794/small.pt)       |     ~2 GB     |
+| medium |   769 M    |      [`medium`](https://openaipublic.azureedge.net/main/whisper/models/345ae4da62f9b3d59415adc60127b97c714f32e89e936602e85993674d08dcb1/medium.pt)      |     ~5 GB     |
+| large  |   1550 M   |      [`large`](https://openaipublic.azureedge.net/main/whisper/models/81f7c96c852ee8fc832187b0132e569d6c3065a3252ed18e56effd0b6a73e524/large-v2.pt)       |    ~10 GB     |
+
+> [!NOTE]
+> 由于 github 单个文件限制，本仓库内只保留了 tiny 模型，如需使用其他模型，请自行下载所需模型文件，并放置在 `src/subtitle/models` 文件夹中。
+
 ### 4.2 biliup-rs 登录
 
 首先按照 [biliup-rs](https://github.com/biliup/biliup-rs) 登录b站，将登录产生的`cookies.json`文件复制一份到项目根目录中。
