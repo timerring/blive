@@ -21,14 +21,14 @@
 
 ## 2. Major features
 
-- **速度快**：录制的同时可以选择启动无弹幕版视频的上传进程，下播延迟检测后即可直接上线平台。
-- **范围广**：多线程同时监听数个直播间，同时录制内容并投稿。
-- **空间小**：自动删除已上传的往期直播回放，节省空间，硬盘空间可以重复利用。
-- **灵活高**：模版化自定义投稿，支持自定义投稿分区，动态内容，视频描述，视频标题，视频标签等，同时支持多P上传。
-- **自动检测合并**：对于网络问题或者连线导致的视频流分段，支持自动检测并合并成为完整视频片段。
-- **弹幕版视频**：录制视频同时录制弹幕文件（包含普通弹幕，付费弹幕以及礼物上舰等信息），支持自动转换xml为ass弹幕文件并且渲染到视频中形成**有弹幕版视频**，转换完成后即在上传队列中自动上传。
-- **硬件要求低**：无需GPU，只需最基础的单核CPU搭配最低的运存即可完成录制，渲染，上传等等全部过程，10年前的电脑或服务器依然可以使用！
-- **(:tada:NEW)自动渲染字幕**(如需使用本功能，则需保证有 Nvidia 显卡)：采用 OpenAI 的开源模型 `whisper`，自动识别视频语音并转换为字幕渲染至视频中。
+- **速度快**：录制的同时可以选择启动无弹幕版视频的上传进程，下播即上线平台。
+- **多房间**：同时录制多个直播间内容视频以及弹幕文件（包含普通弹幕，付费弹幕以及礼物上舰等信息）。
+- **占用小**：自动删除本地已上传的视频，极致节省空间。
+- **灵活高**：模版化自定义投稿，支持自定义投稿分区，动态内容，视频描述，视频标题，视频标签等。
+- **检测片段并合并**：对于网络问题或者直播连线导致的视频流分段，能够自动检测合并成为完整视频。
+- **渲染弹幕版视频**：自动转换xml为ass弹幕文件并且渲染到视频中形成**有弹幕版视频**并自动上传。
+- **硬件要求极低**：无需GPU，只需最基础的单核CPU搭配最低的运存即可完成录制，弹幕渲染，上传等等全部过程，无最低配置要求，10年前的电脑或服务器依然可以使用！
+- **( :tada: NEW)自动渲染字幕**(如需使用本功能，则需保证有 Nvidia 显卡)：采用 OpenAI 的开源模型 [`whisper`](https://github.com/openai/whisper)，自动识别视频内语音并转换为字幕渲染至视频中。
 
 项目架构流程如下：
 
@@ -92,7 +92,7 @@ pip install -r requirements.txt
 # 记录项目根目录
 ./setRoutineTask.sh && source ~/.bashrc
 ```
-如果需要使用自动渲染字幕功能，模型基本参数及链接如下，注意 GPU 显存必须大于所需 VRAM：
+如果需要使用自动渲染字幕功能，模型参数及链接如下，注意 GPU 显存必须大于所需 VRAM：
 
 |  Size  | Parameters | Multilingual model | Required VRAM |
 |:------:|:----------:|:------------------:|:-------------:|
@@ -103,7 +103,9 @@ pip install -r requirements.txt
 | large  |   1550 M   |      [`large`](https://openaipublic.azureedge.net/main/whisper/models/81f7c96c852ee8fc832187b0132e569d6c3065a3252ed18e56effd0b6a73e524/large-v2.pt)       |    ~10 GB     |
 
 > [!NOTE]
-> 由于 github 单个文件限制，本仓库内只保留了 tiny 模型，如需使用其他模型，请自行下载所需模型文件，并放置在 `src/subtitle/models` 文件夹中。
+> 1. 项目默认采用 [`small`](https://openaipublic.azureedge.net/main/whisper/models/9ecf779972d90ba49c06d968637d720dd632c55bbf19d441fb42bf17a411e794/small.pt) 模型，请自行下载所需文件，并放置在 `src/subtitle/models` 文件夹中。
+> 2. 由于 github 单个文件上限是 100MB，因此本仓库内只保留了 tiny 模型以供试用，如需试用请将 `settings.ini` 文件中的 `Mode` 参数设置为模型对应Size名称`tiny`，使用其他参数量模型同理。
+> 3. 如果追求识别准确率，推荐使用参数量 `small` 及以上的模型。
 
 ### 4.2 biliup-rs 登录
 
@@ -120,6 +122,8 @@ pip install -r requirements.txt
 ./startRecord.sh
 ```
 ### 4.4 启动自动上传
+有弹幕版视频和无弹幕版视频的上传是独立的，可以同时进行，也可以单独启用。
+
 #### 4.4.1 无弹幕版视频自动上传
 
 - 投稿的配置文件为 `upload_config.json`，可以参考给出的示例添加。
@@ -131,6 +135,8 @@ pip install -r requirements.txt
 ```
 
 #### 4.4.2 弹幕版视频渲染与自动上传
+
+> 请先确保你已经完成了 4.1 步骤，下载并放置了模型文件。
 
 ##### 启动弹幕渲染进程
 
@@ -178,3 +184,4 @@ pip install -r requirements.txt
 - [hihkm/DanmakuFactory](https://github.com/hihkm/DanmakuFactory)
 - [acgnhiki/blrec](https://github.com/acgnhiki/blrec)
 - [qqyuanxinqq/AutoUpload_Blrec](https://github.com/qqyuanxinqq/AutoUpload_Blrec)
+- [OpenAI/whisper](https://github.com/OpenAI/whisper)
