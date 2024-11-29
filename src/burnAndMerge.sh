@@ -66,6 +66,12 @@ ffmpeg -f concat -safe 0 -i mergevideo.txt -use_wallclock_as_timestamps 1 -c cop
 rm -r $tmpDir
 rm mergevideo.txt
 
-echo "==================== start upload $firstOutputFile ===================="
-echo "$firstOutputFile" >> $BILIVE_PATH/src/uploadProcess/uploadVideoQueue.txt
-echo "==================== OVER ===================="
+python $BILIVE_PATH/src/subtitle/generate.py $firstOutputFile > $BILIVE_PATH/logs/burningLog/subtitlesGenerate-$(date +%Y%m%d%H%M%S).log 2>&1
+srtPath=${firstOutputFile%.*}".srt"
+videoUploadPath=${firstOutputFile%.*}"-s.mp4"
+ffmpeg -hwaccel cuda -c:v h264_cuvid -i "$firstOutputFile" -c:v h264_nvenc -vf "subtitles=$srtPath" "$videoUploadPath" -y -nostdin > $BILIVE_PATH/logs/burningLog/subtitlesRender-$(date +%Y%m%d%H%M%S).log 2>&1
+rm $srtPath
+rm $firstOutputFile
+
+echo "==================== add $videoUploadPath to upload queue ===================="
+echo "$videoUploadPath" >> $BILIVE_PATH/src/uploadProcess/uploadVideoQueue.txt

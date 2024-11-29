@@ -21,7 +21,7 @@ uploadPath=$1
 # extract the roomid and date information
 fileName=$(basename "$uploadPath")
 # use regular expression to match the parameter
-if [[ $fileName =~ ([0-9]+)_([0-9]{4})-([0-9]{2})-([0-9]{2})-([0-9]{2})\.mp4 ]]; then
+if [[ $fileName =~ ([0-9]+)_([0-9]{4})-([0-9]{2})-([0-9]{2})-([0-9]{2})-s\.mp4 ]]; then
     roomID="${BASH_REMATCH[1]}"
     year="${BASH_REMATCH[2]}"
     month="${BASH_REMATCH[3]}"

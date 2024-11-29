@@ -25,7 +25,8 @@ CheckAndProcessFolder() {
             detectName=$(basename "$mp4File")
 
             # This length to prevent processing the burned videos again!
-            if [ ${#detectName} -gt 27 ]; then
+            # The roomid is less 10, so the length of detectName is 28.
+            if [ ${#detectName} -gt 28 ]; then
                 echo $mp4File > ./src/sameSegments.txt
 
                 # Find the same date and hour video

@@ -73,5 +73,12 @@ echo "ffmpeg successfully complete!"
 # Delete the original video.
 rm $fullPath
 
-# Upload video.
-echo "$formatVideoName" >> $BILIVE_PATH/src/uploadProcess/uploadVideoQueue.txt
+python $BILIVE_PATH/src/subtitle/generate.py $formatVideoName > $BILIVE_PATH/logs/burningLog/subtitlesGenerate-$(date +%Y%m%d%H%M%S).log 2>&1
+srtPath=${formatVideoName%.*}".srt"
+videoUploadPath=${formatVideoName%.*}"-s.mp4"
+ffmpeg -hwaccel cuda -c:v h264_cuvid -i "$formatVideoName" -c:v h264_nvenc -vf "subtitles=$srtPath" "$videoUploadPath" -y -nostdin > $BILIVE_PATH/logs/burningLog/subtitlesRender-$(date +%Y%m%d%H%M%S).log 2>&1
+rm $srtPath
+rm $formatVideoName
+
+echo "==================== add $videoUploadPath to upload queue ===================="
+echo "$videoUploadPath" >> $BILIVE_PATH/src/uploadProcess/uploadVideoQueue.txt
