@@ -22,6 +22,7 @@ while read -r line; do
     xmlFile=${line%.mp4}.xml
     assFile=${line%.mp4}.ass
     if [ -f "$xmlFile" ]; then
+        python $BILIVE_PATH/src/utils/adjustPrice.py $xmlFile
         $BILIVE_PATH/src/utils/DanmakuFactory -o "$assFile" -i "$xmlFile" --msgboxfontsize 30 --msgboxsize 400x1000 --ignore-warnings
         echo "==================== generated $assFile ===================="
         export ASS_PATH="$assFile"
@@ -57,6 +58,7 @@ while read -r line; do
     rm ${line%.mp4}.*
 done < ./src/sameSegments.txt
 
+rm $BILIVE_PATH/src/sameSegments.txt
 # merge the videos
 echo "==================== merge starts ===================="
 # echo "ffmpeg -f concat -i mergevideo.txt -c copy $firstOutputFile"

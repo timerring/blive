@@ -47,6 +47,7 @@ assPath="${path}/${roomid}_${year}-${month}-${day}-${hour}.ass"
 # use DanmakuFactory to convert the xml file
 xmlPath="${filenameWithoutExt}.xml"
 if [ -f "$xmlPath" ]; then
+    python $BILIVE_PATH/src/utils/adjustPrice.py $xmlPath
     $BILIVE_PATH/src/utils/DanmakuFactory -o "$assPath" -i "$xmlPath" --msgboxfontsize 30 --ignore-warnings
     rm $xmlPath
     echo “danmaku convert success!”
