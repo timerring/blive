@@ -70,7 +70,7 @@ echo "The parameters have been updated in the $copyYamlFile"
 # Use biliup tool to upload video, and then delete the subtitle ass file and video file.
 if $BILIVE_PATH/src/uploadProcess/biliup upload "$uploadPath" --config "$copyYamlFile"; then
     echo "Upload successfully，then delete the video"
-    # rm $uploadPath
+    rm $uploadPath
 else
     echo "Fail to upload, the files will be reserve."
     exit 1
