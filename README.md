@@ -45,9 +45,8 @@ graph TD
         videoFolder[(Video 文件夹)]<--间隔两分钟扫描一次-->startScan(启动扫描 Video 文件夹)
         startScan  --判断是否有弹幕-->ifDanmaku{判断}
         ifDanmaku -->|有弹幕| DanmakuFactory[DanmakuFactory]
-        ifDanmaku -->|无弹幕| ffmpeg[ffmpeg]
-        DanmakuFactory[DanmakuFactory] --自动转换弹幕--> ffmpeg[ffmpeg]
-        ffmpeg[ffmpeg] --压制视频--> whisper[whisperASR模型]
+        ifDanmaku -->|无弹幕| whisper[whisperASR模型]
+        DanmakuFactory[DanmakuFactory] --自动转换弹幕--> whisper[whisperASR模型]
         whisper[whisperASR模型] --生成字幕--> ffmpeg1[ffmpeg]
         ffmpeg1[ffmpeg] --渲染字幕 --> uploadQueue[(上传队列)]
 
