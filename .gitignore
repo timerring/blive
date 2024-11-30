@@ -392,3 +392,5 @@ cookies.json
 # The model files exceeds the size limit 100MB of github, so download them separately.
 src/subtitle/models/base.pt
 src/subtitle/models/small.pt
+
+test/
