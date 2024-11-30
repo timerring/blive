@@ -61,8 +61,8 @@ while read -r line; do
     fi
     
     # Delete the related items of videos
-    # rm ${line%.mp4}.*
-    mv $line ${line%.mp4}
+    rm ${line%.mp4}.*
+    # mv $line ${line%.mp4}
 done < ./src/sameSegments.txt
 
 rm $BILIVE_PATH/src/sameSegments.txt
@@ -72,9 +72,9 @@ echo "==================== merge starts ===================="
 ffmpeg -f concat -safe 0 -i mergevideo.txt -use_wallclock_as_timestamps 1 -c copy $firstOutputFile > $BILIVE_PATH/logs/mergeLog/merge-$(date +%Y%m-%d-%H%M%S).log 2>&1
 
 # delete useless videos and lists
-# rm -r $tmpDir
+rm -r $tmpDir
 rm mergevideo.txt
-# rm $firstOutputFile
+rm $firstOutputFile
 
 echo "==================== add $videoUploadPath to upload queue ===================="
 echo "$firstOutputFile" >> $BILIVE_PATH/src/uploadProcess/uploadVideoQueue.txt

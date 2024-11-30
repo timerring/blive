@@ -68,11 +68,11 @@ fi
 echo "ffmpeg successfully complete!"
 
 # Delete the original video.
-# rm $fullPath
-# rm $xmlPath
-# rm $assPath
-# rm $srtPath
-mv $fullPath ${fullPath%.*}
+rm $fullPath
+rm $xmlPath
+rm $assPath
+rm $srtPath
+# mv $fullPath ${fullPath%.*}
 
 echo "==================== add $formatVideoName to upload queue ===================="
 echo "$formatVideoName" >> $BILIVE_PATH/src/uploadProcess/uploadVideoQueue.txt
