@@ -15,6 +15,22 @@ def update_sc_prices(file_path):
             new_price = int(price) / 1000
             sc.set('price', str(int(new_price)))
 
+    for guard in root.findall('guard'):
+        # Get the current price
+        price_guard = guard.get('price')
+        if price_guard is not None:
+            # Convert price to integer, divide by 1000, and update the attribute
+            new_price_guard = int(price_guard) / 1000
+            guard.set('price', str(int(new_price_guard)))
+    
+    for toast in root.findall('toast'):
+        # Get the current price
+        price_toast = toast.get('price')
+        if price_toast is not None:
+            # Convert price to integer, divide by 1000, and update the attribute
+            new_price_toast = int(price_toast) / 1000
+            toast.set('price', str(int(new_price_toast)))
+            
     # Write the updated XML back to the file
     tree.write(file_path, encoding='utf-8', xml_declaration=True)
 
