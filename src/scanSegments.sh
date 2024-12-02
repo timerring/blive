@@ -44,9 +44,9 @@ CheckAndProcessFolder() {
                 lineCount=$(wc -l < "./src/sameSegments.txt")
                 echo "$lineCount"
                 if [ $lineCount -gt 1 ]; then
-                    $BILIVE_PATH/src/burnAndMerge.sh ./src/sameSegments.txt
+                    python -m src.burn.render_and_merge
                 else
-                    $BILIVE_PATH/src/danmakuBurning.sh $mp4File
+                    python -m src.burn.only_render $mp4File
                 fi
             fi
         fi
