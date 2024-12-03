@@ -1,3 +1,5 @@
+# Copyright (c) 2024 bilive.
+
 import os
 from pathlib import Path
 from datetime import datetime
