@@ -2,7 +2,6 @@
 
 import os
 from pathlib import Path
-from fsplit.filesplit import Filesplit
 import configparser
 import platform
 import stat
