@@ -53,8 +53,8 @@ def process_danmakus(in_xml_path, resolution):
             subtitle_font_size = '16'
         elif resolution == '1080x1920':
             boxsize = '500x1920'
-            boxfont = '45'
-            danmakufont = '45'
+            boxfont = '50'
+            danmakufont = '50'
             subtitle_font_size = '8'
         elif resolution == '720x1280':
             boxsize = '500x1280'
