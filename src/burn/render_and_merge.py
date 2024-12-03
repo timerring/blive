@@ -1,3 +1,5 @@
+# Copyright (c) 2024 bilive.
+
 import argparse
 import os
 import subprocess
@@ -7,13 +9,21 @@ from src.burn.generate_subtitles import generate_subtitles
 from src.burn.render_video import render_video
 
 
-def format_video_filename(filename):
-    parts = filename.rsplit('/', 1)[-1].split('_')
+def normalize_video_path(filepath):
+    """Normalize the video path to upload
+    Args:
+        filepath: str, the path of video
+    """
+    parts = filepath.rsplit('/', 1)[-1].split('_')
     date_time_parts = parts[1].split('-')
     new_date_time = f"{date_time_parts[0][:4]}-{date_time_parts[0][4:6]}-{date_time_parts[0][6:8]}-{date_time_parts[1]}"
-    return filename.rsplit('/', 1)[0] + '/' + parts[0] + '_' + new_date_time + '.mp4'
+    return filepath.rsplit('/', 1)[0] + '/' + parts[0] + '_' + new_date_time + '.mp4'
 
 def merge_videos(in_final_video):
+    """Merge the video segments
+    Args:
+        in_final_video: str, the path of videos will be merged
+    """
     merge_command = [
     'ffmpeg', '-f', 'concat', '-safe', '0', '-i', 'mergevideo.txt', '-use_wallclock_as_timestamps', '1', 
     '-c', 'copy', in_final_video
@@ -38,7 +48,7 @@ if __name__ == '__main__':
                 video_name = os.path.basename(stripped_line)
                 tmp = directory + '/tmp/'
                 if output_video_path == '':
-                    output_video_path = format_video_filename(stripped_line)
+                    output_video_path = normalize_video_path(stripped_line)
                     print("The output video is " + output_video_path)
                     subprocess.run(['mkdir', tmp])
                 
@@ -65,13 +75,13 @@ if __name__ == '__main__':
                     f.write(f"file '{video_to_be_merged}'\n")
                 print("complete danamku burning and wait for uploading!")
         
-            # for remove_path in [original_video_path, xml_path, ass_path, srt_path, jsonl_path]:
-            #     if os.path.exists(remove_path):
-            #         os.remove(remove_path)
+            for remove_path in [original_video_path, xml_path, ass_path, srt_path, jsonl_path]:
+                if os.path.exists(remove_path):
+                    os.remove(remove_path)
             
             # For test part
-            test_path = original_video_path[:-4]
-            os.rename(original_video_path, test_path)
+            # test_path = original_video_path[:-4]
+            # os.rename(original_video_path, test_path)
 
     subprocess.run(['rm', same_videos_list])
     merge_videos(output_video_path)

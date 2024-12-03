@@ -1,7 +1,14 @@
+# Copyright (c) 2024 bilive.
+
 import xml.etree.ElementTree as ET
 import argparse
 
 def update_sc_prices(file_path):
+    """Adjust the price of sc and guard, see this:
+            https://github.com/hihkm/DanmakuFactory/issues/53
+    Args:
+        file_path: str, the path of xml danmaku file
+    """
     # Parse the XML file
     tree = ET.parse(file_path)
     root = tree.getroot()
@@ -10,7 +17,7 @@ def update_sc_prices(file_path):
     for sc in root.findall('sc'):
         # Get the current price
         price = sc.get('price')
-        if price is not None:
+        if int(price) > 10000:
             # Convert price to integer, divide by 1000, and update the attribute
             new_price = int(price) / 1000
             sc.set('price', str(int(new_price)))
@@ -18,7 +25,7 @@ def update_sc_prices(file_path):
     for guard in root.findall('guard'):
         # Get the current price
         price_guard = guard.get('price')
-        if price_guard is not None:
+        if int(price_guard) > 10000:
             # Convert price to integer, divide by 1000, and update the attribute
             new_price_guard = int(price_guard) / 1000
             guard.set('price', str(int(new_price_guard)))
@@ -26,7 +33,7 @@ def update_sc_prices(file_path):
     for toast in root.findall('toast'):
         # Get the current price
         price_toast = toast.get('price')
-        if price_toast is not None:
+        if int(price_toast) > 10000:
             # Convert price to integer, divide by 1000, and update the attribute
             new_price_toast = int(price_toast) / 1000
             toast.set('price', str(int(new_price_toast)))

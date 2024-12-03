@@ -1,3 +1,5 @@
+# Copyright (c) 2024 bilive.
+
 import sys
 import os
 # In order to test separately

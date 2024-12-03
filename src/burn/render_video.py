@@ -1,8 +1,16 @@
+# Copyright (c) 2024 bilive.
+
 import subprocess
 import src.allconfig
 import os
 
 def render_video(in_video_path, out_video_path, in_subtitle_font_size):
+    """Burn the danmakus and subtitles into the videos
+    Args:
+        in_video_path: str, the path of video
+        out_video_path: str, the path of rendered video
+        in_subtitle_font_size: str, the font size of subtitles
+    """
     in_ass_path = in_video_path[:-4] + '.ass'
     if src.allconfig.GPU_EXIST:
         in_srt_path = in_video_path[:-4] + '.srt'
