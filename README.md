@@ -91,7 +91,7 @@ pip install -r requirements.txt
 # 记录项目根目录
 ./setRoutineTask.sh && source ~/.bashrc
 ```
-如果需要使用自动渲染字幕功能，模型参数及链接如下，注意 GPU 显存必须大于所需 VRAM：
+如果需要使用自动识别并渲染字幕功能，模型参数及链接如下，注意 GPU 显存必须大于所需 VRAM：
 
 |  Size  | Parameters | Multilingual model | Required VRAM |
 |:------:|:----------:|:------------------:|:-------------:|
@@ -105,6 +105,7 @@ pip install -r requirements.txt
 > 1. 项目默认采用 [`small`](https://openaipublic.azureedge.net/main/whisper/models/9ecf779972d90ba49c06d968637d720dd632c55bbf19d441fb42bf17a411e794/small.pt) 模型，请自行下载所需文件，并放置在 `src/subtitle/models` 文件夹中。
 > 2. 由于 github 单个文件上限是 100MB，因此本仓库内只保留了 tiny 模型以供试用，如需试用请将 `settings.ini` 文件中的 `Mode` 参数设置为模型对应Size名称`tiny`，使用其他参数量模型同理。
 > 3. 如果追求识别准确率，推荐使用参数量 `small` 及以上的模型。
+> 4. 如果无 GPU，请勿开启此功能，并将 `src/allconfig.py` 文件中的 `GPU_EXIST` 参数设置为 `False`。
 
 ### 4.2 biliup-rs 登录
 
@@ -123,7 +124,7 @@ pip install -r requirements.txt
 ### 4.4 启动自动上传
 有弹幕版视频和无弹幕版视频的上传是独立的，可以同时进行，也可以单独启用。
 
-#### 4.4.1 无弹幕版视频自动上传
+#### 4.4.1 无弹幕版视频自动上传(WIP，下个版本上线，先跳过本步)
 
 - 投稿的配置文件为 `upload_config.json`，可以参考给出的示例添加。
 - 请在将一级键值名称取为**字符串格式**的对应直播间的房间号（4位数以上）。
