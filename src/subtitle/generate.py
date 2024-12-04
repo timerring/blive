@@ -309,10 +309,7 @@ if __name__ == '__main__':
     if hasattr(args, 'help'):
         exit()
 
-    # 1. acquire video path
     video_path = args.filename or input(f"{config.get_interface_config()['Main']['InputFile']}").strip()
-    # 2. create subtitle generator object, specify language
     sg = SubtitleGenerator(video_path, language='zh-cn')
-    # 3. run program
     print('Start project.')
     sg.run()
