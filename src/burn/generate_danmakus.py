@@ -23,7 +23,7 @@ def get_resolution(in_video_path):
             check=True
         )
         resolution = result.stdout.strip()
-        print("The video resolution is" + resolution)
+        print("The video resolution is " + resolution, flush=True)
         return resolution
     except subprocess.CalledProcessError as e:
         print(f"Error: {e.stderr}")
@@ -71,5 +71,5 @@ def process_danmakus(in_xml_path, resolution):
         subprocess.run([src.allconfig.DanmakuFactory_PATH, "-o", in_ass_path, "-i", in_xml_path, "--resolution", resolution, "--msgboxsize", boxsize, "--msgboxfontsize", boxfont, "-S", danmakufont, "--ignore-warnings"])
         # Remove emojis from ass danmakus (the ffmpeg do not support emojis)
         remove_emojis(in_ass_path)
-        print(f"The {in_ass_path} has been processed.")
+        print(f"The {in_ass_path} has been processed.", flush=True)
         return subtitle_font_size

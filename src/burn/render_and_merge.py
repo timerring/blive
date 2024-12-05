@@ -70,7 +70,7 @@ def render_and_merge(video_path_list):
                 open(merge_list, 'w').close() 
             with open(merge_list, 'a') as f:
                 f.write(f"file '{video_to_be_merged}'\n")
-            print("complete danamku burning and wait for uploading!")
+            print("complete danamku burning and wait for uploading!", flush=True)
     
         # for remove_path in [original_video_path, xml_path, ass_path, srt_path, jsonl_path]:
         #     if os.path.exists(remove_path):

@@ -16,13 +16,13 @@ def remove_emojis(danmaku_file):
 
         result = re.sub(regex, "", originalFile, 0, re.MULTILINE)
         if result:
-            print(f"The emojis of {danmaku_file} are removed.")
+            print(f"The emojis of {danmaku_file} are removed.", flush=True)
             with open(danmaku_file, 'w', encoding='utf-8') as output_file:
                 output_file.write(result)
     except FileNotFoundError:
-        print("file not exists.")
+        print("file not exists.", flush=True)
     except UnicodeDecodeError:
-        print("The file encoding may be inconsistent with the specified UTF-8 encoding.")
+        print("The file encoding may be inconsistent with the specified UTF-8 encoding.", flush=True)
 
 if __name__ == '__main__':
     # Read and define variables

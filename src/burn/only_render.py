@@ -18,8 +18,9 @@ def normalize_video_path(filepath):
     new_date_time = f"{date_time_parts[0][:4]}-{date_time_parts[0][4:6]}-{date_time_parts[0][6:8]}-{date_time_parts[1]}"
     return filepath.rsplit('/', 1)[0] + '/' + parts[0] + '_' + new_date_time + '-upload.mp4'
 
-def render_video_only(original_video_path):
-    format_video_path = normalize_video_path(str(original_video_path))
+def render_video_only(video_path):
+    original_video_path = str(video_path)
+    format_video_path = normalize_video_path(original_video_path)
     xml_path = original_video_path[:-4] + '.xml'
     ass_path = original_video_path[:-4] + '.ass'
     srt_path = original_video_path[:-4] + '.srt'
@@ -37,7 +38,7 @@ def render_video_only(original_video_path):
 
     # Burn danmaku or subtitles into the videos 
     render_video(original_video_path, format_video_path, subtitle_font_size)
-    print("complete danamku burning and wait for uploading!")
+    print("complete danamku burning and wait for uploading!", flush=True)
 
     # # Delete relative files
     # for remove_path in [original_video_path, xml_path, ass_path, srt_path, jsonl_path]:

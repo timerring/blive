@@ -11,7 +11,7 @@ def process_folder(folder_path):
     # Don't process the recording folder
     flv_files = list(Path(folder_path).glob('*.flv'))
     if flv_files:
-        print(f"Found flv files in {folder_path}. Skipping.")
+        print(f"Found flv files in {folder_path}. Skipping.", flush=True)
         return
 
     files_by_date = {}
@@ -29,9 +29,11 @@ def process_folder(folder_path):
         if len(files) > 1:
             # If there are multiple segments with the same date, merge them
             sorted_files = sorted(files, key=lambda x: x.stem.split('_')[1])
+            print(f"Merging {sorted_files}...", flush=True)
             render_and_merge(sorted_files)
         else:
             for file in files:
+                print(f"Processing {file}...", flush=True)
                 render_video_only(file)
 
 if __name__ == "__main__":
