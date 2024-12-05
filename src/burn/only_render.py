@@ -49,9 +49,9 @@ if __name__ == '__main__':
         if os.path.exists(remove_path):
             os.remove(remove_path)
     
-    # For test
+    # # For test
     # test_path = original_video_path[:-4]
     # os.rename(original_video_path, test_path)
 
-    with open(f"{src.allconfig.SRC_DIR}/uploadProcess/uploadVideoQueue.txt", "a") as file:
+    with open(f"{src.allconfig.SRC_DIR}/upload/uploadVideoQueue.txt", "a") as file:
         file.write(f"{format_video_path}\n")
