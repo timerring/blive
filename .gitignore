@@ -394,3 +394,5 @@ src/subtitle/models/base.pt
 src/subtitle/models/small.pt
 
 test/
+
+src/upload/upload.yaml

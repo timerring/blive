@@ -4,7 +4,7 @@
     <img src="assets/headerLight.svg" alt="BILIVE" />
   </picture>
 
-*7 x 24 小时无人监守录制、渲染弹幕、自动上传，启动项目，人人都是录播员。*
+*7 x 24 小时无人监守录制、渲染弹幕、识别字幕、自动上传，启动项目，人人都是录播员。*
 
 [:page_facing_up: Documentation](#major-features) |
 [:gear: Installation](#quick-start) |
@@ -21,10 +21,10 @@
 
 ## 2. Major features
 
-- **速度快**：录制的同时可以选择启动无弹幕版视频的上传进程，下播即上线平台。
+<!-- - **速度快**：~~录制的同时可以选择启动无弹幕版视频的上传进程，下播即上线平台~~。(无弹幕版暂缓上线，等维护完成下一个版本上线) -->
 - **多房间**：同时录制多个直播间内容视频以及弹幕文件（包含普通弹幕，付费弹幕以及礼物上舰等信息）。
 - **占用小**：自动删除本地已上传的视频，极致节省空间。
-- **灵活高**：模版化自定义投稿，支持自定义投稿分区，动态内容，视频描述，视频标题，视频标签等。
+- **模版化**：无需复杂配置，开箱即用，( :tada: NEW)通过 b 站搜索建议接口自动抓取相关热门标签。
 - **检测片段并合并**：对于网络问题或者直播连线导致的视频流分段，能够自动检测合并成为完整视频。
 - **渲染弹幕版视频**：自动转换xml为ass弹幕文件并且渲染到视频中形成**有弹幕版视频**并自动上传。
 - **硬件要求极低**：无需GPU，只需最基础的单核CPU搭配最低的运存即可完成录制，弹幕渲染，上传等等全部过程，无最低配置要求，10年前的电脑或服务器依然可以使用！
@@ -85,12 +85,14 @@ graph TD
  
 ### 4.1 安装环境
 ```
+# 进入项目目录
+cd bilive
 # 安装所需依赖 推荐先 conda 创建虚拟环境
 pip install -r requirements.txt
-
 # 记录项目根目录
-./setRoutineTask.sh && source ~/.bashrc
+./setPath.sh && source ~/.bashrc
 ```
+以下功能默认开启，如果无 GPU，请直接看 4.2 节，并将 `src/allconfig.py` 文件中的 `GPU_EXIST` 参数设置为 `False`。
 如果需要使用自动识别并渲染字幕功能，模型参数及链接如下，注意 GPU 显存必须大于所需 VRAM：
 
 |  Size  | Parameters | Multilingual model | Required VRAM |
@@ -105,7 +107,6 @@ pip install -r requirements.txt
 > 1. 项目默认采用 [`small`](https://openaipublic.azureedge.net/main/whisper/models/9ecf779972d90ba49c06d968637d720dd632c55bbf19d441fb42bf17a411e794/small.pt) 模型，请自行下载所需文件，并放置在 `src/subtitle/models` 文件夹中。
 > 2. 由于 github 单个文件上限是 100MB，因此本仓库内只保留了 tiny 模型以供试用，如需试用请将 `settings.ini` 文件中的 `Mode` 参数设置为模型对应Size名称`tiny`，使用其他参数量模型同理。
 > 3. 如果追求识别准确率，推荐使用参数量 `small` 及以上的模型。
-> 4. 如果无 GPU，请勿开启此功能，并将 `src/allconfig.py` 文件中的 `GPU_EXIST` 参数设置为 `False`。
 
 ### 4.2 biliup-rs 登录
 
@@ -119,7 +120,7 @@ pip install -r requirements.txt
 然后执行：
 
 ```bash
-./startRecord.sh
+./record.sh
 ```
 ### 4.4 启动自动上传
 有弹幕版视频和无弹幕版视频的上传是独立的，可以同时进行，也可以单独启用。
@@ -129,32 +130,30 @@ pip install -r requirements.txt
 - 投稿的配置文件为 `upload_config.json`，可以参考给出的示例添加。
 - 请在将一级键值名称取为**字符串格式**的对应直播间的房间号（4位数以上）。
 
-然后执行：
-```bash
-./startUploadNoDanmaku.sh
-```
-
 #### 4.4.2 弹幕版视频渲染与自动上传
 
 > 请先确保你已经完成了 4.1 步骤，下载并放置了模型文件。
+> 否则，请将 `src/allconfig.py` 文件中的 `GPU_EXIST` 参数设置为 `False`
 
 ##### 启动弹幕渲染进程
 
-输入以下指令即可开始检测已录制的视频并且自动合并分段，自动进行弹幕转换与渲染的过程：
+输入以下指令即可检测已录制的视频并且自动合并分段，自动进行弹幕转换，字幕识别与渲染的过程：
 
 ```bash
-./startScan.sh
+./scan.sh
 ```
 
 ##### 启动自动上传进程
 
-参照 `upload/config` 文件夹内的 `22230707.yaml` 模板，添加你需要录制的房间信息，如有多个房间，请添加多个`roomid.yaml`文件，具体见[biliup-rs上传文档](https://biliup.github.io/biliup-rs/Guide.html#useage)。
-
-输入以下指令即可自动使上传队列中的视频匹配对应模版并自动上传：
-
 ```bash
-./startUpload.sh
+./upload.sh
 ```
+
+> [!TIP]
+> 上传默认参数如下，[]中内容全部自动替换。也可在 src/upload/extract_video_info.py 中自定义相关配置：
+> + 默认标题是"【弹幕】[XXX]直播回放-[日期]-[直播间标题]"。
+> + 默认描述是"【弹幕+字幕】[XXX]直播，直播间地址：[https://live.bilibili.com/XXX] 内容仅供娱乐，直播中主播的言论、观点和行为均由主播本人负责，不代表录播员的观点或立场。"
+> + 默认标签是根据主播名字自动在 b 站搜索推荐中抓取的[热搜词]，详见[bilibili-API-collect](https://github.com/SocialSisterYi/bilibili-API-collect/blob/master/docs/search/suggest.md)。
 
 > [!NOTE]
 > 相应的执行日志请在 `logs` 文件夹中查看。
@@ -168,13 +167,9 @@ pip install -r requirements.txt
 > │   └── ...
 > ├── uploadDanmakuLog # 有弹幕版上传日志
 > │   └── ...
-> ├── uploadNoDanmakuLog # 无弹幕版上传日志
-> │   └── ...
 > ├── blrec.log # startRecord.sh 运行日志
-> ├── removeEmojis.log # 移除弹幕表情日志
 > ├── scanSegments.log # startScan.sh 运行日志
-> ├── uploadQueue.log # startUpload.sh 运行日志
-> └── uploadNoDanmaku.log # startUploadNoDanmaku.sh 运行日志
+> └── upload.log # upload.sh 运行日志
 > ```
 
 ## 特别感谢

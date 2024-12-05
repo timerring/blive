@@ -7,7 +7,7 @@ import src.allconfig
 from src.burn.generate_danmakus import get_resolution, process_danmakus
 from src.burn.generate_subtitles import generate_subtitles
 from src.burn.render_video import render_video
-
+from src.upload.extract_video_info import get_video_info
 
 def normalize_video_path(filepath):
     """Normalize the video path to upload
@@ -19,13 +19,13 @@ def normalize_video_path(filepath):
     new_date_time = f"{date_time_parts[0][:4]}-{date_time_parts[0][4:6]}-{date_time_parts[0][6:8]}-{date_time_parts[1]}"
     return filepath.rsplit('/', 1)[0] + '/' + parts[0] + '_' + new_date_time + '.mp4'
 
-def merge_videos(in_final_video):
-    """Merge the video segments
+def merge_videos(in_final_video, title, artist, date):
+    """Merge the video segments and preserve the first video's metadata
     Args:
         in_final_video: str, the path of videos will be merged
     """
     merge_command = [
-    'ffmpeg', '-f', 'concat', '-safe', '0', '-i', 'mergevideo.txt', '-use_wallclock_as_timestamps', '1', 
+    'ffmpeg', '-f', 'concat', '-safe', '0', '-i', 'mergevideo.txt', '-metadata', f'title={title}', '-metadata', f'artist={artist}', '-metadata', f'date={date}', '-use_wallclock_as_timestamps', '1', 
     '-c', 'copy', in_final_video
     ]
     with open(src.allconfig.MERGE_LOG_PATH, 'a') as mlog:
@@ -35,6 +35,9 @@ def merge_videos(in_final_video):
 if __name__ == '__main__':
     # Define the path to your file
     same_videos_list = src.allconfig.SRC_DIR + '/sameSegments.txt'
+    title = ''
+    artist = ''
+    date = ''
     output_video_path = ''
 
     # Open the file and read it line by line
@@ -48,6 +51,10 @@ if __name__ == '__main__':
                 video_name = os.path.basename(stripped_line)
                 tmp = directory + '/tmp/'
                 if output_video_path == '':
+                    title, artist, date = get_video_info(stripped_line)
+                    #  = video_info['title']
+                    # artist = video_info['artist']
+                    # date = video_info['date']
                     output_video_path = normalize_video_path(stripped_line)
                     print("The output video is " + output_video_path)
                     subprocess.run(['mkdir', tmp])
@@ -75,17 +82,17 @@ if __name__ == '__main__':
                     f.write(f"file '{video_to_be_merged}'\n")
                 print("complete danamku burning and wait for uploading!")
         
-            for remove_path in [original_video_path, xml_path, ass_path, srt_path, jsonl_path]:
-                if os.path.exists(remove_path):
-                    os.remove(remove_path)
+            # for remove_path in [original_video_path, xml_path, ass_path, srt_path, jsonl_path]:
+            #     if os.path.exists(remove_path):
+            #         os.remove(remove_path)
             
             # For test part
-            # test_path = original_video_path[:-4]
-            # os.rename(original_video_path, test_path)
+            test_path = original_video_path[:-4]
+            os.rename(original_video_path, test_path)
 
     subprocess.run(['rm', same_videos_list])
-    merge_videos(output_video_path)
+    merge_videos(output_video_path, title, artist, date)
     subprocess.run(['rm', '-r', tmp])
 
-    with open(f"{src.allconfig.SRC_DIR}/uploadProcess/uploadVideoQueue.txt", "a") as file:
+    with open(f"{src.allconfig.SRC_DIR}/upload/uploadVideoQueue.txt", "a") as file:
         file.write(f"{output_video_path}\n")
