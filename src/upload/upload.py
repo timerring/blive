@@ -11,7 +11,7 @@ import time
 def read_and_delete_lines(file_path):
     while True:
         if os.path.getsize(file_path) == 0:
-            print(f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S')} Empty queue, wait 2 minutes and check again...")
+            print(f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S')} Empty queue, wait 2 minutes and check again...", flush=True)
             time.sleep(120)
             continue
 
@@ -47,7 +47,7 @@ def upload_video(upload_path, yaml_file_path):
         # Check if the command was successful
         if result.returncode == 0:
             print("Upload successfully, then delete the video")
-            # os.remove(upload_path)
+            os.remove(upload_path)
         else:
             print("Fail to upload, the files will be reserved.")
             sys.exit(1)

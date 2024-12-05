@@ -165,11 +165,10 @@ pip install -r requirements.txt
 > │   └── ...
 > ├── mergeLog # 片段合并日志
 > │   └── ...
-> ├── uploadDanmakuLog # 有弹幕版上传日志
+> ├── uploadLog # 视频上传日志
 > │   └── ...
-> ├── blrec.log # startRecord.sh 运行日志
-> ├── scanSegments.log # startScan.sh 运行日志
-> └── upload.log # upload.sh 运行日志
+> ├── blrec.log # record.sh 运行日志
+> └── scan.log # scan.sh 运行日志
 > ```
 
 ## 特别感谢
