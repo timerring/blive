@@ -1,7 +1,7 @@
 # kill the previous scanSegments process
-kill -9 $(pgrep -f scanSegments)
+kill -9 $(pgrep -f src.burn.scan)
 # start the scanSegments process
-nohup $BILIVE_PATH/src/scanSegments.sh > $BILIVE_PATH/logs/scan.log 2>&1 &
+nohup python -m src.burn.scan > $BILIVE_PATH/logs/scanLog/scan-$(date +%Y%m%d-%H%M%S).log 2>&1 &
 # Check if the last command was successful
 if [ $? -eq 0 ]; then
     echo "success"
