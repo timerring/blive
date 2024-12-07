@@ -362,9 +362,6 @@ __pycache__/
 logs/*/*
 !logs/*/.gitkeep
 
-# Ignore login_file folder
-login_file/
-
 # Specific for the MacOS
 .DS_Store
 
@@ -374,17 +371,9 @@ package.json
 pnpm-lock.yaml
 package-lock.json
 
-# Ignore the biliup folder
-src/uploadProcess/config/*
-!src/uploadProcess/config/1234567.yaml
-!src/uploadProcess/config/upload_config.json
-!src/uploadProcess/uploadVideoQueue.txt
-
 # Ignore the production
 startRecord-production.sh
 settings-production.toml
-path.txt
-sameSegments.txt
 
 # Ignore the cookies.json
 cookies.json
@@ -392,7 +381,5 @@ cookies.json
 # The model files exceeds the size limit 100MB of github, so download them separately.
 src/subtitle/models/base.pt
 src/subtitle/models/small.pt
-
-test/
-
+src/burn/mergevideo.txt
 src/upload/upload.yaml

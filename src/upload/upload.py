@@ -18,7 +18,7 @@ def read_and_delete_lines(file_path):
         with open(file_path, "r") as file:
             lines = file.readlines()
             upload_video_path = lines.pop(0).strip()
-            print(f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S')} " + "deal with " + upload_video_path)
+            print(f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S')} " + "deal with " + upload_video_path, flush=True)
             # generate the yaml template
             yaml_template = generate_yaml_template(upload_video_path)
             yaml_file_path = allconfig.SRC_DIR + "/upload/upload.yaml"
