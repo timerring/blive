@@ -46,30 +46,34 @@ def process_danmakus(in_xml_path, resolution):
             boxfont = '28'
             danmakufont = '38'
             subtitle_font_size = '15'
+            subtitle_margin_v = '60'
         elif resolution == '1920x1080':
             boxsize = '500x1080'
             boxfont = '50'
             danmakufont = '55'
             subtitle_font_size = '16'
+            subtitle_margin_v = '60'
         elif resolution == '1080x1920':
             boxsize = '500x1920'
             boxfont = '55'
             danmakufont = '60'
             subtitle_font_size = '8'
+            subtitle_margin_v = '60'
         elif resolution == '720x1280':
             boxsize = '500x1280'
             boxfont = '28'
             danmakufont = '38'
             subtitle_font_size = '8'
+            subtitle_margin_v = '60'
         else:
             boxsize = '500x1080'
             boxfont = '38'
             danmakufont = '38'
             subtitle_font_size = '16'
-        
+            subtitle_margin_v = '60'
         # Convert danmakus to ass file
         subprocess.run([src.allconfig.DanmakuFactory_PATH, "-o", in_ass_path, "-i", in_xml_path, "--resolution", resolution, "--msgboxsize", boxsize, "--msgboxfontsize", boxfont, "-S", danmakufont, "--ignore-warnings"])
         # Remove emojis from ass danmakus (the ffmpeg do not support emojis)
         remove_emojis(in_ass_path)
         print(f"The {in_ass_path} has been processed.", flush=True)
-        return subtitle_font_size
+        return subtitle_font_size, subtitle_margin_v
