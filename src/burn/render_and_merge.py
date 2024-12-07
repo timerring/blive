@@ -72,13 +72,13 @@ def render_and_merge(video_path_list):
                 f.write(f"file '{video_to_be_merged}'\n")
             print("complete danamku burning and wait for uploading!", flush=True)
     
-        # for remove_path in [original_video_path, xml_path, ass_path, srt_path, jsonl_path]:
-        #     if os.path.exists(remove_path):
-        #         os.remove(remove_path)
+        for remove_path in [original_video_path, xml_path, ass_path, srt_path, jsonl_path]:
+            if os.path.exists(remove_path):
+                os.remove(remove_path)
         
-        # For test part
-        test_path = original_video_path[:-4]
-        os.rename(original_video_path, test_path)
+        # # For test part
+        # test_path = original_video_path[:-4]
+        # os.rename(original_video_path, test_path)
         
     merge_videos(output_video_path, title, artist, date, merge_list)
     subprocess.run(['rm', '-r', tmp])

@@ -41,13 +41,13 @@ def render_video_only(video_path):
     print("complete danamku burning and wait for uploading!", flush=True)
 
     # # Delete relative files
-    # for remove_path in [original_video_path, xml_path, ass_path, srt_path, jsonl_path]:
-    #     if os.path.exists(remove_path):
-    #         os.remove(remove_path)
+    for remove_path in [original_video_path, xml_path, ass_path, srt_path, jsonl_path]:
+        if os.path.exists(remove_path):
+            os.remove(remove_path)
     
-    # For test
-    test_path = original_video_path[:-4]
-    os.rename(original_video_path, test_path)
+    # # For test
+    # test_path = original_video_path[:-4]
+    # os.rename(original_video_path, test_path)
 
     with open(f"{SRC_DIR}/upload/uploadVideoQueue.txt", "a") as file:
         file.write(f"{format_video_path}\n")
