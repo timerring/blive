@@ -19,7 +19,7 @@ def get_bilibili_suggestions(term):
         response = requests.get(url, params=params)
         if response.status_code == 200:
             suggestions = response.json()
-            values_list = [item['value'] for item in suggestions['result']['tag']]
+            values_list = [item['value'][:20] for item in suggestions['result']['tag']]
             result = ",".join(values_list)
             return result
         print(f"Request failed with status code: {response.status_code}")
