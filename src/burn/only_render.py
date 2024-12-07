@@ -30,14 +30,14 @@ def render_video_only(video_path):
     video_resolution = get_resolution(original_video_path)
     
     # Process the danmakus to ass and remove emojis
-    subtitle_font_size = process_danmakus(xml_path, video_resolution)
+    subtitle_font_size, subtitle_margin_v = process_danmakus(xml_path, video_resolution)
 
     # Generate the srt file via whisper model
     if GPU_EXIST:
         generate_subtitles(original_video_path)
 
     # Burn danmaku or subtitles into the videos 
-    render_video(original_video_path, format_video_path, subtitle_font_size)
+    render_video(original_video_path, format_video_path, subtitle_font_size, subtitle_margin_v)
     print("complete danamku burning and wait for uploading!", flush=True)
 
     # # Delete relative files

@@ -60,12 +60,12 @@ def render_and_merge(video_path_list):
             # Recoginze the resolution of video
             video_resolution = get_resolution(original_video_path)
             # Process the danmakus to ass and remove emojis
-            subtitle_font_size = process_danmakus(xml_path, video_resolution)
+            subtitle_font_size, subtitle_margin_v = process_danmakus(xml_path, video_resolution)
             # Generate the srt file via whisper model
             if GPU_EXIST:
                 generate_subtitles(original_video_path)
             # Burn danmaku or subtitles into the videos 
-            render_video(original_video_path, video_to_be_merged, subtitle_font_size)
+            render_video(original_video_path, video_to_be_merged, subtitle_font_size, subtitle_margin_v)
             if not os.path.exists(merge_list):
                 open(merge_list, 'w').close() 
             with open(merge_list, 'a') as f:
