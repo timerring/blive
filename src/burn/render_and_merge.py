@@ -16,8 +16,8 @@ def normalize_video_path(filepath):
     """
     parts = filepath.rsplit('/', 1)[-1].split('_')
     date_time_parts = parts[1].split('-')
-    new_date_time = f"{date_time_parts[0][:4]}-{date_time_parts[0][4:6]}-{date_time_parts[0][6:8]}-{date_time_parts[1]}"
-    return filepath.rsplit('/', 1)[0] + '/' + parts[0] + '_' + new_date_time + '-upload.mp4'
+    new_date_time = f"{date_time_parts[0][:4]}-{date_time_parts[0][4:6]}-{date_time_parts[0][6:8]}-{date_time_parts[1]}-{date_time_parts[2]}"
+    return filepath.rsplit('/', 1)[0] + '/' + parts[0] + '_' + new_date_time + '-.mp4'
 
 def merge_videos(in_final_video, title, artist, date, merge_list):
     """Merge the video segments and preserve the first video's metadata
