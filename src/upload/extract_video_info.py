@@ -5,7 +5,6 @@ import re
 import json
 import os
 from datetime import datetime
-# from src.upload.query_search_suggestion import get_bilibili_suggestions
 from src.upload.query_search_suggestion import get_bilibili_suggestions
 
 def get_video_info(video_file_path):
@@ -48,7 +47,8 @@ def generate_desc(video_path):
 
 def generate_tag(video_path):
     title, artist, date = get_video_info(video_path)
-    tags = get_bilibili_suggestions(artist)
+    artist_text = re.sub(r'\W+', '', artist)
+    tags = get_bilibili_suggestions(artist_text)
     return tags
 
 def generate_source(video_path):
@@ -63,7 +63,7 @@ def generate_source(video_path):
 
 
 if __name__ == "__main__":
-    video_path = "/home/jh/Downloads/bilive/Videos/31612461/31612461_20241204-19-08-29.mp4"
+    video_path = ""
     video_title = generate_title(video_path)
     print(video_title)
     video_desc = generate_desc(video_path)
