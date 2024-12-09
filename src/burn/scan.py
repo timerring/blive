@@ -7,7 +7,7 @@ from src.burn.render_and_merge import render_and_merge
 import time
 from src.allconfig import VIDEOS_DIR
 
-def process_folder(folder_path):
+def process_folder_merge(folder_path):
     # Don't process the recording folder
     flv_files = list(Path(folder_path).glob('*.flv'))
     if flv_files:
@@ -17,7 +17,7 @@ def process_folder(folder_path):
     files_by_date = {}
 
     # process the recorded files
-    mp4_files = [mp4_file for mp4_file in Path(folder_path).glob('*.mp4') if not mp4_file.name.endswith('-upload.mp4')]
+    mp4_files = [mp4_file for mp4_file in Path(folder_path).glob('*.mp4') if not mp4_file.name.endswith('-.mp4')]
     for mp4_file in mp4_files:
         date_part = mp4_file.stem.split('_')[1].split('-')[0]
 
@@ -36,11 +36,21 @@ def process_folder(folder_path):
                 print(f"Processing {file}...", flush=True)
                 render_video_only(file)
 
+def process_folder_append(folder_path):
+    # process the recorded files
+    mp4_files = [mp4_file for mp4_file in Path(folder_path).glob('*.mp4') if not mp4_file.name.endswith('-.mp4')]
+    for file in mp4_files:
+        print(f"Processing {file}...", flush=True)
+        render_video_only(file)
+
 if __name__ == "__main__":
     room_folder_path = VIDEOS_DIR
     while True:
         for room_folder in Path(room_folder_path).iterdir():
             if room_folder.is_dir():
-                process_folder(room_folder)
+                # This function use the merge mode to upload videos
+                # process_folder_merge(room_folder)
+                # This function use the append mode to upload videos
+                process_folder_append(room_folder)
         print(f"{time.strftime('%Y-%m-%d %H:%M:%S')} There is no file recorded. Check again in 120 seconds.", flush=True)
         time.sleep(120)
