@@ -93,8 +93,8 @@ def read_append_and_delete_lines(file_path):
                 with open(yaml_file_path, 'w', encoding='utf-8') as file:
                     file.write(yaml_template)
                 upload_video(upload_video_path, yaml_file_path)
-        with open(file_path, "w") as file:
-            file.writelines(lines)
+            with open(file_path, "w") as file:
+                file.writelines(lines)
 
 def append_upload(upload_path, bv_result):
     try:
