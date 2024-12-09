@@ -39,6 +39,7 @@ def process_folder_merge(folder_path):
 def process_folder_append(folder_path):
     # process the recorded files
     mp4_files = [mp4_file for mp4_file in Path(folder_path).glob('*.mp4') if not mp4_file.name.endswith('-.mp4')]
+    mp4_files.sort()
     for file in mp4_files:
         print(f"Processing {file}...", flush=True)
         render_video_only(file)
