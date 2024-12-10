@@ -2,10 +2,10 @@
 
 import os
 from pathlib import Path
-from src.burn.only_render import render_video_only
+from src.burn.only_render import render_video_only, pipeline_render
 from src.burn.render_and_merge import render_and_merge
 import time
-from src.allconfig import VIDEOS_DIR
+from src.allconfig import VIDEOS_DIR, MODEL_TYPE
 
 def process_folder_merge(folder_path):
     # Don't process the recording folder
@@ -42,16 +42,19 @@ def process_folder_append(folder_path):
     mp4_files.sort()
     for file in mp4_files:
         print(f"Processing {file}...", flush=True)
-        render_video_only(file)
+        if MODEL_TYPE == "pipeline":
+            pipeline_render(file)
+        else:
+            render_video_only(file)
 
 if __name__ == "__main__":
     room_folder_path = VIDEOS_DIR
     while True:
         for room_folder in Path(room_folder_path).iterdir():
             if room_folder.is_dir():
-                # This function use the merge mode to upload videos
-                # process_folder_merge(room_folder)
-                # This function use the append mode to upload videos
-                process_folder_append(room_folder)
+                if MODEL_TYPE == "merge":
+                    process_folder_merge(room_folder)
+                else:
+                    process_folder_append(room_folder)
         print(f"{time.strftime('%Y-%m-%d %H:%M:%S')} There is no file recorded. Check again in 120 seconds.", flush=True)
         time.sleep(120)

@@ -3,10 +3,11 @@
 import argparse
 import os
 import subprocess
-from src.allconfig import GPU_EXIST, SRC_DIR
+from src.allconfig import GPU_EXIST, SRC_DIR, MODEL_TYPE
 from src.burn.generate_danmakus import get_resolution, process_danmakus
 from src.burn.generate_subtitles import generate_subtitles
 from src.burn.render_video import render_video
+import multiprocessing
 
 def normalize_video_path(filepath):
     """Normalize the video path to upload
@@ -34,7 +35,8 @@ def render_video_only(video_path):
 
     # Generate the srt file via whisper model
     if GPU_EXIST:
-        generate_subtitles(original_video_path)
+        if MODEL_TYPE != "pipeline":
+            generate_subtitles(original_video_path)
 
     # Burn danmaku or subtitles into the videos 
     render_video(original_video_path, format_video_path, subtitle_font_size, subtitle_margin_v)
@@ -51,6 +53,11 @@ def render_video_only(video_path):
 
     with open(f"{SRC_DIR}/upload/uploadVideoQueue.txt", "a") as file:
         file.write(f"{format_video_path}\n")
+
+def pipeline_render(video_path):
+    generate_subtitles(video_path)
+    burn_process = multiprocessing.Process(target=render_video_only, args=(video_path,))
+    burn_process.start()
 
 if __name__ == '__main__':
     # Read and define variables
