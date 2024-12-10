@@ -14,3 +14,6 @@ WHISPER_LOG_PATH = os.path.join(BILIVE_DIR, 'logs', 'burningLog', f'whisper-{dat
 BURN_LOG_PATH = os.path.join(BILIVE_DIR, 'logs', 'burningLog', f'burn-{datetime.now().strftime("%Y%m-%d-%H%M%S")}.log')
 MERGE_LOG_PATH = os.path.join(BILIVE_DIR, 'logs', 'mergeLog', f'merge-{datetime.now().strftime("%Y%m-%d-%H%M%S")}.log')
 GPU_EXIST=True
+MODEL_TYPE = "pipeline"
+# MODEL_TYPE = "append"
+# MODEL_TYPE = "merge"

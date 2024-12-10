@@ -22,6 +22,7 @@
 ## 2. Major features
 
 <!-- - **速度快**：~~录制的同时可以选择启动无弹幕版视频的上传进程，下播即上线平台~~。(无弹幕版暂缓上线，等维护完成下一个版本上线) -->
+- **速度快**：采用 `pipeline` 流水线处理视频，理想情况下录播与直播相差半小时以内，没下播就能上线录播！
 - **多房间**：同时录制多个直播间内容视频以及弹幕文件（包含普通弹幕，付费弹幕以及礼物上舰等信息）。
 - **占用小**：自动删除本地已上传的视频，极致节省空间。
 - **模版化**：无需复杂配置，开箱即用，( :tada: NEW)通过 b 站搜索建议接口自动抓取相关热门标签。
@@ -34,24 +35,23 @@
 
 ```mermaid
 graph TD
-
-        User((用户))---->startRecord(启动录制)
+        User((用户))--record-->startRecord(启动录制)
         startRecord(启动录制)--保存视频和字幕文件-->videoFolder[(Video 文件夹)]
 
-        User((用户))---->startUploadNoDanmaku(启动无弹幕版视频上传)
-        videoFolder[(Video 文件夹)]<--实时上传-->startUploadNoDanmaku(启动无弹幕版视频上传)
-
-        User((用户))---->startScan(启动扫描 Video 文件夹)
+        User((用户))--scan-->startScan(启动扫描 Video 文件夹)
         videoFolder[(Video 文件夹)]<--间隔两分钟扫描一次-->startScan(启动扫描 Video 文件夹)
-        startScan  --判断是否有弹幕-->ifDanmaku{判断}
+        startScan <--视频文件--> whisper[whisperASR模型]
+        whisper[whisperASR模型] --生成字幕-->parameter[查询视频分辨率]
+        subgraph 启动新进程
+        parameter[查询分辨率] -->ifDanmaku{判断}
         ifDanmaku -->|有弹幕| DanmakuFactory[DanmakuFactory]
-        ifDanmaku -->|无弹幕| whisper[whisperASR模型]
-        DanmakuFactory[DanmakuFactory] --自动转换弹幕--> whisper[whisperASR模型]
-        whisper[whisperASR模型] --生成字幕--> ffmpeg1[ffmpeg]
-        ffmpeg1[ffmpeg] --渲染字幕 --> uploadQueue[(上传队列)]
+        ifDanmaku -->|无弹幕| ffmpeg1[ffmpeg]
+        DanmakuFactory[DanmakuFactory] --根据分辨率转换弹幕--> ffmpeg1[ffmpeg]
+        end
+        ffmpeg1[ffmpeg] --渲染弹幕及字幕 --> uploadQueue[(上传队列)]
 
-        User((用户))---->startUpload(启动有弹幕版视频上传进程)
-        startUpload(启动有弹幕版视频上传进程) <--扫描队列并上传视频--> uploadQueue[(上传队列)]
+        User((用户))--upload-->startUpload(启动视频上传进程)
+        startUpload(启动视频上传进程) <--扫描队列并上传视频--> uploadQueue[(上传队列)]
 ```
 
 
@@ -92,7 +92,15 @@ pip install -r requirements.txt
 # 记录项目根目录
 ./setPath.sh && source ~/.bashrc
 ```
-以下功能默认开启，如果无 GPU，请直接看 4.2 节，并将 `src/allconfig.py` 文件中的 `GPU_EXIST` 参数设置为 `False`。
+
+项目大多数参数均在 `src/allconfig.py` 文件中，相关参数如下:
++ GPU_EXIST 是否存在 GPU(以 `nvidia-smi` 显示驱动以及 `CUDA` 检查通过为主)
++ MODEL_TYPE 渲染模式，
+  +  `pipeline` 模式(默认): 目前最快的模式，需要 GPU 支持，最好在 `blrec` 设置片段为半小时以内，asr 识别和渲染并行执行，分 p 上传视频片段。
+  + `append` 模式: 基本同上，但 asr 识别与渲染过程串行执行，比 pipeline 慢预计 25%。
+  + `merge` 模式: 等待所有录制完成，再进行合并识别渲染过程，上传均为完整版录播。
+
+以下功能默认开启，如果无 GPU，请直接看 4.2 节，并将 `src/allconfig.py` 文件中的 `GPU_EXIST` 参数设置为 `False`，并将 `MODEL_TYPE` 调整为 `merge` 或者 `append`。
 如果需要使用自动识别并渲染字幕功能，模型参数及链接如下，注意 GPU 显存必须大于所需 VRAM：
 
 |  Size  | Parameters | Multilingual model | Required VRAM |
@@ -110,32 +118,24 @@ pip install -r requirements.txt
 
 ### 4.2 biliup-rs 登录
 
-首先按照 [biliup-rs](https://github.com/biliup/biliup-rs) 登录b站，将登录产生的`cookies.json`文件复制一份到项目根目录中。
+首先按照 [biliup-rs](https://github.com/biliup/biliup-rs) 登录b站，登录脚本在 `src/upload/biliup` ，登录产生的`cookies.json`保留在该文件夹下即可。
 
 ### 4.3 启动自动录制
 
-- 在 `startRecord.sh`启动脚本中设置端口 `port`
-- 在 `settings.toml` 中设置视频存放目录、日志目录，也可在 blrec 前端界面即`http://localhost:port` 中进行设置。详见 [blrec](https://github.com/acgnhiki/blrec)。
+- 在 `record.sh`启动脚本中设置端口 `port`
+- 在 `settings.toml` 中设置视频存放目录、日志目录，也可启动后在 blrec 前端界面即`http://localhost:port` 中进行设置。详见 [blrec](https://github.com/acgnhiki/blrec)。
 
-然后执行：
+启动 blrec：
 
 ```bash
 ./record.sh
 ```
 ### 4.4 启动自动上传
-有弹幕版视频和无弹幕版视频的上传是独立的，可以同时进行，也可以单独启用。
-
-#### 4.4.1 无弹幕版视频自动上传(WIP，下个版本上线，先跳过本步)
-
-- 投稿的配置文件为 `upload_config.json`，可以参考给出的示例添加。
-- 请在将一级键值名称取为**字符串格式**的对应直播间的房间号（4位数以上）。
-
-#### 4.4.2 弹幕版视频渲染与自动上传
 
 > 请先确保你已经完成了 4.1 步骤，下载并放置了模型文件。
 > 否则，请将 `src/allconfig.py` 文件中的 `GPU_EXIST` 参数设置为 `False`
 
-##### 启动弹幕渲染进程
+#### 启动扫描渲染进程
 
 输入以下指令即可检测已录制的视频并且自动合并分段，自动进行弹幕转换，字幕识别与渲染的过程：
 
@@ -143,7 +143,7 @@ pip install -r requirements.txt
 ./scan.sh
 ```
 
-##### 启动自动上传进程
+#### 启动自动上传进程
 
 ```bash
 ./upload.sh
