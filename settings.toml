@@ -9,7 +9,7 @@ enable_recorder = true
 [output]
 path_template = "{roomid}/{roomid}_{year}{month}{day}-{hour}-{minute}-{second}"
 filesize_limit = 0
-duration_limit = 0
+duration_limit = 1200
 out_dir = "./Videos"
 
 [logging]
