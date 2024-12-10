@@ -35,10 +35,10 @@
 
 ```mermaid
 graph TD
-        User((用户))---->startRecord(启动录制)
+        User((用户))--record-->startRecord(启动录制)
         startRecord(启动录制)--保存视频和字幕文件-->videoFolder[(Video 文件夹)]
 
-        User((用户))---->startScan(启动扫描 Video 文件夹)
+        User((用户))--scan-->startScan(启动扫描 Video 文件夹)
         videoFolder[(Video 文件夹)]<--间隔两分钟扫描一次-->startScan(启动扫描 Video 文件夹)
         startScan <--视频文件--> whisper[whisperASR模型]
         whisper[whisperASR模型] --生成字幕-->parameter[查询视频分辨率]
@@ -50,7 +50,7 @@ graph TD
         end
         ffmpeg1[ffmpeg] --渲染弹幕及字幕 --> uploadQueue[(上传队列)]
 
-        User((用户))---->startUpload(启动视频上传进程)
+        User((用户))--upload-->startUpload(启动视频上传进程)
         startUpload(启动视频上传进程) <--扫描队列并上传视频--> uploadQueue[(上传队列)]
 ```
 
@@ -92,13 +92,13 @@ pip install -r requirements.txt
 # 记录项目根目录
 ./setPath.sh && source ~/.bashrc
 ```
+
 项目大多数参数均在 `src/allconfig.py` 文件中，相关参数如下:
 + GPU_EXIST 是否存在 GPU(以 `nvidia-smi` 显示驱动以及 `CUDA` 检查通过为主)
 + MODEL_TYPE 渲染模式，
   +  `pipeline` 模式(默认): 目前最快的模式，需要 GPU 支持，最好在 `blrec` 设置片段为半小时以内，asr 识别和渲染并行执行，分 p 上传视频片段。
   + `append` 模式: 基本同上，但 asr 识别与渲染过程串行执行，比 pipeline 慢预计 25%。
   + `merge` 模式: 等待所有录制完成，再进行合并识别渲染过程，上传均为完整版录播。
-```
 
 以下功能默认开启，如果无 GPU，请直接看 4.2 节，并将 `src/allconfig.py` 文件中的 `GPU_EXIST` 参数设置为 `False`，并将 `MODEL_TYPE` 调整为 `merge` 或者 `append`。
 如果需要使用自动识别并渲染字幕功能，模型参数及链接如下，注意 GPU 显存必须大于所需 VRAM：
