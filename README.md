@@ -118,14 +118,14 @@ pip install -r requirements.txt
 
 ### 4.2 biliup-rs 登录
 
-首先按照 [biliup-rs](https://github.com/biliup/biliup-rs) 登录b站，将登录产生的`cookies.json`文件复制一份到项目根目录中。
+首先按照 [biliup-rs](https://github.com/biliup/biliup-rs) 登录b站，登录脚本在 `src/upload/biliup` ，登录产生的`cookies.json`保留在该文件夹下即可。
 
 ### 4.3 启动自动录制
 
-- 在 `startRecord.sh`启动脚本中设置端口 `port`
-- 在 `settings.toml` 中设置视频存放目录、日志目录，也可在 blrec 前端界面即`http://localhost:port` 中进行设置。详见 [blrec](https://github.com/acgnhiki/blrec)。
+- 在 `record.sh`启动脚本中设置端口 `port`
+- 在 `settings.toml` 中设置视频存放目录、日志目录，也可启动后在 blrec 前端界面即`http://localhost:port` 中进行设置。详见 [blrec](https://github.com/acgnhiki/blrec)。
 
-然后执行：
+启动 blrec：
 
 ```bash
 ./record.sh
@@ -135,7 +135,7 @@ pip install -r requirements.txt
 > 请先确保你已经完成了 4.1 步骤，下载并放置了模型文件。
 > 否则，请将 `src/allconfig.py` 文件中的 `GPU_EXIST` 参数设置为 `False`
 
-#### 启动弹幕渲染进程
+#### 启动扫描渲染进程
 
 输入以下指令即可检测已录制的视频并且自动合并分段，自动进行弹幕转换，字幕识别与渲染的过程：
 
