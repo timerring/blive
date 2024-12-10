@@ -8,6 +8,7 @@ from datetime import datetime
 from src.upload.generate_yaml import generate_yaml_template
 from src.upload.extract_video_info import generate_title
 import time
+import fcntl
 
 def read_and_delete_lines(file_path):
     while True:
@@ -66,14 +67,23 @@ def find_bv_number(target_str, my_list):
     return None
 
 def read_append_and_delete_lines(file_path):
-    if os.path.getsize(file_path) == 0:
-        print(f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S')} Empty queue, wait 2 minutes and check again...", flush=True)
-        time.sleep(120)
-        return
+    while True:
+        if os.path.getsize(file_path) == 0:
+            print(f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S')} Empty queue, wait 2 minutes and check again...", flush=True)
+            time.sleep(120)
+            return
 
-    with open(file_path, "r") as file:
-        lines = file.readlines()
-        upload_video_path = lines.pop(0).strip()
+        with open(file_path, "r+") as file:
+            fcntl.flock(file, fcntl.LOCK_EX)
+            lines = file.readlines()
+            upload_video_path = lines.pop(0).strip()
+            file.seek(0)
+            file.writelines(lines)
+            # Truncate the file to the current position
+            file.truncate()
+            # Release the lock
+            fcntl.flock(file, fcntl.LOCK_UN)
+
         print(f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S')} " + "deal with " + upload_video_path, flush=True)
         # check if the live is already uploaded
         query = generate_title(upload_video_path)
@@ -92,10 +102,7 @@ def read_append_and_delete_lines(file_path):
             with open(yaml_file_path, 'w', encoding='utf-8') as file:
                 file.write(yaml_template)
             upload_video(upload_video_path, yaml_file_path)
-        with open(file_path, "w") as file:
-            file.writelines(lines)
-        return
-            
+            return
 
 def append_upload(upload_path, bv_result):
     try:
