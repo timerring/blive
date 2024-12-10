@@ -7,7 +7,7 @@ from src.allconfig import GPU_EXIST, SRC_DIR, MODEL_TYPE
 from src.burn.generate_danmakus import get_resolution, process_danmakus
 from src.burn.generate_subtitles import generate_subtitles
 from src.burn.render_video import render_video
-import multiprocessing
+from concurrent.futures import ProcessPoolExecutor
 
 def normalize_video_path(filepath):
     """Normalize the video path to upload
@@ -56,8 +56,10 @@ def render_video_only(video_path):
 
 def pipeline_render(video_path):
     generate_subtitles(video_path)
-    burn_process = multiprocessing.Process(target=render_video_only, args=(video_path,))
-    burn_process.start()
+    # The limit number of concurrent processes in NV encoding is 3
+    max_workers = 3
+    with ProcessPoolExecutor(max_workers=max_workers) as executor:
+        executor.submit(render_video_only, video_path)
 
 if __name__ == '__main__':
     # Read and define variables
