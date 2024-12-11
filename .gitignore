@@ -367,9 +367,7 @@ logs/*/*
 
 # Specific for the git commitizen
 node_modules/
-package.json
 pnpm-lock.yaml
-package-lock.json
 
 # Ignore the production
 startRecord-production.sh
