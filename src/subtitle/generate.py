@@ -111,7 +111,7 @@ class FLACConverter:  # pylint: disable=too-few-public-methods
             start = max(0, start - self.include_before)
             end += self.include_after
             temp = tempfile.NamedTemporaryFile(suffix='.flac', delete=False)
-            command = [config.FFMPEG_PATH, "-ss", str(start), "-t", str(end - start),
+            command = ["ffmpeg", "-ss", str(start), "-t", str(end - start),
                        "-y", "-i", self.source_path,
                        "-loglevel", "error", temp.name]
             use_shell = True if os.name == "nt" else False
@@ -170,10 +170,7 @@ class SubtitleGenerator:
         if not os.path.isfile(self.filename):
             print("The given file does not exist: {}".format(self.filename))
             raise Exception("Invalid filepath: {}".format(self.filename))
-        if not self.which(config.FFMPEG_PATH):
-            print("ffmpeg: Executable not found on machine.")
-            raise Exception("Dependency not found: ffmpeg")
-        command = [config.FFMPEG_PATH, "-y", "-i", self.filename,
+        command = ["ffmpeg", "-y", "-i", self.filename,
                    "-ac", '1', "-ar", str(rate),
                    "-loglevel", "error", temp.name]
         use_shell = True if os.name == "nt" else False
@@ -252,7 +249,7 @@ class SubtitleGenerator:
         """
         audio_filename, audio_rate = self.extract_audio()
         regions = self.find_speech_regions(audio_filename)
-        pool = multiprocessing.Pool(10)
+        pool = multiprocessing.Pool(12)
         converter = FLACConverter(source_path=audio_filename)
         recognizer = AudioRecogniser(language=self.language)
         transcripts = []

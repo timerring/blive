@@ -43,10 +43,6 @@ INTERFACE_KEY_NAME_MAP = {
 
 init_settings_config()
 
-ffmpeg_bin = os.path.join('linux_x64', 'ffmpeg')
-FFMPEG_PATH = os.path.join(BASE_DIR, '', ffmpeg_bin)
-os.chmod(FFMPEG_PATH, stat.S_IRWXU+stat.S_IRWXG+stat.S_IRWXO)
-
 SILENCE_THRESH = -70           # silence below -70dBFS is considered silence
 MIN_SILENCE_LEN = 700          # if silence is longer than 700ms, split
 LENGTH_LIMIT = 60 * 1000       # split into segments no longer than 1 minute
