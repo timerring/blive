@@ -36,7 +36,7 @@ def get_video_info(video_file_path):
 
 def generate_title(video_path):
     title, artist, date = get_video_info(video_path)
-    new_title = "【弹幕】" + artist + "直播回放-" + date + "-" + title
+    new_title = "【弹幕+字幕】" + artist + "直播回放-" + date + "-" + title
     return new_title
 
 def generate_desc(video_path):
