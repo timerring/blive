@@ -14,7 +14,7 @@
 
 ## Installation(有 GPU 版本)
 
-> 是否有 GPU 以 `nvidia-smi` 显示驱动以及 `CUDA` 检查通过为准。如果未配置显卡驱动或未安装 `CUDA`，即使有 GPU 也无法使用。
+> 是否有 GPU 以 `nvidia-smi` 显示 nvidia GPU 驱动以及 `nvcc -V` 显示 `CUDA` 版本号为准。如果未配置显卡驱动或未安装 `CUDA`，即使有 GPU 也无法使用，而会使用 CPU 推理（不推荐，可根据自身硬件条件判断是否尝试 CPU 推理）。
 
 > [!TIP]
 > 如果你是 windows 用户，请不要使用命令提示符（Command Prompt）或 Windows PowerShell，请使用 [PowerShell](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-windows?view=powershell-7.4) 或 WSL 或 **Git Bash**(推荐)。
@@ -107,5 +107,5 @@ logs # 日志文件夹
 ## Installation(无 GPU 版本)
 无 GPU 版本过程基本同上，可以跳过步骤 3，需要注意在执行步骤 5 **之前**完成以下设置将确保完全用 CPU 渲染视频弹幕。
 
-1. 请将 `src/allconfig.py` 文件中的 `GPU_EXIST` 参数设置为 `False`
+1. 请将 `src/allconfig.py` 文件中的 `GPU_EXIST` 参数设置为 `False`。（若不置为 `False` 且则会使用 CPU 推理，不推荐，可自行根据硬件条件进行尝试。）
 2. 将 `MODEL_TYPE` 调整为 `merge` 或者 `append`。
