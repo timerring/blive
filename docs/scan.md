@@ -10,6 +10,9 @@
 + [Using FFmpeg with NVIDIA GPU Hardware Acceleration](https://docs.nvidia.com/video-technologies/video-codec-sdk/12.0/ffmpeg-with-nvidia-gpu/index.html)
 + [使用GPU为FFmpeg 加速](https://yukihane.work/li-gong/ffmpeg-with-gpu)
 
+## 渲染速率为什么下降
+
+长时间地使用 GPU，温度升高可能会导致 GPU 降频，从而导致渲染速率下降。可以通过 `nvidia-smi -q -d CLOCK` 查看 GPU 频率信息。
 
 ## requests 请求错误
 ```

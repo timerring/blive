@@ -37,7 +37,13 @@ def update_sc_prices(file_path):
             # Convert price to integer, divide by 1000, and update the attribute
             new_price_toast = int(price_toast) / 1000
             toast.set('price', str(int(new_price_toast)))
-            
+
+    # Remove 'gift' elements with price less than 1000
+    for gift in root.findall('gift'):
+        price_gift = gift.get('price')
+        if int(price_gift) < 1000:
+            root.remove(gift)
+
     # Write the updated XML back to the file
     tree.write(file_path, encoding='utf-8', xml_declaration=True)
 
