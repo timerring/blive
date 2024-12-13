@@ -178,7 +178,7 @@ logs # 日志文件夹
 ### Installation(无 GPU 版本)
 无 GPU 版本过程基本同上，可以跳过步骤 3，需要注意在执行步骤 5 **之前**完成以下设置将确保完全用 CPU 渲染视频弹幕。
 
-1. 请将 `src/allconfig.py` 文件中的 `GPU_EXIST` 参数设置为 `False`。（若不置为 `False` 且则会使用 CPU 推理，不推荐，可自行根据硬件条件进行尝试。）
+1. 请将 `src/config.py` 文件中的 `GPU_EXIST` 参数设置为 `False`。（若不置为 `False` 且则会使用 CPU 推理，不推荐，可自行根据硬件条件进行尝试。）
 2. 将 `MODEL_TYPE` 调整为 `merge` 或者 `append`。
 
 > [!TIP]
@@ -191,8 +191,6 @@ logs # 日志文件夹
 ## 特别感谢
 
 - [biliup/biliup-rs](https://github.com/biliup/biliup-rs)
-- [FortuneDayssss/BilibiliUploader](https://github.com/FortuneDayssss/BilibiliUploader)
 - [hihkm/DanmakuFactory](https://github.com/hihkm/DanmakuFactory)
 - [acgnhiki/blrec](https://github.com/acgnhiki/blrec)
-- [qqyuanxinqq/AutoUpload_Blrec](https://github.com/qqyuanxinqq/AutoUpload_Blrec)
 - [OpenAI/whisper](https://github.com/OpenAI/whisper)

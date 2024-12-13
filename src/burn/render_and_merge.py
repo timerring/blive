@@ -3,7 +3,7 @@
 import argparse
 import os
 import subprocess
-from src.allconfig import GPU_EXIST, SRC_DIR, MERGE_LOG_PATH
+from src.config import GPU_EXIST, SRC_DIR, MERGE_LOG_PATH
 from src.burn.generate_danmakus import get_resolution, process_danmakus
 from src.burn.generate_subtitles import generate_subtitles
 from src.burn.render_video import render_video

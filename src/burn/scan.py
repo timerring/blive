@@ -5,7 +5,7 @@ from pathlib import Path
 from src.burn.only_render import render_video_only, pipeline_render, monitor_queue
 from src.burn.render_and_merge import render_and_merge
 import time
-from src.allconfig import VIDEOS_DIR, MODEL_TYPE
+from src.config import VIDEOS_DIR, MODEL_TYPE
 import threading
 
 def process_folder_merge(folder_path):

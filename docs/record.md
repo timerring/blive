@@ -29,7 +29,7 @@ cookie = "xxxx"
 录制部分采用的是 `blrec`，在 `settings.toml` 中设置视频存放目录、日志目录，也可启动后在 blrec 前端界面即`http://localhost:port` 中进行设置。详见 [blrec](https://github.com/acgnhiki/blrec)。
 
 > [!TIP]
-> 如果要调整目录，请相应调整 `src/allconfig.py` 中的值。
+> 如果要调整目录，请相应调整 `src/config.py` 中的值。
 
 ## 完全无法获取直播流信息
 

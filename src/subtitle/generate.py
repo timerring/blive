@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# Copyright (c) 2024 bilive.
 
 import io
 import multiprocessing
@@ -17,7 +17,7 @@ import sys
 import pysrt
 import six
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-import config
+from config import get_model_path, get_interface_config
 import whisper
 from zhconv.zhconv import convert
 import argparse
@@ -62,7 +62,7 @@ def process_srt_file(input_file):
 
 class AudioRecogniser:
     def __init__(self, language='auto'):
-        self.model_path = config.get_model_path()
+        self.model_path = get_model_path()
         self.model = whisper.load_model(self.model_path)
         self.language = language
 
@@ -81,7 +81,7 @@ class AudioRecogniser:
                 options = whisper.DecodingOptions(fp16=False, language=self.language)
         else:
             # if no language is set, detect language automatically
-            print(f"{config.get_interface_config()['Main']['LanguageDetected']}{max(probs, key=probs.get)}")
+            print(f"{get_interface_config()['Main']['LanguageDetected']}{max(probs, key=probs.get)}")
             options = whisper.DecodingOptions(fp16=False)
 
         transcription = whisper.decode(self.model, mel, options)
@@ -253,7 +253,7 @@ class SubtitleGenerator:
         converter = FLACConverter(source_path=audio_filename)
         recognizer = AudioRecogniser(language=self.language)
         transcripts = []
-        print(f"{config.get_interface_config()['Main']['StartGenerateSub']}")
+        print(f"{get_interface_config()['Main']['StartGenerateSub']}")
         start_time = time.time()
 
         if regions:
@@ -289,22 +289,22 @@ class SubtitleGenerator:
         os.remove(audio_filename)
         self.isFinished = True
         elapse = time.time() - start_time
-        print(f"{config.get_interface_config()['Main']['FinishGenerateSub']}")
-        print(f"{config.get_interface_config()['Main']['SubLocation']}{dest}")
-        print(f"{config.get_interface_config()['Main']['Elapse']}: {elapse}s")
+        print(f"{get_interface_config()['Main']['FinishGenerateSub']}")
+        print(f"{get_interface_config()['Main']['SubLocation']}{dest}")
+        print(f"{get_interface_config()['Main']['Elapse']}: {elapse}s")
         return dest
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Subtitle Generator')
-    parser.add_argument('filename', nargs='?', help=config.get_interface_config()['Main']['InputFile'])
+    parser.add_argument('filename', nargs='?', help=get_interface_config()['Main']['InputFile'])
 
     args = parser.parse_args()
 
     if hasattr(args, 'help'):
         exit()
 
-    video_path = args.filename or input(f"{config.get_interface_config()['Main']['InputFile']}").strip()
+    video_path = args.filename or input(f"{get_interface_config()['Main']['InputFile']}").strip()
     sg = SubtitleGenerator(video_path, language='zh-cn')
     print('Start project.')
     sg.run()

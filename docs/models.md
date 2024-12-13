@@ -31,6 +31,6 @@
 
 ## 更换模型方法
 
-1. 请将 `src/settings.ini` 文件中的 `Mode` 参数设置为模型对应Size名称，如 `tiny`，`base`，`small`，`medium`，`large`。
+1. 请将 `src/config.py` 文件中的 `Inference_Model` 参数设置为模型对应Size名称，如 `tiny`，`base`，`small`，`medium`，`large`。
 2. 将对应的模型文件下载，并放置在 src/subtitle/models 文件夹中。
 3. 重新运行 `./scan.sh` 脚本。
