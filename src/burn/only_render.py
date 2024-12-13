@@ -3,7 +3,7 @@
 import argparse
 import os
 import subprocess
-from src.allconfig import GPU_EXIST, SRC_DIR, MODEL_TYPE
+from src.config import GPU_EXIST, SRC_DIR, MODEL_TYPE
 from src.burn.generate_danmakus import get_resolution, process_danmakus
 from src.burn.generate_subtitles import generate_subtitles
 from src.burn.render_video import render_video
@@ -63,7 +63,6 @@ def monitor_queue():
             video_path = render_queue.get()
             render_video_only(video_path)
         else:
-            print("No video to render, waiting 1 secondfor new video...", flush=True)
             time.sleep(1)
 
 def pipeline_render(video_path):

@@ -3,7 +3,7 @@
 import subprocess
 import os
 import sys
-from src import allconfig
+from src.config import SRC_DIR, BILIVE_DIR
 from datetime import datetime
 from src.upload.generate_yaml import generate_yaml_template
 from src.upload.extract_video_info import generate_title
@@ -23,7 +23,7 @@ def read_and_delete_lines(file_path):
             print(f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S')} " + "deal with " + upload_video_path, flush=True)
             # generate the yaml template
             yaml_template = generate_yaml_template(upload_video_path)
-            yaml_file_path = allconfig.SRC_DIR + "/upload/upload.yaml"
+            yaml_file_path = SRC_DIR + "/upload/upload.yaml"
             with open(yaml_file_path, 'w', encoding='utf-8') as file:
                 file.write(yaml_template)
             upload_video(upload_video_path, yaml_file_path)
@@ -34,9 +34,9 @@ def upload_video(upload_path, yaml_file_path):
     try:
         # Construct the command
         command = [
-            f"{allconfig.BILIVE_DIR}/src/upload/biliup",
+            f"{BILIVE_DIR}/src/upload/biliup",
             "-u",
-            f"{allconfig.SRC_DIR}/upload/cookies.json",
+            f"{SRC_DIR}/upload/cookies.json",
             "upload",
             upload_path,
             "--config",
@@ -87,7 +87,7 @@ def read_append_and_delete_lines(file_path):
         print(f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S')} " + "deal with " + upload_video_path, flush=True)
         # check if the live is already uploaded
         query = generate_title(upload_video_path)
-        result = subprocess.check_output(f"{allconfig.SRC_DIR}/upload/biliup" + " -u " + f"{allconfig.SRC_DIR}/upload/cookies.json" + " list", shell=True)
+        result = subprocess.check_output(f"{SRC_DIR}/upload/biliup" + " -u " + f"{SRC_DIR}/upload/cookies.json" + " list", shell=True)
         upload_list = result.decode("utf-8").splitlines()
         limit_list = upload_list[:30]
         bv_result = find_bv_number(query, limit_list)
@@ -98,7 +98,7 @@ def read_append_and_delete_lines(file_path):
             print("First upload this live", flush=True)
             # generate the yaml template
             yaml_template = generate_yaml_template(upload_video_path)
-            yaml_file_path = allconfig.SRC_DIR + "/upload/upload.yaml"
+            yaml_file_path = SRC_DIR + "/upload/upload.yaml"
             with open(yaml_file_path, 'w', encoding='utf-8') as file:
                 file.write(yaml_template)
             upload_video(upload_video_path, yaml_file_path)
@@ -108,9 +108,9 @@ def append_upload(upload_path, bv_result):
     try:
         # Construct the command
         command = [
-            f"{allconfig.BILIVE_DIR}/src/upload/biliup",
+            f"{BILIVE_DIR}/src/upload/biliup",
             "-u",
-            f"{allconfig.SRC_DIR}/upload/cookies.json",
+            f"{SRC_DIR}/upload/cookies.json",
             "append",
             "--vid",
             bv_result,
@@ -133,7 +133,7 @@ def append_upload(upload_path, bv_result):
 
 if __name__ == "__main__":    
     # read the queue and upload the video
-    queue_path = allconfig.SRC_DIR + "/upload/uploadVideoQueue.txt"
+    queue_path = SRC_DIR + "/upload/uploadVideoQueue.txt"
     # read_and_delete_lines(queue_path)
     while True:
         read_append_and_delete_lines(queue_path)
