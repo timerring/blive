@@ -2,10 +2,11 @@
 
 import os
 from pathlib import Path
-from src.burn.only_render import render_video_only, pipeline_render
+from src.burn.only_render import render_video_only, pipeline_render, monitor_queue
 from src.burn.render_and_merge import render_and_merge
 import time
 from src.allconfig import VIDEOS_DIR, MODEL_TYPE
+import threading
 
 def process_folder_merge(folder_path):
     # Don't process the recording folder
@@ -49,6 +50,8 @@ def process_folder_append(folder_path):
 
 if __name__ == "__main__":
     room_folder_path = VIDEOS_DIR
+    monitor_thread = threading.Thread(target=monitor_queue, daemon=True)
+    monitor_thread.start()
     while True:
         for room_folder in Path(room_folder_path).iterdir():
             if room_folder.is_dir():

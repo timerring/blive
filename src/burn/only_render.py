@@ -7,7 +7,11 @@ from src.allconfig import GPU_EXIST, SRC_DIR, MODEL_TYPE
 from src.burn.generate_danmakus import get_resolution, process_danmakus
 from src.burn.generate_subtitles import generate_subtitles
 from src.burn.render_video import render_video
-import multiprocessing
+import queue
+import threading
+import time
+
+render_queue = queue.Queue()
 
 def normalize_video_path(filepath):
     """Normalize the video path to upload
@@ -44,8 +48,7 @@ def render_video_only(video_path):
 
     # # Delete relative files
     for remove_path in [original_video_path, xml_path, ass_path, srt_path, jsonl_path]:
-        if os.path.exists(remove_path):
-            os.remove(remove_path)
+        os.remove(remove_path)
     
     # # For test
     # test_path = original_video_path[:-4]
@@ -54,10 +57,18 @@ def render_video_only(video_path):
     with open(f"{SRC_DIR}/upload/uploadVideoQueue.txt", "a") as file:
         file.write(f"{format_video_path}\n")
 
+def monitor_queue():
+    while True:
+        if not render_queue.empty():
+            video_path = render_queue.get()
+            render_video_only(video_path)
+        else:
+            print("No video to render, waiting 1 secondfor new video...", flush=True)
+            time.sleep(1)
+
 def pipeline_render(video_path):
     generate_subtitles(video_path)
-    burn_process = multiprocessing.Process(target=render_video_only, args=(video_path,))
-    burn_process.start()
+    render_queue.put(video_path)
 
 if __name__ == '__main__':
     # Read and define variables

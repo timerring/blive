@@ -1,5 +1,7 @@
 # 安装常见问题
 
+> 如果没有找到遇到的问题，请及时在 [issues](https://github.com/timerring/bilive/issues/new/choose) 中提出。
+
 ## OSError: sndfile library not found
 
 Reference: https://github.com/timerring/bilive/issues/106
