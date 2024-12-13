@@ -2,7 +2,7 @@
 
 import os
 from pathlib import Path
-from src.burn.only_render import render_video_only, pipeline_render, monitor_queue
+from src.burn.only_render import render_video_only, VideoRenderQueue
 from src.burn.render_and_merge import render_and_merge
 import time
 from src.config import VIDEOS_DIR, MODEL_TYPE
@@ -44,13 +44,14 @@ def process_folder_append(folder_path):
     for file in mp4_files:
         print(f"Processing {file}...", flush=True)
         if MODEL_TYPE == "pipeline":
-            pipeline_render(file)
+            video_render_queue.pipeline_render(file)
         else:
             render_video_only(file)
 
 if __name__ == "__main__":
     room_folder_path = VIDEOS_DIR
-    monitor_thread = threading.Thread(target=monitor_queue, daemon=True)
+    video_render_queue = VideoRenderQueue()
+    monitor_thread = threading.Thread(target=video_render_queue.monitor_queue)
     monitor_thread.start()
     while True:
         for room_folder in Path(room_folder_path).iterdir():
