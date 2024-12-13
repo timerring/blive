@@ -11,8 +11,6 @@ import queue
 import threading
 import time
 
-render_queue = queue.Queue()
-
 def normalize_video_path(filepath):
     """Normalize the video path to upload
     Args:
@@ -57,17 +55,21 @@ def render_video_only(video_path):
     with open(f"{SRC_DIR}/upload/uploadVideoQueue.txt", "a") as file:
         file.write(f"{format_video_path}\n")
 
-def monitor_queue():
-    while True:
-        if not render_queue.empty():
-            video_path = render_queue.get()
-            render_video_only(video_path)
-        else:
-            time.sleep(1)
+class VideoRenderQueue:
+    def __init__(self):
+        self.render_queue = queue.Queue()
 
-def pipeline_render(video_path):
-    generate_subtitles(video_path)
-    render_queue.put(video_path)
+    def pipeline_render(self, video_path):
+        generate_subtitles(video_path)
+        self.render_queue.put(video_path)
+
+    def monitor_queue(self):
+        while True:
+            if not self.render_queue.empty():
+                video_path = self.render_queue.get()
+                render_video_only(video_path)
+            else:
+                time.sleep(1)
 
 if __name__ == '__main__':
     # Read and define variables
