@@ -1,5 +1,7 @@
 # record 常见问题
 
+> 如果没有找到遇到的问题，请及时在 [issues](https://github.com/timerring/bilive/issues/new/choose) 中提出。
+
 ## 录制 cookies 用处是什么
 
 主要用于录制时验证账号，B 站默认未登录状态下最高画质参数为 250 (超清)，如果想要录制更高参数的画质视频，需要登录账号，请在配置文件中指定账号的 cookies。 

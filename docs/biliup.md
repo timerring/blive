@@ -1,5 +1,7 @@
 # biliup常见问题
 
+> 如果没有找到遇到的问题，请及时在 [issues](https://github.com/timerring/bilive/issues/new/choose) 中提出。
+
 ## biliup-rs 产生的 cookies 用处是什么？
 1. 主要用于上传前验证登录状态。
 2. 投稿时（包括追加投稿时）指定账号。

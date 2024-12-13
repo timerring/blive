@@ -1,5 +1,7 @@
 # upload 常见问题
 
+> 如果没有找到遇到的问题，请及时在 [issues](https://github.com/timerring/bilive/issues/new/choose) 中提出。
+
 ## 上传默认参数
 
 上传默认参数如下，[]中内容全部自动替换：
