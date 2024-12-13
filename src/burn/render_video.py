@@ -38,7 +38,7 @@ def render_video(in_video_path, out_video_path, in_subtitle_font_size, in_subtit
                 'ffmpeg', '-y', '-i', in_video_path, '-vf', f'ass={in_ass_path}', '-preset', 'ultrafast', out_video_path
             ]
             with open(src.allconfig.BURN_LOG_PATH, 'a') as blog:
-                subprocess.run(command_without_gpu, stdout=log, stderr=subprocess.STDOUT)
+                subprocess.run(command_without_gpu, stdout=blog, stderr=subprocess.STDOUT)
         else:
             print("no gpu no danmaku")
             subprocess.run(['mv', in_video_path, out_video_path])
