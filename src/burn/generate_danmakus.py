@@ -42,11 +42,11 @@ def process_danmakus(in_xml_path, resolution):
         update_sc_prices(in_xml_path)
         in_ass_path = in_xml_path[:-4] + '.ass'
         if resolution == '1280x720':
-            boxsize = '450x720'
-            boxfont = '28'
+            boxsize = '470x720'
+            boxfont = '25'
             danmakufont = '38'
             subtitle_font_size = '15'
-            subtitle_margin_v = '60'
+            subtitle_margin_v = '40'
         elif resolution == '1920x1080':
             boxsize = '500x1080'
             boxfont = '50'

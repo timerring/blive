@@ -249,7 +249,7 @@ class SubtitleGenerator:
         """
         audio_filename, audio_rate = self.extract_audio()
         regions = self.find_speech_regions(audio_filename)
-        pool = multiprocessing.Pool(12)
+        pool = multiprocessing.Pool(10)
         converter = FLACConverter(source_path=audio_filename)
         recognizer = AudioRecogniser(language=self.language)
         transcripts = []
@@ -297,8 +297,6 @@ class SubtitleGenerator:
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Subtitle Generator')
-    
-    parser.add_argument('-l', '--language', help=config.get_interface_config()['LanguageModeGUI']['SubtitleLanguage'], required=False)
     parser.add_argument('filename', nargs='?', help=config.get_interface_config()['Main']['InputFile'])
 
     args = parser.parse_args()
