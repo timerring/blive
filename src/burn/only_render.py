@@ -31,9 +31,13 @@ def render_video_only(video_path):
 
     # Recoginze the resolution of video
     video_resolution = get_resolution(original_video_path)
-    
-    # Process the danmakus to ass and remove emojis
-    subtitle_font_size, subtitle_margin_v = process_danmakus(xml_path, video_resolution)
+    try:
+        # Process the danmakus to ass and remove emojis
+        subtitle_font_size, subtitle_margin_v = process_danmakus(xml_path, video_resolution)
+    except TypeError as e:
+        print(f"TypeError: {e} - Check the return value of process_danmakus")
+    except FileNotFoundError as e:
+        print(f"FileNotFoundError: {e} - Check if the file exists")
 
     # Generate the srt file via whisper model
     if GPU_EXIST:
@@ -67,7 +71,10 @@ class VideoRenderQueue:
         while True:
             if not self.render_queue.empty():
                 video_path = self.render_queue.get()
-                render_video_only(video_path)
+                try:
+                    render_video_only(video_path)
+                except Exception as e:
+                    print(f"Error processing video {video_path}: {e}", flush=True)
             else:
                 time.sleep(1)
 
