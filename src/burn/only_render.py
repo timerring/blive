@@ -50,7 +50,8 @@ def render_video_only(video_path):
 
     # # Delete relative files
     for remove_path in [original_video_path, xml_path, ass_path, srt_path, jsonl_path]:
-        os.remove(remove_path)
+        if os.path.exists(remove_path):
+            os.remove(remove_path)
     
     # # For test
     # test_path = original_video_path[:-4]
