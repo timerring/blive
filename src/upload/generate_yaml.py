@@ -13,7 +13,7 @@ def generate_yaml_template(video_path):
     desc = generate_desc(video_path)
     tag = generate_tag(video_path)
     data = {
-        "line": "kodo",
+        "line": "bda2",
         "limit": 5,
         "streamers": {
             video_path: {
