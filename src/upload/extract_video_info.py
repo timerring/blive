@@ -6,6 +6,7 @@ import json
 import os
 from datetime import datetime
 from src.upload.query_search_suggestion import get_bilibili_suggestions
+from src.config import GPU_EXIST
 
 def get_video_info(video_file_path):
     """get the title, artist and date of the video file via ffprobe
@@ -36,13 +37,19 @@ def get_video_info(video_file_path):
 
 def generate_title(video_path):
     title, artist, date = get_video_info(video_path)
-    new_title = "【弹幕+字幕】" + artist + "直播回放-" + date + "-" + title
+    if GPU_EXIST:
+        new_title = "【弹幕+字幕】" + artist + "直播回放-" + date + "-" + title
+    else:
+        new_title = "【弹幕】" + artist + "直播回放-" + date + "-" + title
     return new_title
 
 def generate_desc(video_path):
     title, artist, date = get_video_info(video_path)
     source_link = generate_source(video_path)
-    new_desc = "【弹幕+字幕】" + artist + "直播，直播间地址：" + source_link + " 内容仅供娱乐，直播中主播的言论、观点和行为均由主播本人负责，不代表录播员的观点或立场。"
+    if GPU_EXIST:
+        new_desc = "【弹幕+字幕】" + artist + "直播，直播间地址：" + source_link + " 内容仅供娱乐，直播中主播的言论、观点和行为均由主播本人负责，不代表录播员的观点或立场。"
+    else:
+        new_desc = "【弹幕】" + artist + "直播，直播间地址：" + source_link + " 内容仅供娱乐，直播中主播的言论、观点和行为均由主播本人负责，不代表录播员的观点或立场。"
     return new_desc
 
 def generate_tag(video_path):

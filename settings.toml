@@ -9,7 +9,7 @@ enable_recorder = true
 [output]
 path_template = "{roomid}/{roomid}_{year}{month}{day}-{hour}-{minute}-{second}"
 filesize_limit = 0
-duration_limit = 1200
+duration_limit = 1800
 out_dir = "./Videos"
 
 [logging]
@@ -51,7 +51,7 @@ inject_extra_metadata = true
 delete_source = "auto"
 
 [space]
-check_interval = 0
+check_interval = 300
 space_threshold = 10737418240
 recycle_records = false
 
