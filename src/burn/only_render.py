@@ -22,6 +22,10 @@ def normalize_video_path(filepath):
     return filepath.rsplit('/', 1)[0] + '/' + parts[0] + '_' + new_date_time + '-.mp4'
 
 def render_video_only(video_path):
+    if not os.path.exists(video_path):
+        print(f"File {video_path} does not exist.")
+        return
+
     original_video_path = str(video_path)
     format_video_path = normalize_video_path(original_video_path)
     xml_path = original_video_path[:-4] + '.xml'
